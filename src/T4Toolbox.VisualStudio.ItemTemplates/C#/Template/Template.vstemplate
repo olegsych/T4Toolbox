@@ -1,0 +1,28 @@
+﻿<!--
+<copyright file="Template.vstemplate" company="Oleg Sych">
+  Copyright © Oleg Sych. All Rights Reserved.
+</copyright>
+<summary>
+  Creates a partial .tt file with an empty Template sub-class. 
+</summary>
+-->
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <DefaultName>Template.tt</DefaultName>
+    <Name>Template</Name>
+    <Description>An empty code generation template</Description>
+    <ProjectType>CSharp</ProjectType>
+    <Icon Package="{A9696DE6-E209-414d-BBEC-A0506FB0E924}" ID="110"/>
+  </TemplateData>
+  <TemplateContent>
+    <ProjectItem TargetFileName="$fileinputname$.tt" ReplaceParameters="true">Template.tt</ProjectItem>
+    <CustomParameters>
+      <CustomParameter Name="$itemproperties$" Value="CustomTool" />
+      <CustomParameter Name="$CustomTool$" Value="" />
+    </CustomParameters>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.VSDesigner, Version=11.0.0.0, Culture=Neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VSDesigner.ProjectWizard.ItemPropertyWizard</FullClassName>
+  </WizardExtension>
+</VSTemplate>

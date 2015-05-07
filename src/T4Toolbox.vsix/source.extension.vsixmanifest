@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="T4Toolbox.12" Version="12.10.0.0" Language="en-US" Publisher="Oleg Sych" />
+    <DisplayName>T4 Toolbox for Visual Studio 2013</DisplayName>
+    <Description>Extends Text Templates with syntax colorization, error reporting, outlining, QuickInfo tooltips, statement completion, generation of multiple output files with source control integration, support for template parameters in Solution Explorer properties and more.</Description>
+    <MoreInfo>https://github.com/olegsych/T4Toolbox</MoreInfo>
+    <License>License.txt</License>
+    <GettingStartedGuide>https://github.com/olegsych/T4Toolbox/wiki/Getting-Started</GettingStartedGuide>
+    <ReleaseNotes>https://github.com/olegsych/T4Toolbox/wiki/Release-Notes</ReleaseNotes>
+  </Metadata>
+  <Installation InstalledByMsi="false">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="12.0" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
+    <Dependency Id="Microsoft.VisualStudio.MPF.12.0" DisplayName="Visual Studio MPF 12.0" d:Source="Installed" Version="[12.0,13.0)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio;PkgdefProjectOutputGroup|" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="%CurrentProject%.ItemTemplates" d:TargetPath="|T4Toolbox.VisualStudio.ItemTemplates;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.T4.Include" Path="Include" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio|" />
+  </Assets>
+</PackageManifest>

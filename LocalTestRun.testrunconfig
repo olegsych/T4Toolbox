@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestSettings name="Local Test Run" id="531c258c-fb46-4456-a0d5-c40817e878c8" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description>Test settings required to run Visual Studio integration tests.</Description>
+  <Execution>
+    <Hosts type="VS IDE">
+      <VSSDKTestHostRunConfig name="VS IDE" HiveKind="DevEnv" HiveName="12.0Exp" xmlns="http://microsoft.com/schemas/VisualStudio/SDK/Tools/IdeHostAdapter/2006/06" />
+    </Hosts>
+  </Execution>
+</TestSettings>

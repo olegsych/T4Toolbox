@@ -1,0 +1,14 @@
+<#+
+' <copyright file="$fileinputname$.tt" company="$registeredorganization$">
+'  Copyright © $registeredorganization$. All Rights Reserved.
+' </copyright>
+
+Public Class $fileinputname$ 
+	Inherits Generator
+
+	Protected Overrides Sub RunCore()	
+
+	End Sub
+
+End Class
+#>

@@ -1,0 +1,13 @@
+﻿<#+
+// <copyright file="$fileinputname$.tt" company="$registeredorganization$">
+//  Copyright © $registeredorganization$. All Rights Reserved.
+// </copyright>
+
+public class $fileinputname$ : Generator
+{
+	protected override void RunCore()
+	{
+
+	}
+}
+#>

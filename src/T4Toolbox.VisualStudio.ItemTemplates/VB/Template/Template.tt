@@ -1,0 +1,15 @@
+<#+
+' <copyright file="$fileinputname$.tt" company="$registeredorganization$">
+'  Copyright © $registeredorganization$. All Rights Reserved.
+' </copyright>
+
+Public Class $fileinputname$ 
+	Inherits Template
+
+	Public Overrides Function TransformText() As String
+
+        Return Me.GenerationEnvironment.ToString()
+	End Function
+
+End Class
+#>

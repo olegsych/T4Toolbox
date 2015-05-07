@@ -1,0 +1,11 @@
+## Ignore Visual Studio temporary files, build and test results
+
+*.suo
+*.user
+*.cache
+*.vspscc
+
+[Bb]in/
+[Oo]bj/
+[Tt]est[Rr]esult*/
+[Pp]ackages/

@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <NuGetPackageImportStamp>abce5b53</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1E1E9161-CBE4-4538-928C-539AA5E70153}</ProjectGuid>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>T4Toolbox.VisualStudio</RootNamespace>
+    <AssemblyName>T4Toolbox.VisualStudio</AssemblyName>
+    <!-- VSSDK properties -->
+    <CreateVsixContainer>false</CreateVsixContainer>
+    <DeployExtension>false</DeployExtension>
+    <UseCodebase>true</UseCodebase>
+    <YaccLexTools>$(SolutionDir)packages\YaccLexTools.0.2.2\tools\</YaccLexTools>
+    <GplexTool>"$(YaccLexTools)gplex.exe"</GplexTool>
+    <GppgTool>"$(YaccLexTools)gppg.exe"</GppgTool>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EnvDTE">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="EnvDTE80">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.VisualStudio.CoreUtility" />
+    <Reference Include="Microsoft.VisualStudio.Designer.Interfaces">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Editor" />
+    <Reference Include="Microsoft.VisualStudio.Language.Intellisense" />
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.12.0" />
+    <Reference Include="Microsoft.VisualStudio.TemplateWizardInterface" />
+    <Reference Include="Microsoft.VisualStudio.Text.Data" />
+    <Reference Include="Microsoft.VisualStudio.Text.Logic" />
+    <Reference Include="Microsoft.VisualStudio.Text.UI" />
+    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf" />
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.12.0" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.11.0" />
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.VSHost.12.0" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="VSLangProj">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\T4Toolbox.DirectiveProcessors\T4Toolbox.DirectiveProcessors.csproj">
+      <Project>{E0282961-2D83-48CC-B4D4-8257449CF8F7}</Project>
+      <Name>T4Toolbox.DirectiveProcessors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">
+      <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
+      <Name>T4Toolbox</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(SolutionDir)\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="CustomToolParameter.cs" />
+    <Compile Include="CustomToolParameters.cs" />
+    <Compile Include="Editor\ClassificationFormatDefinitions.cs" />
+    <Compile Include="Editor\ClassificationTypeDefinitions.cs" />
+    <Compile Include="Editor\ClassificationTypeName.cs" />
+    <Compile Include="Editor\TemplateCompletionBuilder.cs" />
+    <Compile Include="Editor\TemplateCompletionHandler.cs" />
+    <Compile Include="Editor\TemplateCompletionHandlerProvider.cs" />
+    <Compile Include="Editor\TemplateCompletionSource.cs" />
+    <Compile Include="Editor\TemplateCompletionSourceProvider.cs" />
+    <Compile Include="Editor\TemplateErrorReporter.cs" />
+    <Compile Include="Editor\TemplateErrorReporterProvider.cs" />
+    <Compile Include="Editor\TemplateOutliningTagger.cs" />
+    <Compile Include="Editor\TemplateOutliningTaggerProvider.cs" />
+    <Compile Include="Editor\TemplateQuickInfoSource.cs" />
+    <Compile Include="Editor\TemplateQuickInfoSourceProvider.cs" />
+    <Compile Include="Editor\TemplateTagger.cs" />
+    <Compile Include="Editor\TemplateClassificationTagger.cs" />
+    <Compile Include="Editor\TemplateClassificationTaggerProvider.cs" />
+    <Compile Include="Editor\TemplateContentType.cs" />
+    <Compile Include="Editor\TemplateErrorTagger.cs" />
+    <Compile Include="Editor\TemplateErrorTaggerProvider.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="TemplateAnalysis\AssemblyDirective.cs" />
+    <Compile Include="TemplateAnalysis\Attribute.cs" />
+    <Compile Include="TemplateAnalysis\AttributeDescriptor.cs" />
+    <Compile Include="TemplateAnalysis\AttributeName.cs" />
+    <Compile Include="TemplateAnalysis\AttributeValue.cs" />
+    <Compile Include="TemplateAnalysis\BlockEnd.cs" />
+    <Compile Include="TemplateAnalysis\CaptureNode.cs" />
+    <Compile Include="TemplateAnalysis\ClassBlockStart.cs" />
+    <Compile Include="TemplateAnalysis\Code.cs" />
+    <Compile Include="TemplateAnalysis\CodeBlock.cs" />
+    <Compile Include="TemplateAnalysis\CodeBlockStart.cs" />
+    <Compile Include="TemplateAnalysis\CustomDirective.cs" />
+    <Compile Include="TemplateAnalysis\DirectiveBlockStart.cs" />
+    <Compile Include="TemplateAnalysis\DirectiveDescriptor.cs" />
+    <Compile Include="TemplateAnalysis\DirectiveName.cs" />
+    <Compile Include="TemplateAnalysis\Directive.cs" />
+    <Compile Include="TemplateAnalysis\DoubleQuote.cs" />
+    <Compile Include="TemplateAnalysis\EndOfFile.cs" />
+    <Compile Include="TemplateAnalysis\Equals.cs" />
+    <Compile Include="TemplateAnalysis\ExpressionBlockStart.cs" />
+    <Compile Include="TemplateAnalysis\HashCode.cs" />
+    <Compile Include="TemplateAnalysis\ImportDirective.cs" />
+    <Compile Include="TemplateAnalysis\IncludeDirective.cs" />
+    <Compile Include="TemplateAnalysis\KnownValuesAttribute.cs" />
+    <Compile Include="TemplateAnalysis\Position.cs" />
+    <Compile Include="TemplateAnalysis\OutputDirective.cs" />
+    <Compile Include="TemplateAnalysis\ParameterDirective.cs" />
+    <Compile Include="TemplateAnalysis\StatementBlockStart.cs" />
+    <Compile Include="TemplateAnalysis\SyntaxNodeVisitor.cs" />
+    <Compile Include="TemplateAnalysis\SyntaxToken.cs" />
+    <Compile Include="TemplateAnalysis\NonterminalNode.cs" />
+    <Compile Include="TemplateAnalysis\ShiftReduceParserCode.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="TemplateAnalysis\SyntaxNode.cs" />
+    <Compile Include="TemplateAnalysis\Template.cs" />
+    <Compile Include="TemplateAnalysis\TemplateAnalysis.cs" />
+    <Compile Include="TemplateAnalysis\TemplateAnalyzer.cs" />
+    <Compile Include="TemplateAnalysis\TemplateDirective.cs" />
+    <Compile Include="TemplateAnalysis\TemplateLanguage.cs" />
+    <Compile Include="TemplateAnalysis\TemplateParser.partial.cs" />
+    <Compile Include="T4ToolboxOptions.cs" />
+    <Compile Include="T4ToolboxOptionsPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TemplateAnalysis\TemplateVisibility.cs" />
+    <Compile Include="TemplateAnalysis\ValueDescriptor.cs" />
+    <Compile Include="TemplateLocator.cs" />
+    <Compile Include="CustomToolTemplateEditor.cs" />
+    <Compile Include="BrowseObjectExtender.cs" />
+    <Compile Include="BrowseObjectExtenderProvider.cs" />
+    <Compile Include="ScriptFileGenerator.cs" />
+    <Compile Include="TemplateAnalysis\TemplateScanner.partial.cs" />
+    <Compile Include="TemplateAnalysis\TemplateError.cs" />
+    <Compile Include="TemplateAnalysis\TerminalNode.cs" />
+    <Compile Include="TransformationContextProvider.cs" />
+    <Compile Include="OutputFileManager.cs" />
+    <Compile Include="EnvDteExtensions.cs" />
+    <Compile Include="ItemMetadataWizard.cs" />
+    <Compile Include="ProjectItemProperty.cs" />
+    <Compile Include="ProjectItemTemplateWizard.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="T4ToolboxPackage.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="TemplatedFileGenerator.cs" />
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <Yacc Include="TemplateAnalysis\TemplateParser.y" />
+    <Lex Include="TemplateAnalysis\TemplateScanner.lex" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" />
+  <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets'))" />
+  </Target>
+  <Target Name="GenerateScanners" Inputs="@(Lex)" Outputs="$(IntermediateOutputPath)%(Filename).g.lex.cs" BeforeTargets="CoreCompile">
+    <Exec Command="echo #pragma warning disable 1591 &gt; &quot;$(IntermediateOutputPath)%(Lex.Filename).g.lex.cs&quot;" WorkingDirectory="$(ProjectDir)" />
+    <Exec Command="$(GplexTool) &quot;/out:-&quot; &quot;%(Lex.FullPath)&quot; &gt;&gt; &quot;$(IntermediateOutputPath)%(Lex.Filename).g.lex.cs&quot;" WorkingDirectory="$(ProjectDir)" />
+    <Exec Command="echo #pragma warning restore 1591 &gt;&gt; &quot;$(IntermediateOutputPath)%(Lex.Filename).g.lex.cs&quot;" WorkingDirectory="$(ProjectDir)" />
+    <ItemGroup>
+      <Compile Include="$(IntermediateOutputPath)%(Lex.Filename).g.lex.cs">
+        <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+      </Compile>
+    </ItemGroup>
+  </Target>
+  <Target Name="GenerateParsers" Inputs="@(Yacc)" Outputs="$(IntermediateOutputPath)%(Filename).g.yacc.cs" BeforeTargets="CoreCompile">
+    <Exec Command="$(GppgTool) /gplex &quot;%(Yacc.FullPath)&quot; &gt; &quot;$(IntermediateOutputPath)%(Yacc.Filename).g.yacc.cs&quot;" WorkingDirectory="$(ProjectDir)" />
+    <ItemGroup>
+      <Compile Include="$(IntermediateOutputPath)%(Yacc.Filename).g.yacc.cs">
+        <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+      </Compile>
+    </ItemGroup>
+  </Target>
+</Project>

@@ -1,0 +1,14 @@
+﻿<TargetProjects>
+  <TargetProject>
+    <Language>CSharp</Language>
+    <Template>Class Library</Template>
+    <CodeFileExtension>.cs</CodeFileExtension>
+    <DefaultTextTemplateLanguage>C#</DefaultTextTemplateLanguage>
+  </TargetProject>
+  <TargetProject>
+    <Language>VisualBasic</Language>
+    <Template>Class Library</Template>
+    <CodeFileExtension>.vb</CodeFileExtension>
+    <DefaultTextTemplateLanguage>VB</DefaultTextTemplateLanguage>
+  </TargetProject>
+</TargetProjects>

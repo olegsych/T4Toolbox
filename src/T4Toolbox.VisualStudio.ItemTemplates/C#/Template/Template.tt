@@ -1,0 +1,25 @@
+﻿<#+
+// <copyright file="$fileinputname$.tt" company="$registeredorganization$">
+//  Copyright © $registeredorganization$. All Rights Reserved.
+// </copyright>
+
+public class $fileinputname$ : CSharpTemplate
+{
+	public override string TransformText()
+	{
+		base.TransformText();
+#>
+namespace <#= DefaultNamespace #>
+{
+	public class <#= Identifier("Sample Class") #>
+	{
+		private string <#= FieldName("Sample Field") #>;
+
+		public string <#= PropertyName("Sample Property") #> { get; set; }
+	}
+}
+<#+
+        return this.GenerationEnvironment.ToString();
+	}
+}
+#>
