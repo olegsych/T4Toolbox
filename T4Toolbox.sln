@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{42F21B27-CBA5-4FB6-A855-8B74F05F56CD}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,16 +15,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3594248C-C8A9-4EAB-8E63-0914300D4ECE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox", "src\T4Toolbox\T4Toolbox.csproj", "{682E771A-76F7-4972-BBDC-1250B67F399B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox.VisualStudio", "src\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj", "{1E1E9161-CBE4-4538-928C-539AA5E70153}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{994DFDA5-97F7-4688-A2FA-6D8E7AB2BC18}"
 	ProjectSection(SolutionItems) = preProject
 		test\Settings.StyleCop = test\Settings.StyleCop
 		test\T4Toolbox.Tests.props = test\T4Toolbox.Tests.props
 		test\T4Toolbox.Tests.ruleset = test\T4Toolbox.Tests.ruleset
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{71EF8BD3-A665-4304-8F9D-D6A849A9830D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox", "src\T4Toolbox\T4Toolbox.csproj", "{682E771A-76F7-4972-BBDC-1250B67F399B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox.VisualStudio", "src\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj", "{1E1E9161-CBE4-4538-928C-539AA5E70153}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox.Tests", "test\T4Toolbox.Tests\T4Toolbox.Tests.csproj", "{2A05BF5E-B2B2-4222-91A3-BB86AE8A94CE}"
 EndProject
@@ -37,11 +42,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox.VisualStudio.ItemTemplates", "src\T4Toolbox.VisualStudio.ItemTemplates\T4Toolbox.VisualStudio.ItemTemplates.csproj", "{EA04B345-97BE-4A49-9C9C-3EBD4F5D2250}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox.vsix", "src\T4Toolbox.vsix\T4Toolbox.vsix.csproj", "{8E492B04-AF03-4A88-9A5D-D34D2386A4E5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{71EF8BD3-A665-4304-8F9D-D6A849A9830D}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

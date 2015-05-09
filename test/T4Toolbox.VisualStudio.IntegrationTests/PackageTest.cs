@@ -17,7 +17,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
     using Microsoft.VisualStudio.Utilities;
-    using Microsoft.VSSDK.Tools.VsIdeTesting;
+    
     using T4Toolbox.DirectiveProcessors;
 
     [TestClass]
@@ -28,7 +28,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         {
             await UIThreadDispatcher.InvokeAsync(delegate
             {
-                var shell = (IVsShell)VsIdeTestHostContext.ServiceProvider.GetService(typeof(SVsShell));
+                var shell = (IVsShell)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SVsShell));
                 IVsPackage package;
                 var packageGuid = new Guid(T4ToolboxPackage.Id);
                 Assert.AreEqual(VSConstants.S_OK, shell.LoadPackage(ref packageGuid, out package));
@@ -41,7 +41,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         {
             await UIThreadDispatcher.InvokeAsync(delegate
             {
-                var templatingHost = (ITextTemplatingEngineHost)VsIdeTestHostContext.ServiceProvider.GetService(typeof(STextTemplating));
+                var templatingHost = (ITextTemplatingEngineHost)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(STextTemplating));
                 Type processorType = templatingHost.ResolveDirectiveProcessor(TransformationContextProcessor.Name);
                 Assert.AreEqual(typeof(TransformationContextProcessor), processorType);
             });
@@ -53,11 +53,11 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             await UIThreadDispatcher.InvokeAsync(delegate
             {
                 // Make the T4 Host think it is processing a template, otherwise it doesn't search for include folders
-                var templatingService = (ITextTemplating)VsIdeTestHostContext.ServiceProvider.GetService(typeof(STextTemplating));
+                var templatingService = (ITextTemplating)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(STextTemplating));
                 templatingService.ProcessTemplate("C:\\dummy.txt", string.Empty); // Note the non-.TT extension. T4 Toolbox include files should be available for templates of all file extensions.
 
                 // Ask the T4 host to resolve the T4Toolbox.tt include file
-                var templatingHost = (ITextTemplatingEngineHost)VsIdeTestHostContext.ServiceProvider.GetService(typeof(STextTemplating));
+                var templatingHost = (ITextTemplatingEngineHost)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(STextTemplating));
                 string content, location;
                 Assert.IsTrue(templatingHost.LoadIncludeText("T4Toolbox.tt", out content, out location));
                 Assert.IsFalse(string.IsNullOrWhiteSpace(content));
@@ -68,7 +68,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [TestMethod]
         public void PackageRegistersTextTemplateContentType()
         {
-            var componentModel = (IComponentModel)VsIdeTestHostContext.ServiceProvider.GetService(typeof(SComponentModel));
+            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
             var contentTypeRegistry = componentModel.DefaultExportProvider.GetExportedValue<IContentTypeRegistryService>();
             Assert.IsNotNull(contentTypeRegistry.GetContentType("TextTemplate"));
         }
@@ -76,7 +76,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [TestMethod]
         public void PackageAssociatesTextTemplateContentTypeWithFileExtension()
         {
-            var componentModel = (IComponentModel)VsIdeTestHostContext.ServiceProvider.GetService(typeof(SComponentModel));
+            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
             var fileExtensionRegistry = componentModel.DefaultExportProvider.GetExportedValue<IFileExtensionRegistryService>();
             var contentType = fileExtensionRegistry.GetContentTypeForExtension("tt");
             Assert.AreEqual("TextTemplate", contentType.TypeName);
@@ -149,14 +149,14 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
 
         private static void AssertClassificationTypeIsRegistered(string classificationTypeName)
         {
-            var componentModel = (IComponentModel)VsIdeTestHostContext.ServiceProvider.GetService(typeof(SComponentModel));
+            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
             var classificationTypeRegistry = componentModel.DefaultExportProvider.GetExportedValue<IClassificationTypeRegistryService>();
             Assert.IsNotNull(classificationTypeRegistry.GetClassificationType(classificationTypeName));
         }
 
         private static TextFormattingRunProperties GetClassificationTypeTextProperties(string classificationTypeName)
         {
-            var componentModel = (IComponentModel)VsIdeTestHostContext.ServiceProvider.GetService(typeof(SComponentModel));
+            var componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
 
             var classificationTypeRegistry = componentModel.DefaultExportProvider.GetExportedValue<IClassificationTypeRegistryService>();
             IClassificationType delimiterClassification = classificationTypeRegistry.GetClassificationType(classificationTypeName);

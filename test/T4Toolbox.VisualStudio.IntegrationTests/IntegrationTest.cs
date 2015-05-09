@@ -16,7 +16,8 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.VSSDK.Tools.VsIdeTesting;
+    
+    using Microsoft.VisualStudio.Shell;
 
     [TestClass]
     [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors", Justification = "This class serves as base for non-static classes.")]
@@ -46,7 +47,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
-            UIThreadInvoker.Invoke((Action)delegate
+            ThreadHelper.Generic.Invoke((Action)delegate
             { 
                 CreateTestSolution();
                 UIThreadDispatcher = Dispatcher.CurrentDispatcher;
@@ -56,7 +57,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [AssemblyCleanup]
         public static void AssemblyCleanup()
         {
-            UIThreadInvoker.Invoke((Action)DeleteTestSolution);
+            ThreadHelper.Generic.Invoke((Action)DeleteTestSolution);
         }
 
         public void Dispose()
@@ -71,7 +72,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         {
             get
             {
-                var dte = (DTE2)VsIdeTestHostContext.Dte;
+                var dte = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.12.0");
                 ErrorItems errorItems = dte.ToolWindows.ErrorList.ErrorItems;
                 for (int i = 1; i <= errorItems.Count; i++)
                 {
@@ -87,7 +88,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             Directory.CreateDirectory(SolutionDirectory);
 
             // Create the test solution
-            Dte = (DTE)VsIdeTestHostContext.ServiceProvider.GetService(typeof(DTE));
+            Dte = (DTE)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(DTE));
             Solution = (Solution3)Dte.Solution;
             Solution.Create(SolutionDirectory, "TestSolution");
 
@@ -138,7 +139,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
 
         protected static void LoadT4ToolboxPackage()
         {
-            var shell = (IVsShell)VsIdeTestHostContext.ServiceProvider.GetService(typeof(SVsShell));
+            var shell = (IVsShell)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SVsShell));
             IVsPackage package;
             var packageGuid = new Guid(T4ToolboxPackage.Id);
             ErrorHandler.ThrowOnFailure(shell.LoadPackage(ref packageGuid, out package));
