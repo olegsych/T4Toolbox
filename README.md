@@ -8,7 +8,8 @@ text templates in Visual Studio 2013 and allows you to:
 - Edit text templates in Visual Studio 2013 with syntax colorization, outlining, QuickInfo tooltips, 
 error reporting and statement completion 
 
-To learn more about T4 Toolbox, visit the [Getting Started](https://github.com/olegsych/T4Toolbox/wiki/Getting-Started) wiki page.
+You can install the latest stable version of T4 Toolbox using the Extension Manager in Visual Studio 2013 or download it from the [gallery](https://visualstudiogallery.msdn.microsoft.com/791817a4-eb9a-4000-9c85-972cc60fd5aa).
+To learn more, visit the [Getting Started](https://github.com/olegsych/T4Toolbox/wiki/Getting-Started) wiki page.
 
 ## Building T4 Toolbox
 
