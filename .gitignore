@@ -1,11 +1,14 @@
-## Ignore Visual Studio temporary files, build and test results
+## Ignore Visual Studio and Git files and folders
 
 *.suo
 *.user
 *.cache
 *.vspscc
+*.patch
+*.exe
 
 [Bb]in/
 [Oo]bj/
 [Tt]est[Rr]esult*/
 [Pp]ackages/
+[Bb]ackup*/
