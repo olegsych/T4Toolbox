@@ -22,6 +22,8 @@
     <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
     <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
     <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+    <!-- Disable extension when building on build agent to prevent the DeployVsixExtensionFiles target from failing on AppVeyor -->
+    <DeployExtension Condition=" '$(BuildingInsideVisualStudio)' != 'true' ">false</DeployExtension>
     <!-- Disable FxCop - no assembly -->
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
