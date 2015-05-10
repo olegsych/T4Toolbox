@@ -1,4 +1,4 @@
-version: 12.10.0.{build}
+version: 12.10.1.{build}
 configuration: Release
 before_build:
 - ps: >-
