@@ -1,0 +1,20 @@
+version: 12.10.0.{build}
+configuration: Release
+before_build:
+- ps: >-
+    $currentDirectory = (Get-Item -Path ".\" -Verbose).FullName
+
+    $nuget = "$currentDirectory\nuget.exe"
+
+    if (-not (Test-Path $nuget)) {
+      (new-object Net.WebClient).DownloadFile("http://www.nuget.org/nuget.exe", $nuget)
+    }
+
+    . $nuget restore T4Toolbox.sln
+build:
+  parallel: true
+  verbosity: minimal
+test:
+  assemblies: '**\*.tests.dll'
+artifacts:
+- path: '**\T4Toolbox.*.vsix'
