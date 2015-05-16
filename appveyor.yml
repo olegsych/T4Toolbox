@@ -14,7 +14,9 @@ before_build:
     
     . $nugetExe restore T4Toolbox.sln
 
-    CreateAssemblyKeyFile "T4ToolboxSnk" "T4Toolbox.snk"
+    if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
+        CreateAssemblyKeyFile "T4ToolboxSnk" "T4Toolbox.snk"
+    }
 build:
   parallel: true
   verbosity: minimal
