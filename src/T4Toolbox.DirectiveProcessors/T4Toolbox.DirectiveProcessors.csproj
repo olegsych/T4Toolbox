@@ -11,14 +11,8 @@
     <NuGetPackageImportStamp>3fedb98d</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.11.0" />

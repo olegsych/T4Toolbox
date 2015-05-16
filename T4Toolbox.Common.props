@@ -13,22 +13,27 @@
     <FileAlignment>512</FileAlignment>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputPath>bin\$(Configuration)\</OutputPath>
-    
-    <!-- 
-      The following properties enable advanced compilation options in Release configuration.
-      These options help to detect more errors, but significantly impact productivity.
-      Note: CI build is compiles the Release configuration.
-    -->
-    
-    <!-- Enable documentation generation for Release confiration only (it is disabled by default) -->
-    <DocumentationFile Condition=" '$(Configuration)' == 'Release' ">$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-    
-    <!-- Enable FxCop for Release configuration only (it is disabled by default) -->
-    <RunCodeAnalysis Condition=" '$(Configuration)' == 'Release' ">true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\T4Toolbox.Common.ruleset</CodeAnalysisRuleSet>
-    
-    <!-- Enable StyleCop for Release configuration only (it is enabled by default) -->
-    <StyleCopEnabled Condition=" '$(Configuration)' != 'Release' ">false</StyleCopEnabled>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <StyleCopEnabled>false</StyleCopEnabled>
+  </PropertyGroup>
+
+  <!-- Sign assemblies if the T4Toolbox.snk file is present -->
+  <PropertyGroup Condition="Exists('$(MSBuildThisFileDirectory)\T4Toolbox.snk')">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\T4Toolbox.snk</AssemblyOriginatorKeyFile>
+    <DefineConstants>$(DefineConstants);SIGN_ASSEMBLY</DefineConstants>
   </PropertyGroup>
 </Project>
