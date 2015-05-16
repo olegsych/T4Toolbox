@@ -13,23 +13,17 @@
     <FileAlignment>512</FileAlignment>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputPath>bin\$(Configuration)\</OutputPath>
-    
-    <!-- 
-      The following properties enable advanced compilation options in Release configuration.
-      These options help to detect more errors, but significantly impact productivity.
-      Note: CI build is compiles the Release configuration.
-    -->
-    
-    <!-- Enable documentation generation for Release confiration only (it is disabled by default) -->
-    <DocumentationFile Condition=" '$(Configuration)' == 'Release' ">$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-    
-    <!-- Enable FxCop for Release configuration only (it is disabled by default) -->
-    <RunCodeAnalysis Condition=" '$(Configuration)' == 'Release' ">true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\T4Toolbox.Common.ruleset</CodeAnalysisRuleSet>
-    
-    <!-- Enable StyleCop for Release configuration only (it is enabled by default) -->
-    <StyleCopEnabled Condition=" '$(Configuration)' != 'Release' ">false</StyleCopEnabled>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <StyleCopEnabled>false</StyleCopEnabled>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(SignAssembly)' == 'true' ">
