@@ -31,4 +31,8 @@
     <StyleCopEnabled Condition=" '$(Configuration)' != 'Release' ">false</StyleCopEnabled>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(SignAssembly)' == 'true' ">
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\T4Toolbox.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
 </Project>
