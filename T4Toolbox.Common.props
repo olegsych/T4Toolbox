@@ -30,7 +30,10 @@
     <StyleCopEnabled>false</StyleCopEnabled>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(SignAssembly)' == 'true' ">
+  <!-- Sign assemblies if the T4Toolbox.snk file is present -->
+  <PropertyGroup Condition="Exists('$(MSBuildThisFileDirectory)\T4Toolbox.snk')">
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\T4Toolbox.snk</AssemblyOriginatorKeyFile>
+    <DefineConstants>$(DefineConstants);SIGN_ASSEMBLY</DefineConstants>
   </PropertyGroup>
 </Project>

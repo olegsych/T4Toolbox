@@ -6,6 +6,7 @@
 *.vspscc
 *.patch
 *.exe
+*.snk
 
 [Bb]in/
 [Oo]bj/
