@@ -7,7 +7,7 @@
     <MoreInfo>https://github.com/olegsych/T4Toolbox</MoreInfo>
     <License>License.txt</License>
     <GettingStartedGuide>https://github.com/olegsych/T4Toolbox/wiki/Getting-Started</GettingStartedGuide>
-    <ReleaseNotes>https://github.com/olegsych/T4Toolbox/wiki/Release-Notes</ReleaseNotes>
+    <ReleaseNotes>https://github.com/olegsych/T4Toolbox/releases</ReleaseNotes>
   </Metadata>
   <Installation InstalledByMsi="false">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="12.0" />
