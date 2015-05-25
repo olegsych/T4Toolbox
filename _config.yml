@@ -1,2 +1,3 @@
 baseurl: http://olegsych.github.io/T4Toolbox
 highlighter: pygments
+markdown: redcarpet
