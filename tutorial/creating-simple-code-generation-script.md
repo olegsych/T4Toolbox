@@ -20,7 +20,6 @@ layout: default
 // <copyright file="Products_Delete.tt" company="Your Company">
 //  Copyright @ Your Company. All Rights Reserved.
 // </copyright>  
-
 #>
 ```
 
