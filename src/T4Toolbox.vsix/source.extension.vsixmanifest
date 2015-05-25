@@ -6,8 +6,8 @@
     <Description>Extends Text Templates with syntax colorization, error reporting, outlining, QuickInfo tooltips, statement completion, generation of multiple output files with source control integration, support for template parameters in Solution Explorer properties and more.</Description>
     <MoreInfo>https://github.com/olegsych/T4Toolbox</MoreInfo>
     <License>License.txt</License>
-    <GettingStartedGuide>https://github.com/olegsych/T4Toolbox/wiki/Getting-Started</GettingStartedGuide>
-    <ReleaseNotes>https://github.com/olegsych/T4Toolbox/wiki/Release-Notes</ReleaseNotes>
+    <GettingStartedGuide>http://olegsych.github.io/T4Toolbox/getting-started.html</GettingStartedGuide>
+    <ReleaseNotes>https://github.com/olegsych/T4Toolbox/releases</ReleaseNotes>
   </Metadata>
   <Installation InstalledByMsi="false">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="12.0" />
