@@ -266,11 +266,10 @@ namespace T4Toolbox.VisualStudio.TemplateAnalysis
         [TestMethod]
         public void ValidateIgnoresCaseWhenComparingAttributeValuesToKnownValues()
         {
-            AttributeValue value;
             var directive = new DirectiveWithKnownAttributeValues(
                 new DirectiveBlockStart(0), 
                 new DirectiveName(4, "directive"), 
-                new[] { new Attribute(new AttributeName(13, "attributeWithKnownValues"), new Equals(37), new DoubleQuote(38), value = new AttributeValue(39, "KNOWNVALUE"), new DoubleQuote(49)) },
+                new[] { new Attribute(new AttributeName(13, "attributeWithKnownValues"), new Equals(37), new DoubleQuote(38), new AttributeValue(39, "KNOWNVALUE"), new DoubleQuote(49)) },
                 new BlockEnd(51));
             Assert.IsFalse(directive.Validate().Any());            
         }

@@ -13,11 +13,10 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using EnvDTE;
     using EnvDTE80;
     using EnvDTE90;
-    using Microsoft.VisualStudio;
+    using Microsoft.VisualStudio;    
+    using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    
-    using Microsoft.VisualStudio.Shell;
 
     [TestClass]
     [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors", Justification = "This class serves as base for non-static classes.")]

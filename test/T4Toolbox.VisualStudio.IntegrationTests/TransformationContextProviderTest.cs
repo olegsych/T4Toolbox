@@ -8,8 +8,6 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using System.IO;
     using EnvDTE;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    
-    using Microsoft.VisualStudio.Shell;
 
     [TestClass]
     public class TransformationContextProviderTest : IntegrationTest

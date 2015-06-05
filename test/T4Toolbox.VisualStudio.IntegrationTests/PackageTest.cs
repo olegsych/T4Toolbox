@@ -5,6 +5,7 @@
 namespace T4Toolbox.VisualStudio.IntegrationTests
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Threading.Tasks;
     using System.Windows.Media;
@@ -17,13 +18,14 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
     using Microsoft.VisualStudio.Utilities;
-    
+
     using T4Toolbox.DirectiveProcessors;
 
     [TestClass]
     public class PackageTest : IntegrationTest
     {
         [TestMethod]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "FxCop incorrectly flags async test methods.")]
         public async Task PackageLoads()
         {
             await UIThreadDispatcher.InvokeAsync(delegate
@@ -37,6 +39,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         }
 
         [TestMethod]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "FxCop incorrectly flags async test methods.")]
         public async Task PackageRegistersTransformationContextProcessor()
         {
             await UIThreadDispatcher.InvokeAsync(delegate
@@ -48,6 +51,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         }
 
         [TestMethod]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "FxCop incorrectly flags async test methods.")]
         public async Task PackageDeploysAndRegistersT4ToolboxIncludeFile()
         {
             await UIThreadDispatcher.InvokeAsync(delegate
