@@ -22,14 +22,6 @@ Describe "Module" {
 
 		Set-Location $originalLocation
 	}
-
-	Context "Get-NugetExe" {
-		It "Downloads nuget.exe and returns a file path" {
-			$nugetExe = Get-NugetExe
-			$nugetExe | Should Exist
-			Remove-Item $nugetExe
-		}
-	}
 }
 
 Remove-Module Module
