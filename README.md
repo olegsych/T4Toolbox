@@ -1,14 +1,15 @@
 # T4 Toolbox
 
 T4 Toolbox extends the code generation functionality of the [T4](https://msdn.microsoft.com/en-us/library/bb126445.aspx) 
-text templates in Visual Studio 2013 and allows you to:
+text templates in Visual Studio 2015 and allows you to:
 - Generate multiple output files from a single text template 
 - Automatically add output files to one or more projects and folders 
 - Automatically add or check-out generated files from source control 
-- Edit text templates in Visual Studio 2013 with syntax colorization, outlining, QuickInfo tooltips, 
+- Edit text templates in Visual Studio 2015 with syntax colorization, outlining, QuickInfo tooltips, 
 error reporting and statement completion 
 
-You can install the latest stable version of T4 Toolbox using the Extension Manager in Visual Studio 2013 or download it from the [gallery](https://visualstudiogallery.msdn.microsoft.com/791817a4-eb9a-4000-9c85-972cc60fd5aa).
+You can install the latest stable version of T4 Toolbox using the Extension Manager in Visual Studio 2015 or download 
+it from the [gallery](https://visualstudiogallery.msdn.microsoft.com/791817a4-eb9a-4000-9c85-972cc60fd5aa).
 To learn more, visit the [Getting Started](http://olegsych.github.io/T4Toolbox/getting-started.html) wiki page.
 
 ## Building T4 Toolbox 
@@ -16,9 +17,8 @@ To learn more, visit the [Getting Started](http://olegsych.github.io/T4Toolbox/g
 [![Build status](https://ci.appveyor.com/api/projects/status/github/olegsych/t4toolbox?branch=master&retina=true)](https://ci.appveyor.com/project/olegsych/t4toolbox/branch/master)
 
 Pre-requisites (can be downloaded from https://www.visualstudio.com/downloads)
-- Visual Studio 2013 Community or paid edition, 
-- Visual Studio 2013 Update 4 or later
-- Visual Studio 2013 SDK
+- Visual Studio 2015 Community or paid
+- Visual Studio 2015 SDK
 
 Open `T4Toolbox.sln` in Visual Studio and build it. The NuGet packages the solution depends on should be restored
 [automatically](http://docs.nuget.org/Consume/Package-Restore) by Visual Studio. If you have disabled the automatic
@@ -55,7 +55,7 @@ You can debug unit and integration tests by selecting the Debug commands in Test
 Alternatively, you can debug both generator and editor code by running it in Visual Studio. For that, set the 
 `T4Toolbox.VisualStudio` project as the startup project in Solution Explorer and specify the following options on the 
 Debug page of the project properties.
-- Start Action / Start external program: ```C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe```
+- Start Action / Start external program: ```C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe```
 - Start Options / Command line arguments: ```/rootSuffix Exp```
 
 With these settings in place, building the `T4Toolbox.VisualStudio` project will automatically install the extension in the 
