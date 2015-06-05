@@ -12,6 +12,7 @@ before_build:
 - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 - ps: >-
     Import-Module .\build\Module.psm1
+
     if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
         CreateAssemblyKeyFile "T4ToolboxSnk" "T4Toolbox.snk"
     }
