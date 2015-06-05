@@ -36,6 +36,8 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dte", Justification = "Property name needs to be consistent with the API.")]
         protected static DTE Dte { get; private set; }
+
+        protected static IServiceProvider ServiceProvider { get; private set; }
         
         protected static string SolutionDirectory { get; private set; }
 
@@ -46,8 +48,8 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
-            ThreadHelper.Generic.Invoke((Action)delegate
-            { 
+            ThreadHelper.Generic.Invoke(delegate
+            {
                 CreateTestSolution();
                 UIThreadDispatcher = Dispatcher.CurrentDispatcher;
             });
@@ -56,7 +58,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [AssemblyCleanup]
         public static void AssemblyCleanup()
         {
-            ThreadHelper.Generic.Invoke((Action)DeleteTestSolution);
+            ThreadHelper.Generic.Invoke(DeleteTestSolution);
         }
 
         public void Dispose()
@@ -87,7 +89,8 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             Directory.CreateDirectory(SolutionDirectory);
 
             // Create the test solution
-            Dte = (DTE)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(DTE));
+            ServiceProvider = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider;
+            Dte = (DTE)ServiceProvider.GetService(typeof(DTE));
             Solution = (Solution3)Dte.Solution;
             Solution.Create(SolutionDirectory, "TestSolution");
 
@@ -138,7 +141,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
 
         protected static void LoadT4ToolboxPackage()
         {
-            var shell = (IVsShell)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SVsShell));
+            var shell = (IVsShell)ServiceProvider.GetService(typeof(SVsShell));
             IVsPackage package;
             var packageGuid = new Guid(T4ToolboxPackage.Id);
             ErrorHandler.ThrowOnFailure(shell.LoadPackage(ref packageGuid, out package));

@@ -12,7 +12,6 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
     using Microsoft.VisualStudio.Utilities;
-    
     using T4Toolbox.VisualStudio.Editor;
 
     [TestClass]
@@ -26,7 +25,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         {
             UIThreadDispatcher.Invoke(delegate
             {
-                this.componentModel = (IComponentModel)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
+                this.componentModel = (IComponentModel)ServiceProvider.GetService(typeof(SComponentModel));
                 
                 // Use Text content type to test in isolation from TemplateErrorTaggerProvider
                 var contentTypeRegistry = this.componentModel.DefaultExportProvider.GetExportedValue<IContentTypeRegistryService>();

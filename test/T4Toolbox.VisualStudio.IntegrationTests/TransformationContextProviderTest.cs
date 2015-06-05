@@ -21,7 +21,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             UIThreadDispatcher.Invoke(delegate
             {
                 this.project = this.CreateTestProject();
-                this.provider = (ITransformationContextProvider)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(ITransformationContextProvider));
+                this.provider = (ITransformationContextProvider)ServiceProvider.GetService(typeof(ITransformationContextProvider));
             });
         }
 

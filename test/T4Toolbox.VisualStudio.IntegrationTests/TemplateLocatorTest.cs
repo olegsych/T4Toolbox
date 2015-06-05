@@ -19,7 +19,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
                 IntegrationTest.LoadT4ToolboxPackage();
                 string inputPath = this.CreateTempFile(SolutionDirectory, string.Empty);
                 string templatePath = this.CreateTempFile(SolutionDirectory, string.Empty);
-                var templateLocator = (TemplateLocator)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(TemplateLocator));
+                var templateLocator = (TemplateLocator)ServiceProvider.GetService(typeof(TemplateLocator));
                 string resolvedPath = Path.GetFileName(templatePath);
                 Assert.IsTrue(templateLocator.LocateTemplate(inputPath, ref resolvedPath));                
                 Assert.AreEqual(templatePath, resolvedPath);
@@ -36,7 +36,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
                 string includeFolder = Path.Combine(Path.GetDirectoryName(typeof(TemplateLocator).Assembly.Location), "Include");
                 string templatePath = this.CreateTempFile(includeFolder, string.Empty);
 
-                var templateLocator = (TemplateLocator)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(TemplateLocator));
+                var templateLocator = (TemplateLocator)ServiceProvider.GetService(typeof(TemplateLocator));
                 string resolvedPath = Path.GetFileName(templatePath);
                 Assert.IsTrue(templateLocator.LocateTemplate(inputPath, ref resolvedPath));
                 Assert.AreEqual(templatePath, resolvedPath);

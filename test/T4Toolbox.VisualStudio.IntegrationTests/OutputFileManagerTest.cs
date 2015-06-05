@@ -39,9 +39,9 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         {
             UIThreadDispatcher.Invoke(delegate
             {
-                this.templatingService = (ITextTemplating)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(STextTemplating));
+                this.templatingService = (ITextTemplating)ServiceProvider.GetService(typeof(STextTemplating));
                 this.templatingHost = (ITextTemplatingEngineHost)this.templatingService;
-                this.provider = (ITransformationContextProvider)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(ITransformationContextProvider));
+                this.provider = (ITransformationContextProvider)ServiceProvider.GetService(typeof(ITransformationContextProvider));
 
                 this.project = this.CreateTestProject();
                 this.folder = this.project.ProjectItems.AddFolder(Path.GetRandomFileName());
