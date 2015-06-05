@@ -1,4 +1,4 @@
-version: 14.10.1.{build}
+version: 14.0.0.{build}
 os: Visual Studio 2015 RC
 branches:
   only:
