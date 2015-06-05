@@ -14,9 +14,9 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   <ItemGroup>
-    <Reference Include="System" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.11.0" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
