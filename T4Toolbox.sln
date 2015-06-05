@@ -27,6 +27,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{71EF8BD3-A665-4304-8F9D-D6A849A9830D}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox", "src\T4Toolbox\T4Toolbox.csproj", "{682E771A-76F7-4972-BBDC-1250B67F399B}"
@@ -45,16 +46,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox.VisualStudio.Item
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Toolbox.vsix", "src\T4Toolbox.vsix\T4Toolbox.vsix.csproj", "{8E492B04-AF03-4A88-9A5D-D34D2386A4E5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{71EF8BD3-A665-4304-8F9D-D6A849A9830D}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{0658B25D-9363-4E23-99F9-0A371A5AB636}"
 	ProjectSection(SolutionItems) = preProject
 		build\Module.psm1 = build\Module.psm1
 		build\Module.tests.ps1 = build\Module.tests.ps1
+	EndProjectSection
+	ProjectSection(FolderStartupServices) = postProject
+		{82A7F48D-3B50-4B1E-B82E-3ADA8210C358} = {82A7F48D-3B50-4B1E-B82E-3ADA8210C358}
 	EndProjectSection
 EndProject
 Global
