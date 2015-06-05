@@ -12,6 +12,7 @@ using Microsoft.VisualStudio.Shell;
 // Help Visual Studio resolve references to the T4Toolbox assembly.
 [assembly: ProvideCodeBase(
     AssemblyName = T4Toolbox.AssemblyInfo.Name,
+    PublicKeyToken = T4Toolbox.AssemblyInfo.PublicKeyToken,
     Version = T4Toolbox.AssemblyInfo.Version,
     CodeBase = @"$PackageFolder$\" + T4Toolbox.AssemblyInfo.Name + ".dll")]
 
@@ -20,12 +21,14 @@ using Microsoft.VisualStudio.Shell;
 // of ProvideDirectiveProcessorAttribute.
 [assembly: ProvideCodeBase(
     AssemblyName = T4Toolbox.DirectiveProcessors.AssemblyInfo.Name,
+    PublicKeyToken = T4Toolbox.DirectiveProcessors.AssemblyInfo.PublicKeyToken,
     Version = T4Toolbox.DirectiveProcessors.AssemblyInfo.Version,
     CodeBase = @"$PackageFolder$\" + T4Toolbox.DirectiveProcessors.AssemblyInfo.Name + ".dll")]
 
 // Help Visual Studio resolve references to the T4Toolbox.VisualStudio assembly.
 [assembly: ProvideCodeBase(
     AssemblyName = T4Toolbox.VisualStudio.AssemblyInfo.Name,
+    PublicKeyToken = T4Toolbox.VisualStudio.AssemblyInfo.PublicKeyToken,
     Version = T4Toolbox.VisualStudio.AssemblyInfo.Version,
     CodeBase = @"$PackageFolder$\" + T4Toolbox.VisualStudio.AssemblyInfo.Name + ".dll")]
 

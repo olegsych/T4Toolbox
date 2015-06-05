@@ -4,12 +4,6 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>12.0</OldToolsVersion>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -22,6 +16,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>T4Toolbox.VisualStudio.ItemTemplates</RootNamespace>
     <AssemblyName>T4Toolbox.VisualStudio.ItemTemplates</AssemblyName>
+    <!-- Suppress C# warning about missing source files -->
+    <NoWarn>2008</NoWarn>
     <!-- Disable FxCop. This project does not generate an assembly. -->
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <!-- VS SDK Item Template Project Settings -->

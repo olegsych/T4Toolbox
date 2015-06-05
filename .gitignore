@@ -1,15 +1,15 @@
-# Visual Studio files and folders
+## Ignore Visual Studio and Git files and folders
 
 *.suo
 *.user
 *.cache
 *.vspscc
+*.patch
+*.exe
+*.snk
 
 [Bb]ackup*/
 [Bb]in/
 [Oo]bj/
 [Tt]est[Rr]esult*/
 [Pp]ackages/
-
-# Git files
-*.patch
