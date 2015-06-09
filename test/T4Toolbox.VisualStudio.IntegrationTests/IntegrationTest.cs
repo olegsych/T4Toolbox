@@ -35,7 +35,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dte", Justification = "Property name needs to be consistent with the API.")]
-        protected static DTE Dte { get; private set; }
+        protected static DTE2 Dte { get; private set; }
 
         protected static IServiceProvider ServiceProvider { get; private set; }
         
@@ -73,8 +73,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         {
             get
             {
-                var dte = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.12.0");
-                ErrorItems errorItems = dte.ToolWindows.ErrorList.ErrorItems;
+                ErrorItems errorItems = Dte.ToolWindows.ErrorList.ErrorItems;
                 for (int i = 1; i <= errorItems.Count; i++)
                 {
                     yield return errorItems.Item(i);
@@ -90,7 +89,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
 
             // Create the test solution
             ServiceProvider = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider;
-            Dte = (DTE)ServiceProvider.GetService(typeof(DTE));
+            Dte = (DTE2)ServiceProvider.GetService(typeof(DTE));
             Solution = (Solution3)Dte.Solution;
             Solution.Create(SolutionDirectory, "TestSolution");
 
