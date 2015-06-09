@@ -18,7 +18,8 @@ To learn more, visit the [Getting Started](http://olegsych.github.io/T4Toolbox/g
 
 Pre-requisites (can be downloaded from https://www.visualstudio.com/downloads)
 - Visual Studio 2015 Community or paid
-- Visual Studio 2015 SDK
+- Visual Studio 2015 SDK 
+- .NET 3.5 (for Lex and Yacc tools)
 
 Open `T4Toolbox.sln` in Visual Studio and build it. The NuGet packages the solution depends on should be restored
 [automatically](http://docs.nuget.org/Consume/Package-Restore) by Visual Studio. If you have disabled the automatic
