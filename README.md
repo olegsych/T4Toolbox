@@ -9,7 +9,7 @@ text templates in Visual Studio 2015 and allows you to:
 error reporting and statement completion 
 
 You can install the latest stable version of T4 Toolbox using the Extension Manager in Visual Studio 2015 or download 
-it from the [gallery](https://visualstudiogallery.msdn.microsoft.com/791817a4-eb9a-4000-9c85-972cc60fd5aa).
+it from the [gallery](https://visualstudiogallery.msdn.microsoft.com/site/search?query=T4Toolbox).
 To learn more, visit the [Getting Started](http://olegsych.github.io/T4Toolbox/getting-started.html) wiki page.
 
 ## Building T4 Toolbox 
