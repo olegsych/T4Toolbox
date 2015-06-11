@@ -41,6 +41,9 @@ namespace T4Toolbox.VisualStudio
     [ProvideAutoLoad(VSConstants.UICONTEXT.CSharpProject_string)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.VBProject_string)]
 
+    // Ensure VS experimental hive can find the extension dlls.
+    [ProvideBindingPath]
+
     public sealed class T4ToolboxPackage : Package, IDisposable
     {
         internal const string Id = "c88631b5-770c-453d-b90e-7136f127d57d";

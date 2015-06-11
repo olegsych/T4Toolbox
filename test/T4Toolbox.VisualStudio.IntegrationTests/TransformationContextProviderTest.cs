@@ -8,7 +8,6 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using System.IO;
     using EnvDTE;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.VSSDK.Tools.VsIdeTesting;
 
     [TestClass]
     public class TransformationContextProviderTest : IntegrationTest
@@ -22,7 +21,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             UIThreadDispatcher.Invoke(delegate
             {
                 this.project = this.CreateTestProject();
-                this.provider = (ITransformationContextProvider)VsIdeTestHostContext.ServiceProvider.GetService(typeof(ITransformationContextProvider));
+                this.provider = (ITransformationContextProvider)ServiceProvider.GetService(typeof(ITransformationContextProvider));
             });
         }
 

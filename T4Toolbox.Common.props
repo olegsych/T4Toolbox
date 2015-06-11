@@ -6,6 +6,9 @@
     <PlatformTarget>AnyCPU</PlatformTarget>    
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>

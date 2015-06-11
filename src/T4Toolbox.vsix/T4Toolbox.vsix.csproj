@@ -1,10 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -14,8 +9,11 @@
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{8E492B04-AF03-4A88-9A5D-D34D2386A4E5}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <!-- On AppVeyor build agent, use dynamically generated package version. Locally, hardcode to 0.0.0.0 -->
+    <PackageVersion Condition=" '$(appveyor_build_version)' != '' ">$(appveyor_build_version)</PackageVersion>
+    <PackageVersion Condition=" '$(appveyor_build_version)' == '' ">0.0.0.0</PackageVersion>
     <!-- VSSDK properties -->
-    <TargetVsixContainerName>T4Toolbox.12.vsix</TargetVsixContainerName>
+    <TargetVsixContainerName>T4Toolbox.$(PackageVersion).vsix</TargetVsixContainerName>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
@@ -28,9 +26,6 @@
     <DeployExtension Condition=" '$(BuildingInsideVisualStudio)' != 'true' ">false</DeployExtension>
     <!-- Disable FxCop - no assembly -->
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <!-- On AppVeyor build agent, use dynamically generated package version. Locally, hardcode to 0.0.0.0 -->
-    <PackageVersion Condition=" '$(appveyor_build_version)' != '' ">$(appveyor_build_version)</PackageVersion>
-    <PackageVersion Condition=" '$(appveyor_build_version)' == '' ">0.0.0.0</PackageVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />

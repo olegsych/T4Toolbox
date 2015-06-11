@@ -15,7 +15,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
-    using Microsoft.VSSDK.Tools.VsIdeTesting;
+    
     using VSLangProj;
 
     [TestClass]
@@ -39,9 +39,9 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         {
             UIThreadDispatcher.Invoke(delegate
             {
-                this.templatingService = (ITextTemplating)VsIdeTestHostContext.ServiceProvider.GetService(typeof(STextTemplating));
+                this.templatingService = (ITextTemplating)ServiceProvider.GetService(typeof(STextTemplating));
                 this.templatingHost = (ITextTemplatingEngineHost)this.templatingService;
-                this.provider = (ITransformationContextProvider)VsIdeTestHostContext.ServiceProvider.GetService(typeof(ITransformationContextProvider));
+                this.provider = (ITransformationContextProvider)ServiceProvider.GetService(typeof(ITransformationContextProvider));
 
                 this.project = this.CreateTestProject();
                 this.folder = this.project.ProjectItems.AddFolder(Path.GetRandomFileName());

@@ -13,10 +13,10 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
     using EnvDTE;
     using EnvDTE80;
     using EnvDTE90;
-    using Microsoft.VisualStudio;
+    using Microsoft.VisualStudio;    
+    using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Microsoft.VSSDK.Tools.VsIdeTesting;
 
     [TestClass]
     [SuppressMessage("Microsoft.Design", "CA1053:StaticHolderTypesShouldNotHaveConstructors", Justification = "This class serves as base for non-static classes.")]
@@ -35,7 +35,9 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dte", Justification = "Property name needs to be consistent with the API.")]
-        protected static DTE Dte { get; private set; }
+        protected static DTE2 Dte { get; private set; }
+
+        protected static IServiceProvider ServiceProvider { get; private set; }
         
         protected static string SolutionDirectory { get; private set; }
 
@@ -46,8 +48,8 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
-            UIThreadInvoker.Invoke((Action)delegate
-            { 
+            ThreadHelper.Generic.Invoke(delegate
+            {
                 CreateTestSolution();
                 UIThreadDispatcher = Dispatcher.CurrentDispatcher;
             });
@@ -56,7 +58,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [AssemblyCleanup]
         public static void AssemblyCleanup()
         {
-            UIThreadInvoker.Invoke((Action)DeleteTestSolution);
+            ThreadHelper.Generic.Invoke(DeleteTestSolution);
         }
 
         public void Dispose()
@@ -71,8 +73,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         {
             get
             {
-                var dte = (DTE2)VsIdeTestHostContext.Dte;
-                ErrorItems errorItems = dte.ToolWindows.ErrorList.ErrorItems;
+                ErrorItems errorItems = Dte.ToolWindows.ErrorList.ErrorItems;
                 for (int i = 1; i <= errorItems.Count; i++)
                 {
                     yield return errorItems.Item(i);
@@ -87,7 +88,8 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             Directory.CreateDirectory(SolutionDirectory);
 
             // Create the test solution
-            Dte = (DTE)VsIdeTestHostContext.ServiceProvider.GetService(typeof(DTE));
+            ServiceProvider = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider;
+            Dte = (DTE2)ServiceProvider.GetService(typeof(DTE));
             Solution = (Solution3)Dte.Solution;
             Solution.Create(SolutionDirectory, "TestSolution");
 
@@ -138,7 +140,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
 
         protected static void LoadT4ToolboxPackage()
         {
-            var shell = (IVsShell)VsIdeTestHostContext.ServiceProvider.GetService(typeof(SVsShell));
+            var shell = (IVsShell)ServiceProvider.GetService(typeof(SVsShell));
             IVsPackage package;
             var packageGuid = new Guid(T4ToolboxPackage.Id);
             ErrorHandler.ThrowOnFailure(shell.LoadPackage(ref packageGuid, out package));

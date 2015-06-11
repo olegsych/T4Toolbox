@@ -6,12 +6,4 @@ function CreateAssemblyKeyFile([string] $environmentVariableName, [string] $file
 	Set-Content -Path $filePath -Value $bytes -Encoding Byte
 }
 
-function Get-NugetExe() {
-    $nugetExe = [IO.Path]::Combine((Get-Location).Path, "nuget.exe")
-	Write-Host "Downloading from nuget.org to $nugetExe"
-    (new-object Net.WebClient).DownloadFile("http://www.nuget.org/nuget.exe", $nugetExe)
-	return $nugetExe
-}
-
 Export-ModuleMember -Function CreateAssemblyKeyFile
-Export-ModuleMember -Function Get-NuGetExe

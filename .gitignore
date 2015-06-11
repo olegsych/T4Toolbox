@@ -8,8 +8,9 @@
 *.exe
 *.snk
 
+[Bb]ackup*/
 [Bb]in/
 [Oo]bj/
 [Tt]est[Rr]esult*/
 [Pp]ackages/
-[Bb]ackup*/
+.vs/
