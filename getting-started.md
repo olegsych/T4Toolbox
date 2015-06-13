@@ -6,8 +6,7 @@ layout: default
 
 - [Pre-requisites](./tutorial/pre-requisites.html)
 - [Creating simple code generation script](./tutorial/creating-simple-code-generation-script.html)
-- Troubleshooting code generation errors
-- Debugging code generation files
+- [Troubleshooting code generation errors](./tutorial/troubleshooting-code-generation-errors.html)
 - Creating reusable code generation templates
 - Creating complex code generators
 - Reusing code generators on multiple projects
