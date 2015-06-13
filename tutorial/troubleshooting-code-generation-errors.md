@@ -98,10 +98,9 @@ Running transformation: Microsoft.SqlServer.Management.Smo.FailedOperationExcept
    in c:\Git\olegsych\T4Toolbox\ClassLibrary1\ClassLibrary1\delete_procedure.tt:line 10
 ```
 
-Note that the exception stack trace now includes the file name and the line number (delete_procedure.tt:line 10) pointing to 
-the exact location where the error has occurred. This will help you to find and fix simpler runtime errors. In more difficult cases, 
-when the cause of the error is not as obvious, you may need to debug the template by selecting the _Debug T4 Template_ item from the 
-context menu in Solution Explorer.
+Note that the exception stack trace now includes the file name and the line number pointing to the exact location where the error
+has occurred. This will help you to find and fix simpler runtime errors. In more difficult cases, when the cause of the error is 
+not as obvious, you may need to debug the template by selecting the _Debug T4 Template_ item from the context menu in Solution Explorer.
 
 ## Troubleshooting Obscure Compilation Errors
 
