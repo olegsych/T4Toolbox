@@ -6,8 +6,6 @@
     <ProjectGuid>{E0282961-2D83-48CC-B4D4-8257449CF8F7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>T4Toolbox.DirectiveProcessors</AssemblyName>
-    <RootNamespace>T4Toolbox.DirectiveProcessors</RootNamespace>
     <NuGetPackageImportStamp>3fedb98d</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />

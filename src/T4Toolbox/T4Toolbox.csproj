@@ -6,8 +6,6 @@
     <ProjectGuid>{682E771A-76F7-4972-BBDC-1250B67F399B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>T4Toolbox</AssemblyName>
-    <RootNamespace>T4Toolbox</RootNamespace>
     <NuGetPackageImportStamp>6ea57010</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />

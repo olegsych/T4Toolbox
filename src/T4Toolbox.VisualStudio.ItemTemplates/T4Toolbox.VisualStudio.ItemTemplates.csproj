@@ -9,8 +9,6 @@
     <ProjectGuid>{EA04B345-97BE-4A49-9C9C-3EBD4F5D2250}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>T4Toolbox.VisualStudio.ItemTemplates</RootNamespace>
-    <AssemblyName>T4Toolbox.VisualStudio.ItemTemplates</AssemblyName>
     <!-- Suppress C# warning about missing source files -->
     <NoWarn>2008</NoWarn>
     <!-- Disable FxCop. This project does not generate an assembly. -->

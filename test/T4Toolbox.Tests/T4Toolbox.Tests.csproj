@@ -6,8 +6,6 @@
     <ProjectGuid>{2A05BF5E-B2B2-4222-91A3-BB86AE8A94CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>T4Toolbox.Tests</RootNamespace>
-    <AssemblyName>T4Toolbox.Tests</AssemblyName>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <NuGetPackageImportStamp>d8686f10</NuGetPackageImportStamp>
   </PropertyGroup>
