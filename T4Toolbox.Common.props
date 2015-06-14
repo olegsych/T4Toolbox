@@ -6,6 +6,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
