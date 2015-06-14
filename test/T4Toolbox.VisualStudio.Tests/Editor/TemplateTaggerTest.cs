@@ -10,7 +10,7 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
+    using T4Toolbox.TemplateAnalysis;
     using T4Toolbox.VisualStudio.Tests.Fakes;
 
     [TestClass]

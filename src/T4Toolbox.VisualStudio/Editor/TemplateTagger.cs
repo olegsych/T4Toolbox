@@ -7,7 +7,7 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Windows;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
+    using T4Toolbox.TemplateAnalysis;
 
     internal abstract class TemplateTagger<T> : SimpleTagger<T> where T : ITag
     {

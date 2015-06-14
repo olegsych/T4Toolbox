@@ -9,8 +9,8 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Linq;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
-    using Attribute = T4Toolbox.VisualStudio.TemplateAnalysis.Attribute;
+    using T4Toolbox.TemplateAnalysis;
+    using Attribute = T4Toolbox.TemplateAnalysis.Attribute;
 
     [TestClass]
     public class TemplateCompletionBuilderTest

@@ -28,7 +28,6 @@
     <Compile Include="GeneratorTest.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="OutputItemTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateTest.cs" />
     <Compile Include="TransformationContextTest.cs" />
   </ItemGroup>

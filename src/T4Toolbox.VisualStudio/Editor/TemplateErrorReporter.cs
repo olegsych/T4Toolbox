@@ -12,7 +12,7 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.TextManager.Interop;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
+    using T4Toolbox.TemplateAnalysis;
 
     /// <summary>
     /// Displays template errors in the Error List window.

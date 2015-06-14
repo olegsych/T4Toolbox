@@ -9,7 +9,6 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Diagnostics;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Text;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
 
     internal sealed class TemplateQuickInfoSource : IQuickInfoSource
     {

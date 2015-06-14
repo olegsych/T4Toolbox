@@ -7,10 +7,11 @@ namespace T4Toolbox.VisualStudio.Editor
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Microsoft.VisualStudio.Language.Intellisense;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
-    using Attribute = T4Toolbox.VisualStudio.TemplateAnalysis.Attribute;
+    using T4Toolbox.TemplateAnalysis;
+    using Attribute = T4Toolbox.TemplateAnalysis.Attribute;
 
     /// <summary>
     /// Worker for calculating a set of <see cref="Completion"/> applicable to a syntax <see cref="Node"/>
@@ -45,7 +46,8 @@ namespace T4Toolbox.VisualStudio.Editor
             this.currentAttribute = node;
             base.VisitAttribute(node);
         }
-        
+
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", Justification = "node is validated by the base method")]
         protected internal override void VisitAttributeName(AttributeName node)
         {
             base.VisitAttributeName(node);
@@ -72,6 +74,7 @@ namespace T4Toolbox.VisualStudio.Editor
             }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", Justification = "node is validated by the base method")]
         protected internal override void VisitAttributeValue(AttributeValue node)
         {
             base.VisitAttributeValue(node);
@@ -96,6 +99,7 @@ namespace T4Toolbox.VisualStudio.Editor
             base.VisitDirective(node);
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", Justification = "node is validated by the base method")]
         protected internal override void VisitDirectiveName(DirectiveName node)
         {
             base.VisitDirectiveName(node);

@@ -11,7 +11,7 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Classification;
     using Microsoft.VisualStudio.Text.Tagging;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
+    using T4Toolbox.TemplateAnalysis;
 
     internal sealed class TemplateClassificationTagger : SimpleTagger<ClassificationTag>
     {

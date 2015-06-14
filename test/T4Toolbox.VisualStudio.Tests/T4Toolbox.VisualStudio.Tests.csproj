@@ -91,50 +91,17 @@
     <Compile Include="T4ToolboxOptionsTest.cs" />
     <Compile Include="T4ToolboxPackageTest.cs" />
     <Compile Include="ItemMetadataWizardTest.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveDescriptorTest.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\EndOfFileTest.cs" />
-    <Compile Include="TemplateAnalysis\ImportDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\SyntaxNodeTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateAnalyzerTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateScannerTest.cs" />
-    <Compile Include="TemplateAnalysis\TerminalNodeTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateParserTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateErrorTest.cs" />
+    <Compile Include="Editor\TemplateAnalyzerTest.cs" />
     <Compile Include="Editor\TemplateClassificationTaggerTest.cs" />
     <Compile Include="Editor\TemplateErrorTaggerTest.cs" />
-    <Compile Include="TemplateAnalysis\NonterminalNodeTest.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveNameTest.cs" />
-    <Compile Include="TemplateAnalysis\CaptureNodeTest.cs" />
-    <Compile Include="TemplateAnalysis\AttributeNameTest.cs" />
-    <Compile Include="TemplateAnalysis\AttributeValueTest.cs" />
-    <Compile Include="TemplateAnalysis\SyntaxTokenTest.cs" />
-    <Compile Include="TemplateAnalysis\DoubleQuoteTest.cs" />
-    <Compile Include="TemplateAnalysis\EqualsTest.cs" />
-    <Compile Include="TemplateAnalysis\AttributeTest.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveBlockStartTest.cs" />
-    <Compile Include="TemplateAnalysis\BlockEndTest.cs" />
-    <Compile Include="TemplateAnalysis\StatementBlockStartTest.cs" />
-    <Compile Include="TemplateAnalysis\ExpressionBlockStartTest.cs" />
-    <Compile Include="TemplateAnalysis\ClassBlockStartTest.cs" />
-    <Compile Include="TemplateAnalysis\CodeBlockTest.cs" />
-    <Compile Include="TemplateAnalysis\CodeTest.cs" />
-    <Compile Include="TemplateAnalysis\IncludeDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateTest.cs" />
-    <Compile Include="TemplateAnalysis\AssemblyDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\ParameterDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\OutputDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\CustomDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\PositionTest.cs" />
-    <Compile Include="TemplateAnalysis\SyntaxNodeVisitorTest.cs" />
-    <Compile Include="TemplateAnalysis\AttributeDescriptorTest.cs" />
-    <Compile Include="TemplateAnalysis\ValueDescriptorTest.cs" />
-    <Compile Include="TemplateAnalysis\KnownValuesAttributeTest.cs" />
     <Compile Include="TransformationContextProviderTest.cs" />
     <Compile Include="BrowseObjectExtenderTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
+      <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
+      <Name>T4Toolbox.TemplateAnalysis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj">
       <Project>{1E1E9161-CBE4-4538-928C-539AA5E70153}</Project>
       <Name>T4Toolbox.VisualStudio</Name>

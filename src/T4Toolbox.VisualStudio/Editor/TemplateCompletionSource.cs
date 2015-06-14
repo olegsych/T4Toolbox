@@ -10,7 +10,7 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Linq;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Text;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
+    using T4Toolbox.TemplateAnalysis;
 
     internal sealed class TemplateCompletionSource : ICompletionSource
     {

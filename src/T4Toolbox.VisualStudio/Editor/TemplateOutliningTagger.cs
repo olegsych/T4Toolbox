@@ -10,7 +10,7 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Text;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
-    using T4Toolbox.VisualStudio.TemplateAnalysis;
+    using T4Toolbox.TemplateAnalysis;
 
     internal sealed class TemplateOutliningTagger : TemplateTagger<OutliningRegionTag>
     {

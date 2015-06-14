@@ -11,9 +11,6 @@
     <CreateVsixContainer>false</CreateVsixContainer>
     <DeployExtension>false</DeployExtension>
     <UseCodebase>true</UseCodebase>
-    <YaccLexTools>$(SolutionDir)packages\YaccLexTools.0.2.2\tools\</YaccLexTools>
-    <GplexTool>"$(YaccLexTools)gplex.exe"</GplexTool>
-    <GppgTool>"$(YaccLexTools)gppg.exe"</GppgTool>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
@@ -69,6 +66,10 @@
       <Project>{E0282961-2D83-48CC-B4D4-8257449CF8F7}</Project>
       <Name>T4Toolbox.DirectiveProcessors</Name>
     </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
+      <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
+      <Name>T4Toolbox.TemplateAnalysis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">
       <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
       <Name>T4Toolbox</Name>
@@ -100,62 +101,17 @@
     <Compile Include="Editor\TemplateContentType.cs" />
     <Compile Include="Editor\TemplateErrorTagger.cs" />
     <Compile Include="Editor\TemplateErrorTaggerProvider.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="TemplateAnalysis\AssemblyDirective.cs" />
-    <Compile Include="TemplateAnalysis\Attribute.cs" />
-    <Compile Include="TemplateAnalysis\AttributeDescriptor.cs" />
-    <Compile Include="TemplateAnalysis\AttributeName.cs" />
-    <Compile Include="TemplateAnalysis\AttributeValue.cs" />
-    <Compile Include="TemplateAnalysis\BlockEnd.cs" />
-    <Compile Include="TemplateAnalysis\CaptureNode.cs" />
-    <Compile Include="TemplateAnalysis\ClassBlockStart.cs" />
-    <Compile Include="TemplateAnalysis\Code.cs" />
-    <Compile Include="TemplateAnalysis\CodeBlock.cs" />
-    <Compile Include="TemplateAnalysis\CodeBlockStart.cs" />
-    <Compile Include="TemplateAnalysis\CustomDirective.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveBlockStart.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveDescriptor.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveName.cs" />
-    <Compile Include="TemplateAnalysis\Directive.cs" />
-    <Compile Include="TemplateAnalysis\DoubleQuote.cs" />
-    <Compile Include="TemplateAnalysis\EndOfFile.cs" />
-    <Compile Include="TemplateAnalysis\Equals.cs" />
-    <Compile Include="TemplateAnalysis\ExpressionBlockStart.cs" />
-    <Compile Include="TemplateAnalysis\HashCode.cs" />
-    <Compile Include="TemplateAnalysis\ImportDirective.cs" />
-    <Compile Include="TemplateAnalysis\IncludeDirective.cs" />
-    <Compile Include="TemplateAnalysis\KnownValuesAttribute.cs" />
-    <Compile Include="TemplateAnalysis\Position.cs" />
-    <Compile Include="TemplateAnalysis\OutputDirective.cs" />
-    <Compile Include="TemplateAnalysis\ParameterDirective.cs" />
-    <Compile Include="TemplateAnalysis\StatementBlockStart.cs" />
-    <Compile Include="TemplateAnalysis\SyntaxNodeVisitor.cs" />
-    <Compile Include="TemplateAnalysis\SyntaxToken.cs" />
-    <Compile Include="TemplateAnalysis\NonterminalNode.cs" />
-    <Compile Include="TemplateAnalysis\ShiftReduceParserCode.cs">
-      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="TemplateAnalysis\SyntaxNode.cs" />
-    <Compile Include="TemplateAnalysis\Template.cs" />
-    <Compile Include="TemplateAnalysis\TemplateAnalysis.cs" />
-    <Compile Include="TemplateAnalysis\TemplateAnalyzer.cs" />
-    <Compile Include="TemplateAnalysis\TemplateDirective.cs" />
-    <Compile Include="TemplateAnalysis\TemplateLanguage.cs" />
-    <Compile Include="TemplateAnalysis\TemplateParser.partial.cs" />
+    <Compile Include="Editor\TemplateAnalysis.cs" />
+    <Compile Include="Editor\TemplateAnalyzer.cs" />
     <Compile Include="T4ToolboxOptions.cs" />
     <Compile Include="T4ToolboxOptionsPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TemplateAnalysis\TemplateVisibility.cs" />
-    <Compile Include="TemplateAnalysis\ValueDescriptor.cs" />
     <Compile Include="TemplateLocator.cs" />
     <Compile Include="CustomToolTemplateEditor.cs" />
     <Compile Include="BrowseObjectExtender.cs" />
     <Compile Include="BrowseObjectExtenderProvider.cs" />
     <Compile Include="ScriptFileGenerator.cs" />
-    <Compile Include="TemplateAnalysis\TemplateScanner.partial.cs" />
-    <Compile Include="TemplateAnalysis\TemplateError.cs" />
-    <Compile Include="TemplateAnalysis\TerminalNode.cs" />
     <Compile Include="TransformationContextProvider.cs" />
     <Compile Include="OutputFileManager.cs" />
     <Compile Include="EnvDteExtensions.cs" />
@@ -176,8 +132,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <Yacc Include="TemplateAnalysis\TemplateParser.y" />
-    <Lex Include="TemplateAnalysis\TemplateScanner.lex" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -190,23 +144,5 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets'))" />
-  </Target>
-  <Target Name="GenerateScanners" Inputs="@(Lex)" Outputs="$(IntermediateOutputPath)%(Filename).g.lex.cs" BeforeTargets="CoreCompile">
-    <Exec Command="echo #pragma warning disable 1591 &gt; &quot;$(IntermediateOutputPath)%(Lex.Filename).g.lex.cs&quot;" WorkingDirectory="$(ProjectDir)" />
-    <Exec Command="$(GplexTool) &quot;/out:-&quot; &quot;%(Lex.FullPath)&quot; &gt;&gt; &quot;$(IntermediateOutputPath)%(Lex.Filename).g.lex.cs&quot;" WorkingDirectory="$(ProjectDir)" />
-    <Exec Command="echo #pragma warning restore 1591 &gt;&gt; &quot;$(IntermediateOutputPath)%(Lex.Filename).g.lex.cs&quot;" WorkingDirectory="$(ProjectDir)" />
-    <ItemGroup>
-      <Compile Include="$(IntermediateOutputPath)%(Lex.Filename).g.lex.cs">
-        <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-      </Compile>
-    </ItemGroup>
-  </Target>
-  <Target Name="GenerateParsers" Inputs="@(Yacc)" Outputs="$(IntermediateOutputPath)%(Filename).g.yacc.cs" BeforeTargets="CoreCompile">
-    <Exec Command="$(GppgTool) /gplex &quot;%(Yacc.FullPath)&quot; &gt; &quot;$(IntermediateOutputPath)%(Yacc.Filename).g.yacc.cs&quot;" WorkingDirectory="$(ProjectDir)" />
-    <ItemGroup>
-      <Compile Include="$(IntermediateOutputPath)%(Yacc.Filename).g.yacc.cs">
-        <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-      </Compile>
-    </ItemGroup>
   </Target>
 </Project>
