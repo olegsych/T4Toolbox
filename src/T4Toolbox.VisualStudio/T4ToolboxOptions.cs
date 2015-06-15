@@ -12,11 +12,12 @@ namespace T4Toolbox.VisualStudio
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.Win32;
+    using T4Toolbox.VisualStudio.Editor;
 
     /// <summary>
     /// Represents T4 Toolbox settings.
     /// </summary>
-    internal class T4ToolboxOptions : IProfileManager, INotifyPropertyChanged
+    internal class T4ToolboxOptions : IProfileManager, INotifyPropertyChanged, ITemplateEditorOptions
     {
         internal const string Category = T4Toolbox.AssemblyInfo.Product;
         internal const string Page = "General";
@@ -46,6 +47,7 @@ namespace T4Toolbox.VisualStudio
         /// <remarks>
         /// This object is used to subscribe to property change notifications by the tagger.
         /// </remarks>
+        // TODO: Export and test
         public static T4ToolboxOptions Instance
         {
             get

@@ -50,21 +50,6 @@
     <Compile Include="CustomToolParametersTest.cs" />
     <Compile Include="CustomToolParameterTest.cs" />
     <Compile Include="CustomToolTemplateEditorTest.cs" />
-    <Compile Include="Editor\TemplateClassificationTaggerProviderTest.cs" />
-    <Compile Include="Editor\TemplateCompletionSourceProviderTest.cs" />
-    <Compile Include="Editor\TemplateCompletionSourceTest.cs" />
-    <Compile Include="Editor\TemplateErrorTaggerProviderTest.cs" />
-    <Compile Include="Editor\TemplateOutliningTaggerProviderTest.cs" />
-    <Compile Include="Editor\TemplateOutliningTaggerTest.cs" />
-    <Compile Include="Editor\TemplateQuickInfoSourceProviderTest.cs" />
-    <Compile Include="Editor\TemplateQuickInfoSourceTest.cs" />
-    <Compile Include="Editor\TemplateTaggerTest.cs" />
-    <Compile Include="Editor\TemplateCompletionHandlerProviderTest.cs" />
-    <Compile Include="Editor\TemplateCompletionHandlerTest.cs" />
-    <Compile Include="Editor\TemplateCompletionBuilderTest.cs" />
-    <Compile Include="Fakes\FakeClassificationType.cs" />
-    <Compile Include="Fakes\FakeClassificationTypeRegistryService.cs" />
-    <Compile Include="Fakes\FakeCompletionSession.cs" />
     <Compile Include="Fakes\FakeDte.cs" />
     <Compile Include="Fakes\FakeObjectExtenders.cs" />
     <Compile Include="Fakes\FakeProject.cs" />
@@ -73,13 +58,9 @@
     <Compile Include="Fakes\FakeProjects.cs" />
     <Compile Include="Fakes\FakeProperties.cs" />
     <Compile Include="Fakes\FakeProperty.cs" />
-    <Compile Include="Fakes\FakeQuickInfoSession.cs" />
     <Compile Include="Fakes\FakeSolution.cs" />
     <Compile Include="Fakes\FakeTemplateLocator.cs" />
-    <Compile Include="Fakes\FakeTextBuffer.cs" />
-    <Compile Include="Fakes\FakeTextSnapshot.cs" />
     <Compile Include="Fakes\FakeTextTemplating.cs" />
-    <Compile Include="Fakes\FakeTrackingSpan.cs" />
     <Compile Include="Fakes\FakeTypeDescriptorContext.cs" />
     <Compile Include="Fakes\FakeVsActivityLog.cs" />
     <Compile Include="Fakes\StubIPersistDocData.cs" />
@@ -91,9 +72,6 @@
     <Compile Include="T4ToolboxOptionsTest.cs" />
     <Compile Include="T4ToolboxPackageTest.cs" />
     <Compile Include="ItemMetadataWizardTest.cs" />
-    <Compile Include="Editor\TemplateAnalyzerTest.cs" />
-    <Compile Include="Editor\TemplateClassificationTaggerTest.cs" />
-    <Compile Include="Editor\TemplateErrorTaggerTest.cs" />
     <Compile Include="TransformationContextProviderTest.cs" />
     <Compile Include="BrowseObjectExtenderTest.cs" />
   </ItemGroup>

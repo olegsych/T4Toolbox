@@ -19,12 +19,12 @@
     <Reference Include="envdte90">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.ComponentModelHost, Version=14.0.0.0" />
-    <Reference Include="Microsoft.VisualStudio.CoreUtility" />
-    <Reference Include="Microsoft.VisualStudio.Text.Data" />
-    <Reference Include="Microsoft.VisualStudio.Text.Logic" />
-    <Reference Include="Microsoft.VisualStudio.Text.UI" />
-    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf" />
+    <Reference Include="Microsoft.VisualStudio.ComponentModelHost, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.Data, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.Logic, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.UI, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -72,6 +72,10 @@
     <ProjectReference Include="..\..\src\T4Toolbox.DirectiveProcessors\T4Toolbox.DirectiveProcessors.csproj">
       <Project>{E0282961-2D83-48CC-B4D4-8257449CF8F7}</Project>
       <Name>T4Toolbox.DirectiveProcessors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
+      <Project>{fde953d3-ad27-4398-8ef4-293c0cebdc3e}</Project>
+      <Name>T4Toolbox.VisualStudio.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj">
       <Project>{1E1E9161-CBE4-4538-928C-539AA5E70153}</Project>

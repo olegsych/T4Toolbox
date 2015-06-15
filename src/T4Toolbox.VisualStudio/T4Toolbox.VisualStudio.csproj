@@ -70,6 +70,10 @@
       <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
       <Name>T4Toolbox.TemplateAnalysis</Name>
     </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
+      <Project>{fde953d3-ad27-4398-8ef4-293c0cebdc3e}</Project>
+      <Name>T4Toolbox.VisualStudio.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">
       <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
       <Name>T4Toolbox</Name>
@@ -81,28 +85,6 @@
     </Compile>
     <Compile Include="CustomToolParameter.cs" />
     <Compile Include="CustomToolParameters.cs" />
-    <Compile Include="Editor\ClassificationFormatDefinitions.cs" />
-    <Compile Include="Editor\ClassificationTypeDefinitions.cs" />
-    <Compile Include="Editor\ClassificationTypeName.cs" />
-    <Compile Include="Editor\TemplateCompletionBuilder.cs" />
-    <Compile Include="Editor\TemplateCompletionHandler.cs" />
-    <Compile Include="Editor\TemplateCompletionHandlerProvider.cs" />
-    <Compile Include="Editor\TemplateCompletionSource.cs" />
-    <Compile Include="Editor\TemplateCompletionSourceProvider.cs" />
-    <Compile Include="Editor\TemplateErrorReporter.cs" />
-    <Compile Include="Editor\TemplateErrorReporterProvider.cs" />
-    <Compile Include="Editor\TemplateOutliningTagger.cs" />
-    <Compile Include="Editor\TemplateOutliningTaggerProvider.cs" />
-    <Compile Include="Editor\TemplateQuickInfoSource.cs" />
-    <Compile Include="Editor\TemplateQuickInfoSourceProvider.cs" />
-    <Compile Include="Editor\TemplateTagger.cs" />
-    <Compile Include="Editor\TemplateClassificationTagger.cs" />
-    <Compile Include="Editor\TemplateClassificationTaggerProvider.cs" />
-    <Compile Include="Editor\TemplateContentType.cs" />
-    <Compile Include="Editor\TemplateErrorTagger.cs" />
-    <Compile Include="Editor\TemplateErrorTaggerProvider.cs" />
-    <Compile Include="Editor\TemplateAnalysis.cs" />
-    <Compile Include="Editor\TemplateAnalyzer.cs" />
     <Compile Include="T4ToolboxOptions.cs" />
     <Compile Include="T4ToolboxOptionsPage.cs">
       <SubType>Component</SubType>

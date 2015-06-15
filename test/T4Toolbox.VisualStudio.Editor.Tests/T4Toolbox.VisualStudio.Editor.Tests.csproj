@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\T4Toolbox.Tests.props" />
+  <PropertyGroup>
+    <ProjectGuid>{E8BB5F81-8B2B-4DD4-BAAF-A22C26183F41}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Editor, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Language.Intellisense, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+    <Reference Include="Microsoft.VisualStudio.Text.Data, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.Logic, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.UI, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="NSubstitute, Version=1.8.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NSubstitute.1.8.2.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
+      <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
+      <Name>T4Toolbox.TemplateAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
+      <Project>{fde953d3-ad27-4398-8ef4-293c0cebdc3e}</Project>
+      <Name>T4Toolbox.VisualStudio.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\T4Toolbox\T4Toolbox.csproj">
+      <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
+      <Name>T4Toolbox</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(SolutionDir)\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="FakeClassificationType.cs" />
+    <Compile Include="FakeClassificationTypeRegistryService.cs" />
+    <Compile Include="FakeCompletionSession.cs" />
+    <Compile Include="FakeQuickInfoSession.cs" />
+    <Compile Include="FakeTextBuffer.cs" />
+    <Compile Include="FakeTextSnapshot.cs" />
+    <Compile Include="FakeTrackingSpan.cs" />
+    <Compile Include="TemplateAnalyzerTest.cs" />
+    <Compile Include="TemplateClassificationTaggerProviderTest.cs" />
+    <Compile Include="TemplateClassificationTaggerTest.cs" />
+    <Compile Include="TemplateCompletionBuilderTest.cs" />
+    <Compile Include="TemplateCompletionHandlerProviderTest.cs" />
+    <Compile Include="TemplateCompletionHandlerTest.cs" />
+    <Compile Include="TemplateCompletionSourceProviderTest.cs" />
+    <Compile Include="TemplateCompletionSourceTest.cs" />
+    <Compile Include="TemplateErrorTaggerProviderTest.cs" />
+    <Compile Include="TemplateErrorTaggerTest.cs" />
+    <Compile Include="TemplateOutliningTaggerProviderTest.cs" />
+    <Compile Include="TemplateOutliningTaggerTest.cs" />
+    <Compile Include="TemplateQuickInfoSourceProviderTest.cs" />
+    <Compile Include="TemplateQuickInfoSourceTest.cs" />
+    <Compile Include="TemplateTaggerTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets" Condition="Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.MSBuild.4.7.49.1\build\StyleCop.MSBuild.Targets'))" />
+  </Target>
+</Project>

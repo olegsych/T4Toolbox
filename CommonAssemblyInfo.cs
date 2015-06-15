@@ -34,6 +34,8 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("T4Toolbox.TemplateAnalysis.Tests" + T4Toolbox.AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("T4Toolbox.Tests" + T4Toolbox.AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("T4Toolbox.VisualStudio" + T4Toolbox.AssemblyInfo.PublicKey)]
+[assembly: InternalsVisibleTo("T4Toolbox.VisualStudio.Editor" + T4Toolbox.AssemblyInfo.PublicKey)]
+[assembly: InternalsVisibleTo("T4Toolbox.VisualStudio.Editor.Tests" + T4Toolbox.AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("T4Toolbox.VisualStudio.IntegrationTests" + T4Toolbox.AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("T4Toolbox.VisualStudio.Tests" + T4Toolbox.AssemblyInfo.PublicKey)]
 
