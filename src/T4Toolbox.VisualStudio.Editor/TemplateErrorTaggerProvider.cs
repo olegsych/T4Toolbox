@@ -18,7 +18,11 @@ namespace T4Toolbox.VisualStudio.Editor
         [ImportingConstructor]
         public TemplateErrorTaggerProvider(ITemplateEditorOptions options)
         {
-            // TODO: Throw ArgumentNullException
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
             this.options = options;
         }
 
@@ -26,7 +30,7 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (this.options.ErrorUnderliningEnabled)
