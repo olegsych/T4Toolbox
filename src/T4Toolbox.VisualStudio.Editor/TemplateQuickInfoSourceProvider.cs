@@ -19,7 +19,11 @@ namespace T4Toolbox.VisualStudio.Editor
         [ImportingConstructor]
         public TemplateQuickInfoSourceProvider(ITemplateEditorOptions options)
         {
-            // TODO: Throw ARgumentNullException
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
             this.options = options;
         }
 
@@ -27,7 +31,7 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             if (this.options.QuickInfoTooltipsEnabled)

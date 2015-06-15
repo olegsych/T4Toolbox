@@ -4,9 +4,9 @@
 
 namespace T4Toolbox.VisualStudio.Editor
 {
+    using System;
     using System.ComponentModel.Composition;
     using System.Linq;
-    using System.Reflection;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Utilities;
     using NSubstitute;
@@ -56,6 +56,21 @@ namespace T4Toolbox.VisualStudio.Editor
         public void TemplateQuickInfoSourceProviderSpecifiesOrderAttributeRequiredByVisualStudio()
         {
             Assert.Equal(1, typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<OrderAttribute>().Count());
+        }
+
+        [Fact]
+        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => new TemplateQuickInfoSourceProvider(null));
+            Assert.Equal("options", e.ParamName);
+        }
+
+        [Fact]
+        public void CreateTaggerThrowsArgumentNullExceptionWhenBufferIsNullToFailFast()
+        {
+            var provider = new TemplateQuickInfoSourceProvider(Substitute.For<ITemplateEditorOptions>());
+            var e = Assert.Throws<ArgumentNullException>(() => provider.TryCreateQuickInfoSource(null));
+            Assert.Equal("buffer", e.ParamName);
         }
 
         [Fact]
