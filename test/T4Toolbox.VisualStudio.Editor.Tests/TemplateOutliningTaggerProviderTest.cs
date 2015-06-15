@@ -4,8 +4,8 @@
 
 namespace T4Toolbox.VisualStudio.Editor
 {
+    using System;
     using System.ComponentModel.Composition;
-    using System.Reflection;
     using Microsoft.VisualStudio.Text.Tagging;
     using Microsoft.VisualStudio.Utilities;
     using NSubstitute;
@@ -50,6 +50,21 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateOutliningTaggerProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
             Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
+        }
+
+        [Fact]
+        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => new TemplateOutliningTaggerProvider(null));
+            Assert.Equal("options", e.ParamName);
+        }
+
+        [Fact]
+        public void CreateTaggerThrowsArgumentNullExceptionWhenBufferIsNullToFailFast()
+        {
+            var provider = new TemplateOutliningTaggerProvider(Substitute.For<ITemplateEditorOptions>());
+            var e = Assert.Throws<ArgumentNullException>(() => provider.CreateTagger<OutliningRegionTag>(null));
+            Assert.Equal("buffer", e.ParamName);
         }
 
         [Fact]
