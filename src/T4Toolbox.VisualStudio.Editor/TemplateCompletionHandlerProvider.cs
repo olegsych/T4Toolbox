@@ -4,6 +4,7 @@
 
 namespace T4Toolbox.VisualStudio.Editor
 {
+    using System;
     using System.ComponentModel.Composition;
     using System.Diagnostics;
     using Microsoft.VisualStudio;
@@ -20,23 +21,46 @@ namespace T4Toolbox.VisualStudio.Editor
     [Export(typeof(IVsTextViewCreationListener)), ContentType(TemplateContentType.Name), TextViewRole(PredefinedTextViewRoles.Editable)]
     internal sealed class TemplateCompletionHandlerProvider : IVsTextViewCreationListener
     {
-        // TODO: make private fields initialized by constructor
-        [Import]internal IVsEditorAdaptersFactoryService AdapterFactory;
-        [Import]internal SVsServiceProvider ServiceProvider;
-        [Import]internal ICompletionBroker CompletionBroker;
-
         private readonly ITemplateEditorOptions options;
+        private readonly IVsEditorAdaptersFactoryService editorAdapterFactory;
+        private readonly IServiceProvider serviceProvider;
+        private readonly ICompletionBroker completionBroker;
 
         [ImportingConstructor]
-        public TemplateCompletionHandlerProvider(ITemplateEditorOptions options)
+        public TemplateCompletionHandlerProvider(
+            ITemplateEditorOptions options, 
+            IVsEditorAdaptersFactoryService editorAdapterFactory,
+            SVsServiceProvider serviceProvider,
+            ICompletionBroker completionBroker)
         {
-            // TODO: throw ArgumentNullException
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            if (editorAdapterFactory == null)
+            {
+                throw new ArgumentNullException(nameof(editorAdapterFactory));
+            }
+
+            if (serviceProvider == null)
+            {
+                throw new ArgumentNullException(nameof(serviceProvider));
+            }
+
+            if (completionBroker == null)
+            {
+                throw new ArgumentNullException(nameof(completionBroker));
+            }
+
             this.options = options;
+            this.editorAdapterFactory = editorAdapterFactory;
+            this.serviceProvider = serviceProvider;
+            this.completionBroker = completionBroker;
         }
 
         public void VsTextViewCreated(IVsTextView viewAdapter)
         {
-            Debug.Assert(this.AdapterFactory != null, "AdapterFactory");
             Debug.Assert(viewAdapter != null, "viewAdapter");
 
             if (!this.options.CompletionListsEnabled)
@@ -44,7 +68,7 @@ namespace T4Toolbox.VisualStudio.Editor
                 return;
             }
 
-            IWpfTextView textView = this.AdapterFactory.GetWpfTextView(viewAdapter);
+            IWpfTextView textView = this.editorAdapterFactory.GetWpfTextView(viewAdapter);
             if (textView == null)
             {
                 return;
@@ -57,8 +81,8 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             var handler = new TemplateCompletionHandler();
             handler.TextView = textView;
-            handler.ServiceProvider = this.ServiceProvider;
-            handler.CompletionBroker = this.CompletionBroker;
+            handler.ServiceProvider = this.serviceProvider;
+            handler.CompletionBroker = this.completionBroker;
             ErrorHandler.ThrowOnFailure(viewAdapter.AddCommandFilter(handler, out handler.NextHandler));
             return handler;
         }

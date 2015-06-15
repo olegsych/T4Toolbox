@@ -4,12 +4,14 @@
 
 namespace T4Toolbox.VisualStudio.Editor
 {
+    using System;
     using System.ComponentModel.Composition;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Editor;
+    using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.OLE.Interop;
+    using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Text.Editor;
     using Microsoft.VisualStudio.TextManager.Interop;
     using Microsoft.VisualStudio.Utilities;
@@ -51,6 +53,34 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
+        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => new TemplateCompletionHandlerProvider(null, Substitute.For<IVsEditorAdaptersFactoryService>(), Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>()));
+            Assert.Equal("options", e.ParamName);
+        }
+
+        [Fact]
+        public void ConstructorThrowsArgumentNullExceptionWhenEditorAdapterFactoryIsNullToFailFast()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => new TemplateCompletionHandlerProvider(Substitute.For<ITemplateEditorOptions>(), null, Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>()));
+            Assert.Equal("editorAdapterFactory", e.ParamName);
+        }
+
+        [Fact]
+        public void ConstructorThrowsArgumentNullExceptionWhenServiceProviderIsNullToFailFast()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => new TemplateCompletionHandlerProvider(Substitute.For<ITemplateEditorOptions>(), Substitute.For<IVsEditorAdaptersFactoryService>(), null, Substitute.For<ICompletionBroker>()));
+            Assert.Equal("serviceProvider", e.ParamName);
+        }
+
+        [Fact]
+        public void ConstructorThrowsArgumentNullExceptionWhenCompletionBrokerIsNullToFailFast()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => new TemplateCompletionHandlerProvider(Substitute.For<ITemplateEditorOptions>(), Substitute.For<IVsEditorAdaptersFactoryService>(), Substitute.For<SVsServiceProvider>(), null));
+            Assert.Equal("completionBroker", e.ParamName);
+        }
+
+        [Fact]
         public void TemplateCompletionHandlerSpecifiesEditableTextViewRoleRequiredByVisualStudioForTextViewCreationListeners()
         {
             TextViewRoleAttribute attribute = typeof(TemplateCompletionHandlerProvider).GetCustomAttributes(false).OfType<TextViewRoleAttribute>().Single();
@@ -72,7 +102,7 @@ namespace T4Toolbox.VisualStudio.Editor
 
             ITemplateEditorOptions options = OptionsWithCompletionListsEnabled(true);
 
-            var provider = new TemplateCompletionHandlerProvider(options) { AdapterFactory = adapterFactory };
+            var provider = new TemplateCompletionHandlerProvider(options, adapterFactory, Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>());
 
             provider.VsTextViewCreated(viewAdapter);
 
@@ -95,7 +125,7 @@ namespace T4Toolbox.VisualStudio.Editor
 
             ITemplateEditorOptions options = OptionsWithCompletionListsEnabled(true);
 
-            var provider = new TemplateCompletionHandlerProvider(options) { AdapterFactory = adapterFactory };
+            var provider = new TemplateCompletionHandlerProvider(options, adapterFactory, Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>());
             provider.VsTextViewCreated(viewAdapter);
 
             IOleCommandTarget nextTarget;
@@ -118,7 +148,7 @@ namespace T4Toolbox.VisualStudio.Editor
 
             ITemplateEditorOptions options = OptionsWithCompletionListsEnabled(true);
 
-            var provider = new TemplateCompletionHandlerProvider(options) { AdapterFactory = adapterFactory };
+            var provider = new TemplateCompletionHandlerProvider(options, adapterFactory, Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>());
             provider.VsTextViewCreated(viewAdapter);
 
             var handler = (TemplateCompletionHandler)viewProperties.GetProperty(typeof(TemplateCompletionHandler));
@@ -130,7 +160,7 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             ITemplateEditorOptions options = OptionsWithCompletionListsEnabled(false);
             var adapterFactory = Substitute.For<IVsEditorAdaptersFactoryService>();
-            var provider = new TemplateCompletionHandlerProvider(options) { AdapterFactory = adapterFactory };
+            var provider = new TemplateCompletionHandlerProvider(options, adapterFactory, Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>());
 
             var viewAdapter = Substitute.For<IVsTextView>();
             provider.VsTextViewCreated(viewAdapter);
@@ -145,7 +175,7 @@ namespace T4Toolbox.VisualStudio.Editor
             var adapterFactory = Substitute.For<IVsEditorAdaptersFactoryService>();
             adapterFactory.GetWpfTextView(Arg.Any<IVsTextView>()).Returns((IWpfTextView)null);
 
-            var provider = new TemplateCompletionHandlerProvider(options) { AdapterFactory = adapterFactory };
+            var provider = new TemplateCompletionHandlerProvider(options, adapterFactory, Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>());
 
             provider.VsTextViewCreated(Substitute.For<IVsTextView>());
 
