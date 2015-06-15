@@ -5,57 +5,56 @@
 namespace T4Toolbox.VisualStudio.Editor
 {
     using System.ComponentModel.Composition;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text.Tagging;
     using Microsoft.VisualStudio.Utilities;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
     public class TemplateClassificationTaggerProviderTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateClassificationTaggerProviderIsInternalAndNotMeantForPublicConsumption()
         {
-            Assert.IsFalse(typeof(TemplateClassificationTaggerProvider).IsPublic);
+            Assert.False(typeof(TemplateClassificationTaggerProvider).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateClassificationTaggerProviderIsSealedAndNotMeantToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateClassificationTaggerProvider).IsSealed);
+            Assert.True(typeof(TemplateClassificationTaggerProvider).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateClassificationTaggerProviderExportsITaggerProvider()
         {
             var export = (ExportAttribute)typeof(TemplateClassificationTaggerProvider).GetCustomAttributes(typeof(ExportAttribute), false)[0];
-            Assert.AreEqual(typeof(ITaggerProvider), export.ContractType);
+            Assert.Equal(typeof(ITaggerProvider), export.ContractType);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateClassificationTaggerProviderSpecifiesClassificationTagType()
         {
             var tagType = (TagTypeAttribute)typeof(TemplateClassificationTaggerProvider).GetCustomAttributes(typeof(TagTypeAttribute), false)[0];
-            Assert.AreEqual(typeof(ClassificationTag), tagType.TagTypes);
+            Assert.Equal(typeof(ClassificationTag), tagType.TagTypes);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateClassificationTaggerProviderAppliesOnlyToTextTemplateContentType()
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateClassificationTaggerProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
-            Assert.AreEqual(TemplateContentType.Name, contentType.ContentTypes);
+            Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateTaggerReturnsTemplateClassificationTagger()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(true);
             var target = new TemplateClassificationTaggerProvider(options);
             target.ClassificationRegistry = new FakeClassificationTypeRegistryService();
-            Assert.IsNotNull(target.CreateTagger<ClassificationTag>(new FakeTextBuffer(string.Empty)));
+            Assert.NotNull(target.CreateTagger<ClassificationTag>(new FakeTextBuffer(string.Empty)));
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateTaggerReturnsSameTaggerWhenCalledMultipleTimesForSameBuffer()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(true);
@@ -64,17 +63,17 @@ namespace T4Toolbox.VisualStudio.Editor
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger1 = target.CreateTagger<ClassificationTag>(buffer);
             var tagger2 = target.CreateTagger<ClassificationTag>(buffer);
-            Assert.AreSame(tagger1, tagger2);
+            Assert.Same(tagger1, tagger2);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateTaggerDoesNotReturnTaggerWhenSyntaxColorizationIsDisabled()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(false);
             var target = new TemplateClassificationTaggerProvider(options);
             target.ClassificationRegistry = new FakeClassificationTypeRegistryService();
 
-            Assert.IsNull(target.CreateTagger<ClassificationTag>(new FakeTextBuffer(string.Empty)));
+            Assert.Null(target.CreateTagger<ClassificationTag>(new FakeTextBuffer(string.Empty)));
         }
 
         private static ITemplateEditorOptions OptionsWithSyntaxColorizationEnabled(bool enabled)

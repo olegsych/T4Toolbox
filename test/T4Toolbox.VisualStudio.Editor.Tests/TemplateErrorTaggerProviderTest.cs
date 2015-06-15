@@ -6,56 +6,55 @@ namespace T4Toolbox.VisualStudio.Editor
 {
     using System.ComponentModel.Composition;
     using System.Reflection;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text.Tagging;
     using Microsoft.VisualStudio.Utilities;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
     public class TemplateErrorTaggerProviderTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateErrorTaggerProviderIsInternalAndNotMeantForPublicConsumption()
         {
-            Assert.IsFalse(typeof(TemplateErrorTaggerProvider).IsPublic);
+            Assert.False(typeof(TemplateErrorTaggerProvider).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateErrorTaggerProviderIsSealedAndNotMeantToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateErrorTaggerProvider).IsSealed);
+            Assert.True(typeof(TemplateErrorTaggerProvider).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateErrorTaggerProviderExportsITaggerProvider()
         {
             var export = (ExportAttribute)typeof(TemplateErrorTaggerProvider).GetCustomAttributes(typeof(ExportAttribute), false)[0];
-            Assert.AreEqual(typeof(ITaggerProvider), export.ContractType);
+            Assert.Equal(typeof(ITaggerProvider), export.ContractType);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateErrorTaggerProviderSpecifiesErrorTagType()
         {
             var tagType = (TagTypeAttribute)typeof(TemplateErrorTaggerProvider).GetCustomAttributes(typeof(TagTypeAttribute), false)[0];
-            Assert.AreEqual(typeof(ErrorTag), tagType.TagTypes);
+            Assert.Equal(typeof(ErrorTag), tagType.TagTypes);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateErrorTaggerProviderAppliesOnlyToTextTemplateContentType()
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateErrorTaggerProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
-            Assert.AreEqual(TemplateContentType.Name, contentType.ContentTypes);
+            Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateTaggerReturnsTemplateErrorTagger()
         {
             ITemplateEditorOptions options = OptionsWithErrorUnderliningEnabled(true);
             var target = new TemplateErrorTaggerProvider(options);
-            Assert.IsNotNull(target.CreateTagger<ErrorTag>(new FakeTextBuffer(string.Empty)));
+            Assert.NotNull(target.CreateTagger<ErrorTag>(new FakeTextBuffer(string.Empty)));
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateTaggerReturnsSameTaggerWhenCalledMultipleTimesForSameBuffer()
         {
             ITemplateEditorOptions options = OptionsWithErrorUnderliningEnabled(true);
@@ -63,15 +62,15 @@ namespace T4Toolbox.VisualStudio.Editor
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger1 = target.CreateTagger<ErrorTag>(buffer);
             var tagger2 = target.CreateTagger<ErrorTag>(buffer);
-            Assert.AreSame(tagger1, tagger2);
+            Assert.Same(tagger1, tagger2);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateTaggerDoesNotReturnTaggerWhenErrorUnderliningIsDisabled()
         {
             ITemplateEditorOptions options = OptionsWithErrorUnderliningEnabled(false);
             var target = new TemplateErrorTaggerProvider(options);
-            Assert.IsNull(target.CreateTagger<ErrorTag>(new FakeTextBuffer(string.Empty)));
+            Assert.Null(target.CreateTagger<ErrorTag>(new FakeTextBuffer(string.Empty)));
         }
 
         private static ITemplateEditorOptions OptionsWithErrorUnderliningEnabled(bool enabled)

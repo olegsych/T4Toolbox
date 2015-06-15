@@ -8,68 +8,67 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Linq;
     using System.Reflection;
     using Microsoft.VisualStudio.Language.Intellisense;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Utilities;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
     public class TemplateQuickInfoSourceProviderTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceProviderIsInternalAndNotMeantForPublicConsumption()
         {
-            Assert.IsFalse(typeof(TemplateQuickInfoSourceProvider).IsPublic);
+            Assert.False(typeof(TemplateQuickInfoSourceProvider).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceProviderIsSealedAndNotMeantToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateQuickInfoSourceProvider).IsSealed);
+            Assert.True(typeof(TemplateQuickInfoSourceProvider).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceProviderImplementsIQuickSourceProviderInterface()
         {
-            Assert.AreEqual(typeof(IQuickInfoSourceProvider), typeof(TemplateQuickInfoSourceProvider).GetInterfaces()[0]);
+            Assert.Equal(typeof(IQuickInfoSourceProvider), typeof(TemplateQuickInfoSourceProvider).GetInterfaces()[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceProviderExportsIQuickSourceProviderInterface()
         {
             ExportAttribute attribute = typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<ExportAttribute>().Single();
-            Assert.AreEqual(typeof(IQuickInfoSourceProvider), attribute.ContractType);
+            Assert.Equal(typeof(IQuickInfoSourceProvider), attribute.ContractType);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceProviderSpecifiesTextTemplateContentType()
         {
             ContentTypeAttribute attribute = typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<ContentTypeAttribute>().Single();
-            Assert.AreEqual(TemplateContentType.Name, attribute.ContentTypes);
+            Assert.Equal(TemplateContentType.Name, attribute.ContentTypes);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceProviderSpecifiesNameAttributeRequiredByVisualStudio()
         {
-            Assert.AreEqual(1, typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<NameAttribute>().Count());
+            Assert.Equal(1, typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<NameAttribute>().Count());
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceProviderSpecifiesOrderAttributeRequiredByVisualStudio()
         {
-            Assert.AreEqual(1, typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<OrderAttribute>().Count());
+            Assert.Equal(1, typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<OrderAttribute>().Count());
         }
 
-        [TestMethod]
+        [Fact]
         public void TryCreateQuickInfoSourceReturnsTemplateQuickInfoSource()
         {
             ITemplateEditorOptions options = OptionsWithQuickInfoTooltipsEnabled(true);
             var provider = new TemplateQuickInfoSourceProvider(options);
             var textBuffer = new FakeTextBuffer(string.Empty);
             IQuickInfoSource quickInfoSource = provider.TryCreateQuickInfoSource(textBuffer);
-            Assert.AreEqual(typeof(TemplateQuickInfoSource), quickInfoSource.GetType());
+            Assert.Equal(typeof(TemplateQuickInfoSource), quickInfoSource.GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void TryCreateQuickInfoSourceReturnsSameObjectWhenCalledMultipleTimesForSameBuffer()
         {
             ITemplateEditorOptions options = OptionsWithQuickInfoTooltipsEnabled(true);
@@ -77,15 +76,15 @@ namespace T4Toolbox.VisualStudio.Editor
             var textBuffer = new FakeTextBuffer(string.Empty);
             IQuickInfoSource source1 = provider.TryCreateQuickInfoSource(textBuffer);
             IQuickInfoSource source2 = provider.TryCreateQuickInfoSource(textBuffer);
-            Assert.AreSame(source1, source2);
+            Assert.Same(source1, source2);
         }
 
-        [TestMethod]
+        [Fact]
         public void TryCreateQuickInfoSourceReturnsNullWhenQuickInfoTooltipsAreDisabled()
         {
             ITemplateEditorOptions options = OptionsWithQuickInfoTooltipsEnabled(false);
             var provider = new TemplateQuickInfoSourceProvider(options);
-            Assert.IsNull(provider.TryCreateQuickInfoSource(new FakeTextBuffer(string.Empty)));
+            Assert.Null(provider.TryCreateQuickInfoSource(new FakeTextBuffer(string.Empty)));
         }
 
         private static ITemplateEditorOptions OptionsWithQuickInfoTooltipsEnabled(bool enabled)

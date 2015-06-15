@@ -7,119 +7,118 @@ namespace T4Toolbox.VisualStudio.Editor
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
+    using Xunit;
     using Template = T4Toolbox.TemplateAnalysis.Template;
 
-    [TestClass]
     public class TemplateAnalyzerTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateAnalyzerIsInternalAndNotIntendedForConsumptionOutsideOfT4Toolbox()
         {
-            Assert.IsTrue(typeof(TemplateAnalyzer).IsNotPublic);
+            Assert.True(typeof(TemplateAnalyzer).IsNotPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateAnalyzerIsSealedAndNotIntendedToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateAnalyzer).IsSealed);
+            Assert.True(typeof(TemplateAnalyzer).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void CurrentAnalysisReturnsLastTemplateAnalysisResult()
         {
             var buffer = new FakeTextBuffer("<#@");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
             TemplateAnalysis result = target.CurrentAnalysis;
-            Assert.IsNotNull(result);
+            Assert.NotNull(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void CurrentAnalysisReturnsSyntaxErrorsDetectedInTextBuffer()
         {
             var buffer = new FakeTextBuffer("<#@");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
-            Assert.AreEqual(1, target.CurrentAnalysis.Errors.Count);
+            Assert.Equal(1, target.CurrentAnalysis.Errors.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void CurrentAnalysisReturnsSemanticErrorsDetectedInTextBuffer()
         {
             var buffer = new FakeTextBuffer("<#@ template bad=\"puppy\" #>");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
-            Assert.AreEqual(1, target.CurrentAnalysis.Errors.Count);
+            Assert.Equal(1, target.CurrentAnalysis.Errors.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void CurrentAnalysisReturnsUpdatedErrorsWhenTextBufferChanges()
         {
             var buffer = new FakeTextBuffer("<#@");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
-            Assert.AreEqual(1, target.CurrentAnalysis.Errors.Count); // Need to touch lazy property before buffer change for test to be valid 
+            Assert.Equal(1, target.CurrentAnalysis.Errors.Count); // Need to touch lazy property before buffer change for test to be valid 
 
             buffer.CurrentSnapshot = new FakeTextSnapshot(string.Empty);
-            Assert.AreEqual(0, target.CurrentAnalysis.Errors.Count);
+            Assert.Equal(0, target.CurrentAnalysis.Errors.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void CurrentAnalysisReturnsTemplateParsedFromTextBuffer()
         {
             var buffer = new FakeTextBuffer("<#@ template language=\"VB\" #>");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
             Template template = target.CurrentAnalysis.Template;
-            Assert.IsNotNull(template);
-            Assert.AreEqual(1, template.ChildNodes().Count());
+            Assert.NotNull(template);
+            Assert.Equal(1, template.ChildNodes().Count());
         }
 
-        [TestMethod]
+        [Fact]
         public void CurrentAnalysisReturnsDefaultTemplateIfParserCouldNotCreateOne()
         {
             var buffer = new FakeTextBuffer("<#@ t");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
             Template template = target.CurrentAnalysis.Template;
-            Assert.IsNotNull(template);
-            Assert.AreEqual(0, template.ChildNodes().Count());
+            Assert.NotNull(template);
+            Assert.Equal(0, template.ChildNodes().Count());
         }
 
-        [TestMethod]
+        [Fact]
         public void CurrentAnalysisReturnsUpdatedTemplateWhenTextBufferChanges()
         {
             var buffer = new FakeTextBuffer("<#@ template language=\"VB\" #>");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
-            Assert.AreEqual(1, target.CurrentAnalysis.Template.ChildNodes().Count()); // Need to touch lazy Template before buffer change for test to be valid
+            Assert.Equal(1, target.CurrentAnalysis.Template.ChildNodes().Count()); // Need to touch lazy Template before buffer change for test to be valid
 
             buffer.CurrentSnapshot = new FakeTextSnapshot(string.Empty);
-            Assert.AreEqual(0, target.CurrentAnalysis.Template.ChildNodes().Count());
+            Assert.Equal(0, target.CurrentAnalysis.Template.ChildNodes().Count());
         }
 
-        [TestMethod]
+        [Fact]
         public void CurrentAnalysisReturnsTextSnapshotForWhichItWasCreated()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var analyzer = TemplateAnalyzer.GetOrCreate(buffer);
             ITextSnapshot analysisSnapshot = analyzer.CurrentAnalysis.TextSnapshot;
-            Assert.AreSame(buffer.CurrentSnapshot, analysisSnapshot);
+            Assert.Same(buffer.CurrentSnapshot, analysisSnapshot);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetOrCreateReturnsNewTemplateAnalyzerFirstTimeItIsRequestedForTextBuffer()
         {
             ITextBuffer buffer = new FakeTextBuffer(string.Empty);
             TemplateAnalyzer analyzer = TemplateAnalyzer.GetOrCreate(buffer);
-            Assert.IsNotNull(analyzer);
+            Assert.NotNull(analyzer);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetOrCreateReturnsExistingTemplateAnalyzerSecondTimeItIsRequestedForTextBuffer()
         {
             ITextBuffer buffer = new FakeTextBuffer(string.Empty);
             TemplateAnalyzer analyzer1 = TemplateAnalyzer.GetOrCreate(buffer);
             TemplateAnalyzer analyzer2 = TemplateAnalyzer.GetOrCreate(buffer);
-            Assert.AreSame(analyzer1, analyzer2);
+            Assert.Same(analyzer1, analyzer2);
         }
 
-        [TestMethod, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
+        [Fact, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
         public void GetOrCreateDoesNotPreventGarbageCollectionOfPreviouslyCreatedTemplateAnalyzers()
         {
             var analyzer = new WeakReference(TemplateAnalyzer.GetOrCreate(new FakeTextBuffer(string.Empty)));
@@ -127,10 +126,10 @@ namespace T4Toolbox.VisualStudio.Editor
             GC.Collect(2, GCCollectionMode.Forced);
             GC.WaitForPendingFinalizers();
 
-            Assert.IsFalse(analyzer.IsAlive);
+            Assert.False(analyzer.IsAlive);
         }
 
-        [TestMethod, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
+        [Fact, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
         public void GetOrCreateDoesNotPreventGarbageCollectionOfTextBuffers()
         {
             var buffer = new WeakReference(new FakeTextBuffer(string.Empty));
@@ -139,10 +138,10 @@ namespace T4Toolbox.VisualStudio.Editor
             GC.Collect(2, GCCollectionMode.Forced);
             GC.WaitForPendingFinalizers();
 
-            Assert.IsFalse(buffer.IsAlive);
+            Assert.False(buffer.IsAlive);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateChangedEventIsRaisedWhenTextBufferChanges()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -150,10 +149,10 @@ namespace T4Toolbox.VisualStudio.Editor
             bool templateChanged = false;
             target.TemplateChanged += (sender, args) => { templateChanged = true; };
             buffer.CurrentSnapshot = new FakeTextSnapshot("42");
-            Assert.IsTrue(templateChanged);
+            Assert.True(templateChanged);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateChangeEventArgumentSuppliesCurrentTemplateAnalysis()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -161,7 +160,7 @@ namespace T4Toolbox.VisualStudio.Editor
             TemplateAnalysis eventArgument = null;
             target.TemplateChanged += (sender, args) => { eventArgument = args; };
             buffer.CurrentSnapshot = new FakeTextSnapshot("42");
-            Assert.AreSame(target.CurrentAnalysis, eventArgument);
+            Assert.Same(target.CurrentAnalysis, eventArgument);
         }
     }
 }

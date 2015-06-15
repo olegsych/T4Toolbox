@@ -10,55 +10,54 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Editor;
     using Microsoft.VisualStudio.OLE.Interop;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text.Editor;
     using Microsoft.VisualStudio.TextManager.Interop;
     using Microsoft.VisualStudio.Utilities;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
     public class TemplateCompletionHandlerProviderTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerProviderIsInternalBecauseItIsOnlyMeantToBeImportedByVisualStudio()
         {
-            Assert.IsFalse(typeof(TemplateCompletionHandlerProvider).IsPublic);
+            Assert.False(typeof(TemplateCompletionHandlerProvider).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerProviderIsSealedBecauseItIsNotMeantToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateCompletionHandlerProvider).IsSealed);
+            Assert.True(typeof(TemplateCompletionHandlerProvider).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerProviderImplementsIVsTextViewCreationListenerToDetectWhenTemplateTextViewIsCreated()
         {
-            Assert.AreEqual(typeof(IVsTextViewCreationListener), typeof(TemplateCompletionHandlerProvider).GetInterfaces().Single());
+            Assert.Equal(typeof(IVsTextViewCreationListener), typeof(TemplateCompletionHandlerProvider).GetInterfaces().Single());
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerExportsIVsTextViewCreationListener()
         {
             ExportAttribute attribute = typeof(TemplateCompletionHandlerProvider).GetCustomAttributes(false).OfType<ExportAttribute>().Single();
-            Assert.AreEqual(typeof(IVsTextViewCreationListener), attribute.ContractType);
+            Assert.Equal(typeof(IVsTextViewCreationListener), attribute.ContractType);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerAppliesOnlyToTextTemplateContentType()
         {
             ContentTypeAttribute attribute = typeof(TemplateCompletionHandlerProvider).GetCustomAttributes(false).OfType<ContentTypeAttribute>().Single();
-            Assert.AreEqual(TemplateContentType.Name, attribute.ContentTypes);
+            Assert.Equal(TemplateContentType.Name, attribute.ContentTypes);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerSpecifiesEditableTextViewRoleRequiredByVisualStudioForTextViewCreationListeners()
         {
             TextViewRoleAttribute attribute = typeof(TemplateCompletionHandlerProvider).GetCustomAttributes(false).OfType<TextViewRoleAttribute>().Single();
-            Assert.AreEqual(PredefinedTextViewRoles.Editable, attribute.TextViewRoles);
+            Assert.Equal(PredefinedTextViewRoles.Editable, attribute.TextViewRoles);
         }
 
-        [TestMethod]
+        [Fact]
         public void TextViewCreatedCreatesTemplateCompletionHandlerWhenViewAdapterHasTextView()
         {
             var viewProperties = new PropertyCollection();
@@ -77,11 +76,11 @@ namespace T4Toolbox.VisualStudio.Editor
 
             provider.VsTextViewCreated(viewAdapter);
 
-            Assert.IsTrue(viewProperties.ContainsProperty(typeof(TemplateCompletionHandler)));
+            Assert.True(viewProperties.ContainsProperty(typeof(TemplateCompletionHandler)));
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Microsoft.VisualStudio.TextManager.Interop.IVsTextView.AddCommandFilter(Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget,Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget@)", Justification = "This test does not call AddCommandFilter method; it only asserts it was.")]
-        [TestMethod]
+        [Fact]
         public void TextViewCreatedAddsTemplateCompletionHandlerToTextViewCommandFilters()
         {
             var viewProperties = new PropertyCollection();
@@ -104,7 +103,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Microsoft.VisualStudio.TextManager.Interop.IVsTextView.AddCommandFilter(Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget,Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget@)", Justification = "This test does not call AddCommandFilter method; it only asserts it was.")] 
-        [TestMethod]
+        [Fact]
         public void TestViewCreatedSetsNextHandlerOfTemplateCompletionHandler()
         {
             var viewProperties = new PropertyCollection();
@@ -126,7 +125,7 @@ namespace T4Toolbox.VisualStudio.Editor
             viewAdapter.Received().AddCommandFilter(handler, out handler.NextHandler);
         }
 
-        [TestMethod]
+        [Fact]
         public void TextViewCreatedDoesNotCreateTemplateCompletionHandlerWhenCompletionListsAreDisabled()
         {
             ITemplateEditorOptions options = OptionsWithCompletionListsEnabled(false);
@@ -139,7 +138,7 @@ namespace T4Toolbox.VisualStudio.Editor
             adapterFactory.DidNotReceive().GetWpfTextView(viewAdapter);
         }
 
-        [TestMethod]
+        [Fact]
         public void TextViewCreatedDoesNotCreateTemplateCompletionHandlerWhenViewAdapterDoesNotHaveTextView()
         {
             ITemplateEditorOptions options = OptionsWithCompletionListsEnabled(true);

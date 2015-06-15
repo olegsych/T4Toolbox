@@ -8,38 +8,37 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Diagnostics.CodeAnalysis;
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.OLE.Interop;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
     public class TemplateCompletionHandlerTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerIsInternalBecauseItIsOnlyMeantToBeImportedByVisualStudio()
         {
-            Assert.IsFalse(typeof(TemplateCompletionHandler).IsPublic);
+            Assert.False(typeof(TemplateCompletionHandler).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerIsSealedBecauseItIsNotMeantToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateCompletionHandler).IsSealed);
+            Assert.True(typeof(TemplateCompletionHandler).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionHandlerImplementsIOleCommandTargetToInterceptKeystrokes()
         {
-            Assert.AreEqual(typeof(IOleCommandTarget), typeof(TemplateCompletionHandler).GetInterfaces()[0]);
+            Assert.Equal(typeof(IOleCommandTarget), typeof(TemplateCompletionHandler).GetInterfaces()[0]);
         }
 
-        [TestMethod, Ignore]
+        [Fact(Skip = "Not Implemented")]
         public void TestExecMethod()
         {
             // TODO: Test this
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget.QueryStatus(System.Guid@,System.UInt32,Microsoft.VisualStudio.OLE.Interop.OLECMD[],System.IntPtr)", Justification = "This test does not call QueryStatus, it only asserts it was called.")]
-        [TestMethod]
+        [Fact]
         public void QueryStatusCallsNextCommandTargetToSupportDefaultCommandHandling()
         {
             var nextHandler = Substitute.For<IOleCommandTarget>();

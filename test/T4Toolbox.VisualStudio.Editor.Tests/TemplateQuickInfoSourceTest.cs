@@ -5,25 +5,24 @@
 namespace T4Toolbox.VisualStudio.Editor
 {
     using System.Collections.Generic;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
+    using Xunit;
 
-    [TestClass]
     public class TemplateQuickInfoSourceTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceIsInternalAndConsumedOnlyByVisualStudioEditor()
         {
-            Assert.IsFalse(typeof(TemplateQuickInfoSource).IsPublic);
+            Assert.False(typeof(TemplateQuickInfoSource).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateQuickInfoSourceIsSealedAndNotMeantToBeExtended()
         {
-            Assert.IsTrue(typeof(TemplateQuickInfoSource).IsSealed);
+            Assert.True(typeof(TemplateQuickInfoSource).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanWhenBufferIsEmpty()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -34,12 +33,12 @@ namespace T4Toolbox.VisualStudio.Editor
                 ITrackingSpan applicableToSpan;
                 source.AugmentQuickInfoSession(session, quickInfoContent, out applicableToSpan);
 
-                Assert.AreEqual(0, quickInfoContent.Count);
-                Assert.IsNull(applicableToSpan);
+                Assert.Equal(0, quickInfoContent.Count);
+                Assert.Null(applicableToSpan);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanSyntaxNodeAtTriggerPointHasNoDescription()
         {
             var buffer = new FakeTextBuffer("<# code #>");
@@ -50,12 +49,12 @@ namespace T4Toolbox.VisualStudio.Editor
                 ITrackingSpan applicableToSpan;
                 source.AugmentQuickInfoSession(session, quickInfoContent, out applicableToSpan);
 
-                Assert.AreEqual(0, quickInfoContent.Count);
-                Assert.IsNull(applicableToSpan);
+                Assert.Equal(0, quickInfoContent.Count);
+                Assert.Null(applicableToSpan);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanWhenBufferContainsTemplateThatCouldNotBeParsed()
         {
             var buffer = new FakeTextBuffer("<#");
@@ -66,12 +65,12 @@ namespace T4Toolbox.VisualStudio.Editor
                 ITrackingSpan applicableToSpan;
                 source.AugmentQuickInfoSession(session, quickInfoContent, out applicableToSpan);
 
-                Assert.AreEqual(0, quickInfoContent.Count);
-                Assert.IsNull(applicableToSpan);
+                Assert.Equal(0, quickInfoContent.Count);
+                Assert.Null(applicableToSpan);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentQuickInfoSessionReturnsDescriptionOfSyntaxNodeAtTriggerPoint()
         {
             var buffer = new FakeTextBuffer("<#@ assembly name=\"System\" #>");
@@ -82,11 +81,11 @@ namespace T4Toolbox.VisualStudio.Editor
                 ITrackingSpan applicableToSpan;
                 source.AugmentQuickInfoSession(session, quickInfoContent, out applicableToSpan);
 
-                StringAssert.Contains((string)quickInfoContent[0], "assembly");
+                Assert.Contains("assembly", (string)quickInfoContent[0]);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentQuickInfoSessionReturnsSpanOfSyntaxNodeProvidingDescription()
         {
             var buffer = new FakeTextBuffer("<#@ assembly name=\"System\" #>");
@@ -97,7 +96,7 @@ namespace T4Toolbox.VisualStudio.Editor
                 ITrackingSpan applicableToSpan;
                 source.AugmentQuickInfoSession(session, quickInfoContent, out applicableToSpan);
 
-                Assert.AreEqual(new Span(13, 13), applicableToSpan.GetSpan(buffer.CurrentSnapshot).Span);
+                Assert.Equal(new Span(13, 13), applicableToSpan.GetSpan(buffer.CurrentSnapshot).Span);
             }
         }
     }

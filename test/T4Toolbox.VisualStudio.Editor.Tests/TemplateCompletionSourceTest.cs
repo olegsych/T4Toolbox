@@ -7,66 +7,65 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.VisualStudio.Language.Intellisense;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
+    using Xunit;
 
-    [TestClass]
     public class TemplateCompletionSourceTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionSourceIsInternalAndNotMeantForPublicConsumption()
         {
-            Assert.IsFalse(typeof(TemplateCompletionSource).IsPublic);
+            Assert.False(typeof(TemplateCompletionSource).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionSourceIsSealedAndNotMeantToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateCompletionSource).IsSealed);
+            Assert.True(typeof(TemplateCompletionSource).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionSourceImplementsICompletionSourceExpectedByVisualStudioEditor()
         {
-            Assert.AreEqual(typeof(ICompletionSource), typeof(TemplateCompletionSource).GetInterfaces()[0]);
+            Assert.Equal(typeof(ICompletionSource), typeof(TemplateCompletionSource).GetInterfaces()[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentCompletionSessionReturnsCompletionSetWhenTriggerPointIsInsideSyntaxNodeThatSupportsCompletions()
         {
             IList<CompletionSet> completionSets = AugmentCompletionSession("<#@ t #>", 5);
-            Assert.AreEqual(1, completionSets.Count);
+            Assert.Equal(1, completionSets.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentCompletionSessionSortsCompletionsByDisplayTextToMakeThemEasierToRead()
         {
             CompletionSet completionSet = AugmentCompletionSession("<#@ template culture=\"en\" #>", 23)[0];
-            CollectionAssert.AreEqual(completionSet.Completions.OrderBy(c => c.DisplayText).ToList(), completionSet.Completions.ToList());
+            Assert.Equal(completionSet.Completions.OrderBy(c => c.DisplayText).ToList(), completionSet.Completions.ToList());
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentCompletionSessionDoesNotReturnCompletionSetWhenTriggerPointIsInsideSyntaxNodeThatDoesNotSupportCompletions()
         {
             IList<CompletionSet> completionSets = AugmentCompletionSession("<#@ t #>", 1);
-            Assert.AreEqual(0, completionSets.Count);
+            Assert.Equal(0, completionSets.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void AugmentCompletionSessionReturnsCompletionSetApplicableToTheSpanOfSyntaxNodeThatContainsTriggerPoint()
         {
             ITextSnapshot snapshot;
             CompletionSet completionSet = AugmentCompletionSession("<#@ t #>", 5, out snapshot).Single();
-            Assert.AreEqual(new Span(4, 1), completionSet.ApplicableTo.GetSpan(snapshot).Span);
+            Assert.Equal(new Span(4, 1), completionSet.ApplicableTo.GetSpan(snapshot).Span);
         }
 
-        [TestMethod]
+        [Fact]
         public void DisposeRemovesCompletionSourceFromTextBufferProperties()
         {
             ITextBuffer buffer = new FakeTextBuffer(string.Empty);
             var completionSource = buffer.Properties.GetOrCreateSingletonProperty(() => new TemplateCompletionSource(buffer));
             completionSource.Dispose();
-            Assert.IsFalse(buffer.Properties.ContainsProperty(typeof(TemplateCompletionSource)));
+            Assert.False(buffer.Properties.ContainsProperty(typeof(TemplateCompletionSource)));
         }
 
         private static IList<CompletionSet> AugmentCompletionSession(string text, int triggerPosition)

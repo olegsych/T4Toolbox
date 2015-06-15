@@ -8,66 +8,65 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.Globalization;
     using System.Linq;
     using Microsoft.VisualStudio.Language.Intellisense;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using T4Toolbox.TemplateAnalysis;
+    using Xunit;
     using Attribute = T4Toolbox.TemplateAnalysis.Attribute;
 
-    [TestClass]
     public class TemplateCompletionBuilderTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionBuilderIsInternalAndNotMeantForPublicConsumption()
         {
-            Assert.IsFalse(typeof(TemplateCompletionBuilder).IsPublic);
+            Assert.False(typeof(TemplateCompletionBuilder).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateCompletionBuilderIsSealedAndNotMeantToHaveDerivedClasses()
         {
-            Assert.IsTrue(typeof(TemplateCompletionBuilder).IsSealed);
+            Assert.True(typeof(TemplateCompletionBuilder).IsSealed);
         }
 
         #region Completions for Directive Names
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsDirectiveNamesWhenPositionIsWithinDirectiveName()
         {
             var builder = new TemplateCompletionBuilder(42);
             builder.Visit(new DirectiveName(42, string.Empty));
-            Assert.IsNotNull(builder.Completions);
-            Assert.AreEqual(6, builder.Completions.Count);
-            Assert.AreEqual(1, builder.Completions.Count(c => c.DisplayText == "assembly"),  "assembly");
-            Assert.AreEqual(1, builder.Completions.Count(c => c.DisplayText == "import"),    "import");
-            Assert.AreEqual(1, builder.Completions.Count(c => c.DisplayText == "include"),   "include");
-            Assert.AreEqual(1, builder.Completions.Count(c => c.DisplayText == "output"),    "output");
-            Assert.AreEqual(1, builder.Completions.Count(c => c.DisplayText == "parameter"), "parameter");
-            Assert.AreEqual(1, builder.Completions.Count(c => c.DisplayText == "template"),  "template");
+            Assert.NotNull(builder.Completions);
+            Assert.Equal(6, builder.Completions.Count);
+            Assert.Contains(builder.Completions, c => c.DisplayText == "assembly");
+            Assert.Contains(builder.Completions, c => c.DisplayText == "import");
+            Assert.Contains(builder.Completions, c => c.DisplayText == "include");
+            Assert.Contains(builder.Completions, c => c.DisplayText == "output");
+            Assert.Contains(builder.Completions, c => c.DisplayText == "parameter");
+            Assert.Contains(builder.Completions, c => c.DisplayText == "template");
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsDirectiveNamesWithDescriptions()
         {
             var builder = new TemplateCompletionBuilder(42);
             builder.Visit(new DirectiveName(42, string.Empty));
             foreach (Completion completion in builder.Completions)
             {
-                Assert.IsFalse(string.IsNullOrEmpty(completion.Description), completion.DisplayText + " completion should have a description.");
+                Assert.False(string.IsNullOrEmpty(completion.Description), completion.DisplayText + " completion should have a description.");
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsNullWhenPositionIsOutsideOfDirectiveName()
         {
             var builder = new TemplateCompletionBuilder(0);
             builder.Visit(new DirectiveName(42, string.Empty));
-            Assert.IsNull(builder.Completions);
+            Assert.Null(builder.Completions);
         }
 
         #endregion
 
         #region Completions for Attribute Names
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsAttributeNamesWhenPositionIsWithinAttributeName()
         {
             // <#@ output e="" #>
@@ -78,12 +77,12 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(16));
             var builder = new TemplateCompletionBuilder(12);
             builder.Visit(directive);
-            Assert.IsNotNull(builder.Completions);
-            Assert.AreEqual(1, builder.Completions.Count(c => string.Equals(c.DisplayText, "extension", StringComparison.OrdinalIgnoreCase)), "extension");
-            Assert.AreEqual(1, builder.Completions.Count(c => string.Equals(c.DisplayText, "encoding", StringComparison.OrdinalIgnoreCase)), "encoding");
+            Assert.NotNull(builder.Completions);
+            Assert.Contains(builder.Completions, c => string.Equals(c.DisplayText, "encoding", StringComparison.OrdinalIgnoreCase));
+            Assert.Contains(builder.Completions, c => string.Equals(c.DisplayText, "extension", StringComparison.OrdinalIgnoreCase));
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsAttributeNamesWithDescriptions()
         {
             var directive = new OutputDirective(
@@ -95,11 +94,11 @@ namespace T4Toolbox.VisualStudio.Editor
             builder.Visit(directive);
             foreach (Completion completion in builder.Completions)
             {
-                Assert.IsFalse(string.IsNullOrEmpty(completion.Description), completion.DisplayText + " completion should have a description.");
+                Assert.False(string.IsNullOrEmpty(completion.Description), completion.DisplayText + " completion should have a description.");
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionsExcludeAttributesAlreadyPresentInDirective()
         {
             // <#@ output extension="txt" e="" #>
@@ -111,10 +110,10 @@ namespace T4Toolbox.VisualStudio.Editor
             var directive = new OutputDirective(new DirectiveBlockStart(0), new DirectiveName(4, "output"), attributes, new BlockEnd(32));
             var builder = new TemplateCompletionBuilder(28);
             builder.Visit(directive);
-            Assert.IsTrue(string.Equals(builder.Completions.Single().DisplayText, "encoding", StringComparison.OrdinalIgnoreCase));
+            Assert.True(string.Equals(builder.Completions.Single().DisplayText, "encoding", StringComparison.OrdinalIgnoreCase));
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsNullWhenAllAttributesAreAlreadyPresentInDirective()
         {
             // <#@ output extension="txt" encoding="UTF8" #>
@@ -126,10 +125,10 @@ namespace T4Toolbox.VisualStudio.Editor
             var directive = new OutputDirective(new DirectiveBlockStart(0), new DirectiveName(4, "output"), attributes, new BlockEnd(43));
             var builder = new TemplateCompletionBuilder(35);
             builder.Visit(directive);
-            Assert.IsNull(builder.Completions);
+            Assert.Null(builder.Completions);
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsNullWhenPositionIsOutsideOfAttributeName()
         {
             // <#@ output e="" #>
@@ -140,14 +139,14 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(16));
             var builder = new TemplateCompletionBuilder(13);
             builder.Visit(directive);
-            Assert.IsNull(builder.Completions);
+            Assert.Null(builder.Completions);
         }
 
         #endregion
 
         #region Completions for Attribute Values
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsWellKnownValuesWhenPositionIsWithinAttributeValue()
         {
             // <#@ template debug="" #>
@@ -158,12 +157,12 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(22));
             var builder = new TemplateCompletionBuilder(20);
             builder.Visit(directive);
-            Assert.IsNotNull(builder.Completions);
-            Assert.AreEqual("false", builder.Completions[0].DisplayText, true, CultureInfo.InvariantCulture);
-            Assert.AreEqual("true", builder.Completions[1].DisplayText, true, CultureInfo.InvariantCulture);
+            Assert.NotNull(builder.Completions);
+            Assert.Equal("false", builder.Completions[0].DisplayText, StringComparer.InvariantCultureIgnoreCase);
+            Assert.Equal("true", builder.Completions[1].DisplayText, StringComparer.InvariantCultureIgnoreCase);
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsAttributeValuesWithDescriptions()
         {
             // <#@ template debug="" #>
@@ -176,11 +175,11 @@ namespace T4Toolbox.VisualStudio.Editor
             builder.Visit(directive);
             foreach (Completion completion in builder.Completions)
             {
-                Assert.IsFalse(string.IsNullOrEmpty(completion.Description), completion.DisplayText + " completion should have a description.");
+                Assert.False(string.IsNullOrEmpty(completion.Description), completion.DisplayText + " completion should have a description.");
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionsReturnsNullWhenPositionIsOutsideOfAttributeValue()
         {
             // <#@ template debug="" #>
@@ -191,10 +190,10 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(22));
             var builder = new TemplateCompletionBuilder(19);
             builder.Visit(directive);
-            Assert.IsNull(builder.Completions);
+            Assert.Null(builder.Completions);
         }
 
-        [TestMethod]
+        [Fact]
         public void CompletionReturnsNullWhenPositionIsInsideValueOfUnrecognizedAttribute()
         {
             // <#@ template debug="" #>
@@ -205,29 +204,29 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(20));
             var builder = new TemplateCompletionBuilder(18);
             builder.Visit(directive);
-            Assert.IsNull(builder.Completions);
+            Assert.Null(builder.Completions);
         }
 
         #endregion
 
-        [TestMethod]
+        [Fact]
         public void NodeReturnsDirectiveNameWhenPositionIsWithinDirectiveName()
         {
             var node = new DirectiveName(42, string.Empty);
             var builder = new TemplateCompletionBuilder(42);
             builder.Visit(node);
-            Assert.AreSame(node, builder.Node);
+            Assert.Same(node, builder.Node);
         }
 
-        [TestMethod]
+        [Fact]
         public void NodeReturnsNullWhenPositionIsOutsideOfDirectiveName()
         {
             var builder = new TemplateCompletionBuilder(0);
             builder.Visit(new DirectiveName(42, string.Empty));
-            Assert.IsNull(builder.Node);
+            Assert.Null(builder.Node);
         }
 
-        [TestMethod]
+        [Fact]
         public void NodeReturnsAttributeNameWhenPositionIsWithinAttributeName()
         {
             AttributeName attributeName;
@@ -238,10 +237,10 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(16));
             var builder = new TemplateCompletionBuilder(12);
             builder.Visit(directive);
-            Assert.AreSame(attributeName, builder.Node);
+            Assert.Same(attributeName, builder.Node);
         }
 
-        [TestMethod]
+        [Fact]
         public void NodeReturnsNullWhenPositionIsOutsideOfAttributeName()
         {
             var directive = new OutputDirective(
@@ -251,10 +250,10 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(16));
             var builder = new TemplateCompletionBuilder(13);
             builder.Visit(directive);
-            Assert.IsNull(builder.Node);
+            Assert.Null(builder.Node);
         }
 
-        [TestMethod]
+        [Fact]
         public void NodeReturnsAttributeValueWhenPositionIsWithinAttributeValue()
         {
             AttributeValue attributeValue;
@@ -265,10 +264,10 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(22));
             var builder = new TemplateCompletionBuilder(20);
             builder.Visit(directive);
-            Assert.AreSame(attributeValue, builder.Node);
+            Assert.Same(attributeValue, builder.Node);
         }
 
-        [TestMethod]
+        [Fact]
         public void NodeReturnsNullWhenPositionIsOutsideOfAttributeValue()
         {
             var directive = new TemplateDirective(
@@ -278,7 +277,7 @@ namespace T4Toolbox.VisualStudio.Editor
                 new BlockEnd(22));
             var builder = new TemplateCompletionBuilder(19);
             builder.Visit(directive);
-            Assert.IsNull(builder.Node);
+            Assert.Null(builder.Node);
         }
     }
 }

@@ -7,20 +7,19 @@ namespace T4Toolbox.VisualStudio.Editor
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
+    using Xunit;
 
-    [TestClass]
     public class TemplateTaggerTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateTaggerIsInternalAndNotIntendedForPublicConsumption()
         {
-            Assert.IsTrue(typeof(TemplateTagger<ITag>).IsNotPublic);
+            Assert.True(typeof(TemplateTagger<ITag>).IsNotPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateChangeCreatesNewTagSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -30,10 +29,10 @@ namespace T4Toolbox.VisualStudio.Editor
             tagger.CreateTagSpansMethod = snapshot => tagsCreated = true;
             buffer.CurrentSnapshot = new FakeTextSnapshot(string.Empty);
 
-            Assert.IsTrue(tagsCreated);
+            Assert.True(tagsCreated);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateChangeRemovesOldTagSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -42,10 +41,10 @@ namespace T4Toolbox.VisualStudio.Editor
 
             buffer.CurrentSnapshot = new FakeTextSnapshot(string.Empty);
 
-            Assert.IsFalse(tagger.GetTaggedSpans(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length)).Any());
+            Assert.False(tagger.GetTaggedSpans(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length)).Any());
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateChangeRaisesTagsChangedEvent()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -56,10 +55,10 @@ namespace T4Toolbox.VisualStudio.Editor
             tagger.TagsChanged += (sender, args) => tagsChangedEventRaised = true;
             buffer.CurrentSnapshot = new FakeTextSnapshot(string.Empty);
 
-            Assert.IsTrue(tagsChangedEventRaised);
+            Assert.True(tagsChangedEventRaised);
         }
 
-        [TestMethod]
+        [Fact]
         public void UpdateTagSpansCreatesNewTagSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -69,10 +68,10 @@ namespace T4Toolbox.VisualStudio.Editor
             tagger.CreateTagSpansMethod = snapshot => tagsCreated = true;
             tagger.UpdateTagSpans(new TemplateAnalysis(null, null, null));
 
-            Assert.IsTrue(tagsCreated);            
+            Assert.True(tagsCreated);            
         }
 
-        [TestMethod]
+        [Fact]
         public void UpdateTagSpansRemovesOldSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -81,10 +80,10 @@ namespace T4Toolbox.VisualStudio.Editor
 
             tagger.UpdateTagSpans(new TemplateAnalysis(null, null, null));
 
-            Assert.AreEqual(0, tagger.GetTags(new NormalizedSnapshotSpanCollection(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length))).Count());                        
+            Assert.Equal(0, tagger.GetTags(new NormalizedSnapshotSpanCollection(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length))).Count());                        
         }
 
-        [TestMethod]
+        [Fact]
         public void UpdateTagSpansRaisesTagsChangedEventOnlyOnce()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -99,10 +98,10 @@ namespace T4Toolbox.VisualStudio.Editor
             tagger.TagsChanged += (sender, args) => tagsChangedEventCount++;
             tagger.UpdateTagSpans(new TemplateAnalysis(new FakeTextSnapshot(string.Empty), null, null));
 
-            Assert.AreEqual(1, tagsChangedEventCount);
+            Assert.Equal(1, tagsChangedEventCount);
         }
 
-        [TestMethod, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
+        [Fact, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
         public void TemplateAnalyzerDoesNotPreventTemplateErrorTaggerFromGarbageCollection()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -112,8 +111,8 @@ namespace T4Toolbox.VisualStudio.Editor
             GC.Collect(2, GCCollectionMode.Forced);
             GC.WaitForPendingFinalizers();
 
-            Assert.IsNotNull(analyzer);
-            Assert.IsFalse(tagger.IsAlive);
+            Assert.NotNull(analyzer);
+            Assert.False(tagger.IsAlive);
         }
 
         private class TestableTemplateTagger : TemplateTagger<ITag>

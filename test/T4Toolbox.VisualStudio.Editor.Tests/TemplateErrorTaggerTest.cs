@@ -5,26 +5,25 @@
 namespace T4Toolbox.VisualStudio.Editor
 {
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
+    using Xunit;
 
-    [TestClass]
     public class TemplateErrorTaggerTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateErrorTaggerIsInternalAndNotIntendedForConsumptionOutsideOfT4Toolbox()
         {
-            Assert.IsTrue(typeof(TemplateErrorTagger).IsNotPublic);
+            Assert.True(typeof(TemplateErrorTagger).IsNotPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateErrorTaggerIsSealedAndNotIntendedHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateErrorTagger).IsSealed);
+            Assert.True(typeof(TemplateErrorTagger).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsErrorSpanForSyntaxError()
         {
             var buffer = new FakeTextBuffer("<#");
@@ -33,11 +32,11 @@ namespace T4Toolbox.VisualStudio.Editor
             var snapshotSpans = new NormalizedSnapshotSpanCollection(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length));
             ITagSpan<ErrorTag> errorSpan = tagger.GetTags(snapshotSpans).Single();
 
-            Assert.AreEqual(new Span(2, 0), errorSpan.Span);
-            StringAssert.Contains((string)errorSpan.Tag.ToolTipContent, "#>");            
+            Assert.Equal(new Span(2, 0), errorSpan.Span);
+            Assert.Contains("#>", (string)errorSpan.Tag.ToolTipContent);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsErrorSpanForSemanticError()
         {
             var buffer = new FakeTextBuffer("<#@ include file=\" \" #>");
@@ -46,8 +45,8 @@ namespace T4Toolbox.VisualStudio.Editor
             var snapshotSpans = new NormalizedSnapshotSpanCollection(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length));
             ITagSpan<ErrorTag> errorSpan = tagger.GetTags(snapshotSpans).Single();
 
-            Assert.AreEqual(new Span(12, 8), errorSpan.Span);
-            StringAssert.Contains((string)errorSpan.Tag.ToolTipContent, "File");                        
+            Assert.Equal(new Span(12, 8), errorSpan.Span);
+            Assert.Contains("File", (string)errorSpan.Tag.ToolTipContent);
         }
     }
 }

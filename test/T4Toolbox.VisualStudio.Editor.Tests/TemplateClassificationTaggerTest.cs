@@ -6,12 +6,11 @@ namespace T4Toolbox.VisualStudio.Editor
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Classification;
     using Microsoft.VisualStudio.Text.Tagging;
+    using Xunit;
 
-    [TestClass]
     public class TemplateClassificationTaggerTest
     {
         private readonly FakeClassificationTypeRegistryService registry;
@@ -34,25 +33,25 @@ namespace T4Toolbox.VisualStudio.Editor
 
         #region TextBuffer change notification
 
-        [TestMethod]
+        [Fact]
         public void TextBufferChangeCreatesNewTagSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger = new TemplateClassificationTagger(buffer, this.registry);
             buffer.CurrentSnapshot = new FakeTextSnapshot("<#");
-            Assert.IsTrue(tagger.GetTaggedSpans(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length)).Any());
+            Assert.True(tagger.GetTaggedSpans(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length)).Any());
         }
 
-        [TestMethod]
+        [Fact]
         public void TextBufferChangeRemovesOldTagSpans()
         {
             var buffer = new FakeTextBuffer("<#");
             var tagger = new TemplateClassificationTagger(buffer, this.registry);
             buffer.CurrentSnapshot = new FakeTextSnapshot(string.Empty);
-            Assert.IsFalse(tagger.GetTaggedSpans(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length)).Any());
+            Assert.False(tagger.GetTaggedSpans(new SnapshotSpan(buffer.CurrentSnapshot, 0, buffer.CurrentSnapshot.Length)).Any());
         }
 
-        [TestMethod]
+        [Fact]
         public void TextBufferChangeRaisesTagsChangedEvent()
         {
             var buffer = new FakeTextBuffer(string.Empty);
@@ -62,91 +61,91 @@ namespace T4Toolbox.VisualStudio.Editor
             tagger.TagsChanged += (sender, args) => tagsChangedEventRaised = true;
 
             buffer.CurrentSnapshot = new FakeTextSnapshot("<#");
-            Assert.IsTrue(tagsChangedEventRaised);
+            Assert.True(tagsChangedEventRaised);
         }
 
         #endregion
 
         #region Token to Classification mapping
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsCodeBlockSpanForCodeBlockToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("<# statement(); #>").ElementAt(1);
-            Assert.AreEqual(this.codeBlockClassification, span.Tag.ClassificationType);
+            Assert.Equal(this.codeBlockClassification, span.Tag.ClassificationType);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsDelimiterSpanForStatementBlockStartToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("<#").Single();
-            Assert.AreEqual(this.delimiterClassification, span.Tag.ClassificationType);
+            Assert.Equal(this.delimiterClassification, span.Tag.ClassificationType);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsDelimiterSpanForExpressionBlockStartToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("<#=").Single();
-            Assert.AreEqual(this.delimiterClassification, span.Tag.ClassificationType);
+            Assert.Equal(this.delimiterClassification, span.Tag.ClassificationType);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsDelimiterSpanForClassBlockStartToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("<#+").Single();
-            Assert.AreEqual(this.delimiterClassification, span.Tag.ClassificationType);
+            Assert.Equal(this.delimiterClassification, span.Tag.ClassificationType);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsDelimiterSpanForDirectiveBlockStartToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("<#@").Single();
-            Assert.AreEqual(this.delimiterClassification, span.Tag.ClassificationType);
+            Assert.Equal(this.delimiterClassification, span.Tag.ClassificationType);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsDelimiterSpanForBlockEndToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("#>").Single();
-            Assert.AreEqual(this.delimiterClassification, span.Tag.ClassificationType);
+            Assert.Equal(this.delimiterClassification, span.Tag.ClassificationType);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsDirectiveNameSpanForDirectiveNameToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("<#@ directive #>").ElementAt(1);
-            Assert.AreEqual(this.directiveNameClassification, span.Tag.ClassificationType);
+            Assert.Equal(this.directiveNameClassification, span.Tag.ClassificationType);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsAttributeNameSpanForAttributeNameToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("<#@ directive attribute #>").ElementAt(2);
-            Assert.AreEqual(this.attributeNameClassification, span.Tag.ClassificationType);
+            Assert.Equal(this.attributeNameClassification, span.Tag.ClassificationType);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsIgnoresEqualsBetweenAttributeNameAndAttributeValue()
         {
             ITagSpan<ClassificationTag> lastSpan = this.GetTags("<#@ directive attribute =").Last();
-            Assert.AreEqual(this.attributeNameClassification, lastSpan.Tag.ClassificationType);
-            Assert.AreEqual("attribute", lastSpan.Span.GetText());
+            Assert.Equal(this.attributeNameClassification, lastSpan.Tag.ClassificationType);
+            Assert.Equal("attribute", lastSpan.Span.GetText());
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsAttributeValueSpanForAttributeValueToken()
         {
             ITagSpan<ClassificationTag> span = this.GetTags("<#@ \"value\" #>").ElementAt(1);
-            Assert.AreEqual(this.attributeValueClassification, span.Tag.ClassificationType);
-            Assert.AreEqual("value", span.Span.GetText());
+            Assert.Equal(this.attributeValueClassification, span.Tag.ClassificationType);
+            Assert.Equal("value", span.Span.GetText());
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsIgnoresDoubleQuotesAroundAttributeValue()
         {
             ITagSpan<ClassificationTag> lastSpan = this.GetTags("<#@ \"value\"").Last();
-            Assert.AreEqual(this.attributeValueClassification, lastSpan.Tag.ClassificationType);
-            Assert.AreEqual("value", lastSpan.Span.GetText());
+            Assert.Equal(this.attributeValueClassification, lastSpan.Tag.ClassificationType);
+            Assert.Equal("value", lastSpan.Span.GetText());
         }
 
         #endregion

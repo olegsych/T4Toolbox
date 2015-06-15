@@ -7,47 +7,46 @@ namespace T4Toolbox.VisualStudio.Editor
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
+    using Xunit;
 
-    [TestClass]
     public class TemplateOutliningTaggerTest
     {
-        [TestMethod]
+        [Fact]
         public void TemplateOutliningTaggerIsInternalAndNotMeantForUseOutsideOfT4Toolbox()
         {
-            Assert.IsFalse(typeof(TemplateOutliningTagger).IsPublic);
+            Assert.False(typeof(TemplateOutliningTagger).IsPublic);
         }
 
-        [TestMethod]
+        [Fact]
         public void TemplateOutliningTaggerIsSealedAndNotMeantToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(TemplateOutliningTagger).IsSealed);
+            Assert.True(typeof(TemplateOutliningTagger).IsSealed);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsOutliningRegionSpanForCodeBlocks()
         {
             ITagSpan<OutliningRegionTag> outliningSpan = GetTags("<# code #>").Single();
-            Assert.AreEqual(new Span(0, 10), outliningSpan.Span);
+            Assert.Equal(new Span(0, 10), outliningSpan.Span);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsOutliningRegionSpanWithCollapsedFormWhereEllipsisReplacesCode()
         {
             ITagSpan<OutliningRegionTag> outliningSpan = GetTags("<# code #>").Single();
-            Assert.AreEqual("<#...#>", outliningSpan.Tag.CollapsedForm);
+            Assert.Equal("<#...#>", outliningSpan.Tag.CollapsedForm);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsOutliningRegionSpanWithCollapsedHintFormShowingFullCodeBlock()
         {
             ITagSpan<OutliningRegionTag> outliningSpan = GetTags("<# code #>").Single();
-            Assert.AreEqual("<# code #>", outliningSpan.Tag.CollapsedHintForm);
+            Assert.Equal("<# code #>", outliningSpan.Tag.CollapsedHintForm);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetTagsReturnsOutliningRegionsSpanWithCollapsedHintFormShowingEllipsisAfter10Lines()
         {
             string codeBlock = "<#" + Environment.NewLine;
@@ -65,13 +64,13 @@ namespace T4Toolbox.VisualStudio.Editor
                 Environment.NewLine,
                 codeBlock.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Take(10).Concat(new[] { "..." }));
 
-            Assert.AreEqual(expectedHint, outliningSpan.Tag.CollapsedHintForm);
+            Assert.Equal(expectedHint, outliningSpan.Tag.CollapsedHintForm);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateTagSpansDoesNotThrowWhenTemplateCouldNotBeParsedFromText()
         {
-            Assert.IsFalse(GetTags("<#").Any());
+            Assert.False(GetTags("<#").Any());
         }
 
         private static IEnumerable<ITagSpan<OutliningRegionTag>> GetTags(string input)
