@@ -4,7 +4,9 @@
 
 namespace T4Toolbox.VisualStudio.Editor
 {
+    using System;
     using System.ComponentModel.Composition;
+    using Microsoft.VisualStudio.Text.Classification;
     using Microsoft.VisualStudio.Text.Tagging;
     using Microsoft.VisualStudio.Utilities;
     using NSubstitute;
@@ -46,11 +48,24 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
+        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => new TemplateClassificationTaggerProvider(null, Substitute.For<IClassificationTypeRegistryService>()));
+            Assert.Equal("options", e.ParamName);
+        }
+
+        [Fact]
+        public void ConstructorThrowsArgumentNullExceptionWhenClassificationTypeRegistryIsNullToFailFast()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() => new TemplateClassificationTaggerProvider(Substitute.For<ITemplateEditorOptions>(), null));
+            Assert.Equal("classificationTypeRegistry", e.ParamName);
+        }
+
+        [Fact]
         public void CreateTaggerReturnsTemplateClassificationTagger()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(true);
-            var target = new TemplateClassificationTaggerProvider(options);
-            target.ClassificationRegistry = new FakeClassificationTypeRegistryService();
+            var target = new TemplateClassificationTaggerProvider(options, new FakeClassificationTypeRegistryService());
             Assert.NotNull(target.CreateTagger<ClassificationTag>(new FakeTextBuffer(string.Empty)));
         }
 
@@ -58,8 +73,7 @@ namespace T4Toolbox.VisualStudio.Editor
         public void CreateTaggerReturnsSameTaggerWhenCalledMultipleTimesForSameBuffer()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(true);
-            var target = new TemplateClassificationTaggerProvider(options);
-            target.ClassificationRegistry = new FakeClassificationTypeRegistryService();
+            var target = new TemplateClassificationTaggerProvider(options, new FakeClassificationTypeRegistryService());
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger1 = target.CreateTagger<ClassificationTag>(buffer);
             var tagger2 = target.CreateTagger<ClassificationTag>(buffer);
@@ -70,8 +84,7 @@ namespace T4Toolbox.VisualStudio.Editor
         public void CreateTaggerDoesNotReturnTaggerWhenSyntaxColorizationIsDisabled()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(false);
-            var target = new TemplateClassificationTaggerProvider(options);
-            target.ClassificationRegistry = new FakeClassificationTypeRegistryService();
+            var target = new TemplateClassificationTaggerProvider(options, new FakeClassificationTypeRegistryService());
 
             Assert.Null(target.CreateTagger<ClassificationTag>(new FakeTextBuffer(string.Empty)));
         }

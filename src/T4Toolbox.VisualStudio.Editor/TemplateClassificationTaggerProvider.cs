@@ -4,6 +4,7 @@
 
 namespace T4Toolbox.VisualStudio.Editor
 {
+    using System;
     using System.ComponentModel.Composition;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Classification;
@@ -14,23 +15,30 @@ namespace T4Toolbox.VisualStudio.Editor
     internal sealed class TemplateClassificationTaggerProvider : ITaggerProvider
     {
         private readonly ITemplateEditorOptions options;
+        private readonly IClassificationTypeRegistryService classificationTypeRegistry;
 
         [ImportingConstructor]
-        public TemplateClassificationTaggerProvider(ITemplateEditorOptions options)
+        public TemplateClassificationTaggerProvider(ITemplateEditorOptions options, IClassificationTypeRegistryService classificationTypeRegistry)
         {
-            // TODO: throw ArgumentNullException
-            this.options = options;
-        }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
-        // TODO: make private field, initialized by constructor
-        [Import]
-        internal IClassificationTypeRegistryService ClassificationRegistry { private get; set; }
+            if (classificationTypeRegistry == null)
+            {
+                throw new ArgumentNullException(nameof(classificationTypeRegistry));
+            }
+
+            this.options = options;
+            this.classificationTypeRegistry = classificationTypeRegistry;
+        }
 
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
             if (this.options.SyntaxColorizationEnabled)
             {
-                return buffer.Properties.GetOrCreateSingletonProperty(() => new TemplateClassificationTagger(buffer, this.ClassificationRegistry)) as ITagger<T>;
+                return buffer.Properties.GetOrCreateSingletonProperty(() => new TemplateClassificationTagger(buffer, this.classificationTypeRegistry)) as ITagger<T>;
             }
 
             return null;
