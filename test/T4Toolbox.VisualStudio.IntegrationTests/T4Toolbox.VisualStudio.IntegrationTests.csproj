@@ -66,7 +66,6 @@
     <Compile Include="ScriptFileGeneratorTest.cs" />
     <Compile Include="TransformationContextTest.cs" />
     <Compile Include="CustomToolParametersTest.cs" />
-    <Compile Include="TemplateErrorReporterProviderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\T4Toolbox.DirectiveProcessors\T4Toolbox.DirectiveProcessors.csproj">

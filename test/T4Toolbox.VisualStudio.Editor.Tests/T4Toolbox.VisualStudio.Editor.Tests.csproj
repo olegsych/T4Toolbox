@@ -75,6 +75,7 @@
     <Compile Include="TemplateCompletionHandlerTest.cs" />
     <Compile Include="TemplateCompletionSourceProviderTest.cs" />
     <Compile Include="TemplateCompletionSourceTest.cs" />
+    <Compile Include="TemplateErrorReporterProviderTest.cs" />
     <Compile Include="TemplateErrorTaggerProviderTest.cs" />
     <Compile Include="TemplateErrorTaggerTest.cs" />
     <Compile Include="TemplateOutliningTaggerProviderTest.cs" />
