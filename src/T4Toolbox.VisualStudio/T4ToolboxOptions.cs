@@ -6,6 +6,7 @@ namespace T4Toolbox.VisualStudio
 {
     using System;
     using System.ComponentModel;
+    using System.ComponentModel.Composition;
     using System.Diagnostics;
     using System.Globalization;
     using System.Runtime.CompilerServices;
@@ -47,7 +48,7 @@ namespace T4Toolbox.VisualStudio
         /// <remarks>
         /// This object is used to subscribe to property change notifications by the tagger.
         /// </remarks>
-        // TODO: Export and test
+        [Export(typeof(ITemplateEditorOptions))]
         public static T4ToolboxOptions Instance
         {
             get
@@ -187,7 +188,7 @@ namespace T4Toolbox.VisualStudio
 
         public void LoadSettingsFromXml(IVsSettingsReader reader)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void SaveSettingsToStorage()
@@ -211,7 +212,7 @@ namespace T4Toolbox.VisualStudio
 
         public void SaveSettingsToXml(IVsSettingsWriter writer)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void ResetSettings()

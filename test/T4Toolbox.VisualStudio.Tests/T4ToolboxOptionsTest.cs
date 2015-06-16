@@ -5,10 +5,12 @@
 namespace T4Toolbox.VisualStudio.Tests
 {
     using System;
+    using System.ComponentModel.Composition.Hosting;
     using System.IO;
     using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.Win32;
+    using T4Toolbox.VisualStudio.Editor;
 
     [TestClass]
     public sealed class T4ToolboxOptionsTest : IDisposable
@@ -35,6 +37,16 @@ namespace T4Toolbox.VisualStudio.Tests
         {
             var options = new TestableT4ToolboxOptions(this.GetTestRegistryKey);
             Assert.IsFalse(options.BoolPropertyWithoutDefaultValueAttribute);
+        }
+
+        [TestMethod]
+        public void ClassExportsITemplateEditorOptionsForConsumptionByEditorClasses()
+        {
+            var catalog = new TypeCatalog(typeof(T4ToolboxOptions));
+            var container = new CompositionContainer(catalog);
+
+            Lazy<ITemplateEditorOptions> export = container.GetExport<ITemplateEditorOptions>();
+            Assert.IsInstanceOfType(export.Value, typeof(T4ToolboxOptions));
         }
 
         #region CompletionListsEnabled

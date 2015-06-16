@@ -80,6 +80,10 @@
       <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
       <Name>T4Toolbox.TemplateAnalysis</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
+      <Project>{fde953d3-ad27-4398-8ef4-293c0cebdc3e}</Project>
+      <Name>T4Toolbox.VisualStudio.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj">
       <Project>{1E1E9161-CBE4-4538-928C-539AA5E70153}</Project>
       <Name>T4Toolbox.VisualStudio</Name>
