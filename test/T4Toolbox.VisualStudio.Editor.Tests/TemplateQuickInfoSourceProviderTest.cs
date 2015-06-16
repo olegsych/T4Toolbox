@@ -6,6 +6,7 @@ namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
     using System.ComponentModel.Composition;
+    using System.ComponentModel.Composition.Hosting;
     using System.Linq;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Utilities;
@@ -56,6 +57,18 @@ namespace T4Toolbox.VisualStudio.Editor
         public void TemplateQuickInfoSourceProviderSpecifiesOrderAttributeRequiredByVisualStudio()
         {
             Assert.Equal(1, typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<OrderAttribute>().Count());
+        }
+
+        [Fact]
+        public void TemplateQuickInfoSourceProviderCanBeConstructedByVisualStudio()
+        {
+            var catalog = new TypeCatalog(
+                typeof(TemplateQuickInfoSourceProvider),
+                typeof(SubstituteExporter<ITemplateEditorOptions>));
+            var container = new CompositionContainer(catalog);
+
+            Lazy<IQuickInfoSourceProvider> export = container.GetExport<IQuickInfoSourceProvider>();
+            Assert.IsType<TemplateQuickInfoSourceProvider>(export.Value);
         }
 
         [Fact]

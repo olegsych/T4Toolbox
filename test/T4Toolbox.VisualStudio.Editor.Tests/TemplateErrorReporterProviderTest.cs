@@ -6,6 +6,7 @@ namespace T4Toolbox.VisualStudio.Editor.Tests
 {
     using System;
     using System.ComponentModel.Composition;
+    using System.ComponentModel.Composition.Hosting;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
@@ -46,6 +47,20 @@ namespace T4Toolbox.VisualStudio.Editor.Tests
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateErrorReporterProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
             Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
+        }
+
+        [Fact]
+        public void ClassCanBeConstructedByVisualStudio()
+        {
+            var catalog = new TypeCatalog(
+                typeof(TemplateErrorReporterProvider),
+                typeof(SubstituteExporter<ITemplateEditorOptions>),
+                typeof(SubstituteExporter<SVsServiceProvider>),
+                typeof(SubstituteExporter<ITextDocumentFactoryService>));
+            var container = new CompositionContainer(catalog);
+
+            Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
+            Assert.IsType<TemplateErrorReporterProvider>(export.Value);
         }
 
         [Fact]

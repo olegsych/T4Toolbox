@@ -15,6 +15,7 @@ namespace T4Toolbox.VisualStudio.Editor
     {
         private readonly ITemplateEditorOptions options;
 
+        [ImportingConstructor]
         public TemplateOutliningTaggerProvider(ITemplateEditorOptions options)
         {
             if (options == null)

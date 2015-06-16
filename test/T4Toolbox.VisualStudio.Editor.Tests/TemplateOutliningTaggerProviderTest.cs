@@ -6,6 +6,7 @@ namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
     using System.ComponentModel.Composition;
+    using System.ComponentModel.Composition.Hosting;
     using Microsoft.VisualStudio.Text.Tagging;
     using Microsoft.VisualStudio.Utilities;
     using NSubstitute;
@@ -50,6 +51,18 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateOutliningTaggerProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
             Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
+        }
+
+        [Fact]
+        public void TemplateOutliningTaggerProviderCanBeConstructedByVisualStudio()
+        {
+            var catalog = new TypeCatalog(
+                typeof(TemplateOutliningTaggerProvider),
+                typeof(SubstituteExporter<ITemplateEditorOptions>));
+            var container = new CompositionContainer(catalog);
+
+            Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
+            Assert.IsType<TemplateOutliningTaggerProvider>(export.Value);           
         }
 
         [Fact]

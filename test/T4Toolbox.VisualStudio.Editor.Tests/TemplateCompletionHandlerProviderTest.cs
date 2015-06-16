@@ -6,6 +6,7 @@ namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
     using System.ComponentModel.Composition;
+    using System.ComponentModel.Composition.Hosting;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Microsoft.VisualStudio.Editor;
@@ -50,6 +51,22 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             ContentTypeAttribute attribute = typeof(TemplateCompletionHandlerProvider).GetCustomAttributes(false).OfType<ContentTypeAttribute>().Single();
             Assert.Equal(TemplateContentType.Name, attribute.ContentTypes);
+        }
+
+        [Fact]
+        public void ClassCanBeConstructedByVisualStudio()
+        {
+            var catalog = new TypeCatalog(
+                typeof(TemplateCompletionHandlerProvider),
+                typeof(SubstituteExporter<ITemplateEditorOptions>),
+                typeof(SubstituteExporter<IVsEditorAdaptersFactoryService>),
+                typeof(SubstituteExporter<SVsServiceProvider>),
+                typeof(SubstituteExporter<ICompletionBroker>));
+
+            var container = new CompositionContainer(catalog);
+
+            Lazy<IVsTextViewCreationListener> export = container.GetExport<IVsTextViewCreationListener>();
+            Assert.IsType<TemplateCompletionHandlerProvider>(export.Value);
         }
 
         [Fact]

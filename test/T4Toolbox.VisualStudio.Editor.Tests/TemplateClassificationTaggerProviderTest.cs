@@ -6,6 +6,7 @@ namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
     using System.ComponentModel.Composition;
+    using System.ComponentModel.Composition.Hosting;
     using Microsoft.VisualStudio.Text.Classification;
     using Microsoft.VisualStudio.Text.Tagging;
     using Microsoft.VisualStudio.Utilities;
@@ -45,6 +46,19 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateClassificationTaggerProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
             Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
+        }
+
+        [Fact]
+        public void TemplateClassificationTaggerProviderCanBeConstructedByVisualStudio()
+        {
+            var catalog = new TypeCatalog(
+                typeof(TemplateClassificationTaggerProvider),
+                typeof(SubstituteExporter<ITemplateEditorOptions>),
+                typeof(SubstituteExporter<IClassificationTypeRegistryService>));
+            var container = new CompositionContainer(catalog);
+
+            Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
+            Assert.IsType<TemplateClassificationTaggerProvider>(export.Value);
         }
 
         [Fact]
