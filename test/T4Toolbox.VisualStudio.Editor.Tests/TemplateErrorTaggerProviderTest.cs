@@ -12,62 +12,63 @@ namespace T4Toolbox.VisualStudio.Editor
     using NSubstitute;
     using Xunit;
 
-    public class TemplateErrorTaggerProviderTest
+    public static class TemplateErrorTaggerProviderTest
     {
         [Fact]
-        public void TemplateErrorTaggerProviderIsInternalAndNotMeantForPublicConsumption()
+        public static void TemplateErrorTaggerProviderIsInternalAndNotMeantForPublicConsumption()
         {
             Assert.False(typeof(TemplateErrorTaggerProvider).IsPublic);
         }
 
         [Fact]
-        public void TemplateErrorTaggerProviderIsSealedAndNotMeantToHaveChildClasses()
+        public static void TemplateErrorTaggerProviderIsSealedAndNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateErrorTaggerProvider).IsSealed);
         }
 
         [Fact]
-        public void TemplateErrorTaggerProviderExportsITaggerProvider()
+        public static void TemplateErrorTaggerProviderExportsITaggerProvider()
         {
             var export = (ExportAttribute)typeof(TemplateErrorTaggerProvider).GetCustomAttributes(typeof(ExportAttribute), false)[0];
             Assert.Equal(typeof(ITaggerProvider), export.ContractType);
         }
 
         [Fact]
-        public void TemplateErrorTaggerProviderSpecifiesErrorTagType()
+        public static void TemplateErrorTaggerProviderSpecifiesErrorTagType()
         {
             var tagType = (TagTypeAttribute)typeof(TemplateErrorTaggerProvider).GetCustomAttributes(typeof(TagTypeAttribute), false)[0];
             Assert.Equal(typeof(ErrorTag), tagType.TagTypes);
         }
 
         [Fact]
-        public void TemplateErrorTaggerProviderAppliesOnlyToTextTemplateContentType()
+        public static void TemplateErrorTaggerProviderAppliesOnlyToTextTemplateContentType()
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateErrorTaggerProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
             Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
         }
 
         [Fact]
-        public void TemplateErrorTaggerProviderCanBeConstructedByVisualStudio()
+        public static void TemplateErrorTaggerProviderCanBeConstructedByVisualStudio()
         {
-            var catalog = new TypeCatalog(
+            using (var catalog = new TypeCatalog(
                 typeof(TemplateErrorTaggerProvider),
-                typeof(SubstituteExporter<ITemplateEditorOptions>));
-            var container = new CompositionContainer(catalog);
-
-            Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
-            Assert.IsType<TemplateErrorTaggerProvider>(export.Value);
+                typeof(SubstituteExporter<ITemplateEditorOptions>)))
+            using (var container = new CompositionContainer(catalog))
+            {
+                Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
+                Assert.IsType<TemplateErrorTaggerProvider>(export.Value);
+            }
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateErrorTaggerProvider(null));
             Assert.Equal("options", e.ParamName);
         }
 
         [Fact]
-        public void CreateTaggerThrowsArgumentNullExceptionWhenBufferIsNullToFailFast()
+        public static void CreateTaggerThrowsArgumentNullExceptionWhenBufferIsNullToFailFast()
         {
             var provider = new TemplateErrorTaggerProvider(Substitute.For<ITemplateEditorOptions>());
             var e = Assert.Throws<ArgumentNullException>(() => provider.CreateTagger<ErrorTag>(null));
@@ -75,7 +76,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTaggerReturnsTemplateErrorTagger()
+        public static void CreateTaggerReturnsTemplateErrorTagger()
         {
             ITemplateEditorOptions options = OptionsWithErrorUnderliningEnabled(true);
             var target = new TemplateErrorTaggerProvider(options);
@@ -83,7 +84,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTaggerReturnsSameTaggerWhenCalledMultipleTimesForSameBuffer()
+        public static void CreateTaggerReturnsSameTaggerWhenCalledMultipleTimesForSameBuffer()
         {
             ITemplateEditorOptions options = OptionsWithErrorUnderliningEnabled(true);
             var target = new TemplateErrorTaggerProvider(options);
@@ -94,7 +95,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTaggerDoesNotReturnTaggerWhenErrorUnderliningIsDisabled()
+        public static void CreateTaggerDoesNotReturnTaggerWhenErrorUnderliningIsDisabled()
         {
             ITemplateEditorOptions options = OptionsWithErrorUnderliningEnabled(false);
             var target = new TemplateErrorTaggerProvider(options);

@@ -19,93 +19,93 @@ namespace T4Toolbox.VisualStudio.Editor
     using NSubstitute;
     using Xunit;
 
-    public class TemplateCompletionHandlerProviderTest
+    public static class TemplateCompletionHandlerProviderTest
     {
         [Fact]
-        public void TemplateCompletionHandlerProviderIsInternalBecauseItIsOnlyMeantToBeImportedByVisualStudio()
+        public static void TemplateCompletionHandlerProviderIsInternalBecauseItIsOnlyMeantToBeImportedByVisualStudio()
         {
             Assert.False(typeof(TemplateCompletionHandlerProvider).IsPublic);
         }
 
         [Fact]
-        public void TemplateCompletionHandlerProviderIsSealedBecauseItIsNotMeantToHaveChildClasses()
+        public static void TemplateCompletionHandlerProviderIsSealedBecauseItIsNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateCompletionHandlerProvider).IsSealed);
         }
 
         [Fact]
-        public void TemplateCompletionHandlerProviderImplementsIVsTextViewCreationListenerToDetectWhenTemplateTextViewIsCreated()
+        public static void TemplateCompletionHandlerProviderImplementsIVsTextViewCreationListenerToDetectWhenTemplateTextViewIsCreated()
         {
             Assert.Equal(typeof(IVsTextViewCreationListener), typeof(TemplateCompletionHandlerProvider).GetInterfaces().Single());
         }
 
         [Fact]
-        public void TemplateCompletionHandlerExportsIVsTextViewCreationListener()
+        public static void TemplateCompletionHandlerExportsIVsTextViewCreationListener()
         {
             ExportAttribute attribute = typeof(TemplateCompletionHandlerProvider).GetCustomAttributes(false).OfType<ExportAttribute>().Single();
             Assert.Equal(typeof(IVsTextViewCreationListener), attribute.ContractType);
         }
 
         [Fact]
-        public void TemplateCompletionHandlerAppliesOnlyToTextTemplateContentType()
+        public static void TemplateCompletionHandlerAppliesOnlyToTextTemplateContentType()
         {
             ContentTypeAttribute attribute = typeof(TemplateCompletionHandlerProvider).GetCustomAttributes(false).OfType<ContentTypeAttribute>().Single();
             Assert.Equal(TemplateContentType.Name, attribute.ContentTypes);
         }
 
         [Fact]
-        public void ClassCanBeConstructedByVisualStudio()
+        public static void ClassCanBeConstructedByVisualStudio()
         {
-            var catalog = new TypeCatalog(
+            using (var catalog = new TypeCatalog(
                 typeof(TemplateCompletionHandlerProvider),
                 typeof(SubstituteExporter<ITemplateEditorOptions>),
                 typeof(SubstituteExporter<IVsEditorAdaptersFactoryService>),
                 typeof(SubstituteExporter<SVsServiceProvider>),
-                typeof(SubstituteExporter<ICompletionBroker>));
-
-            var container = new CompositionContainer(catalog);
-
-            Lazy<IVsTextViewCreationListener> export = container.GetExport<IVsTextViewCreationListener>();
-            Assert.IsType<TemplateCompletionHandlerProvider>(export.Value);
+                typeof(SubstituteExporter<ICompletionBroker>)))
+            using (var container = new CompositionContainer(catalog))
+            {
+                Lazy<IVsTextViewCreationListener> export = container.GetExport<IVsTextViewCreationListener>();
+                Assert.IsType<TemplateCompletionHandlerProvider>(export.Value);
+            }
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateCompletionHandlerProvider(null, Substitute.For<IVsEditorAdaptersFactoryService>(), Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>()));
             Assert.Equal("options", e.ParamName);
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenEditorAdapterFactoryIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenEditorAdapterFactoryIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateCompletionHandlerProvider(Substitute.For<ITemplateEditorOptions>(), null, Substitute.For<SVsServiceProvider>(), Substitute.For<ICompletionBroker>()));
             Assert.Equal("editorAdapterFactory", e.ParamName);
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenServiceProviderIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenServiceProviderIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateCompletionHandlerProvider(Substitute.For<ITemplateEditorOptions>(), Substitute.For<IVsEditorAdaptersFactoryService>(), null, Substitute.For<ICompletionBroker>()));
             Assert.Equal("serviceProvider", e.ParamName);
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenCompletionBrokerIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenCompletionBrokerIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateCompletionHandlerProvider(Substitute.For<ITemplateEditorOptions>(), Substitute.For<IVsEditorAdaptersFactoryService>(), Substitute.For<SVsServiceProvider>(), null));
             Assert.Equal("completionBroker", e.ParamName);
         }
 
         [Fact]
-        public void TemplateCompletionHandlerSpecifiesEditableTextViewRoleRequiredByVisualStudioForTextViewCreationListeners()
+        public static void TemplateCompletionHandlerSpecifiesEditableTextViewRoleRequiredByVisualStudioForTextViewCreationListeners()
         {
             TextViewRoleAttribute attribute = typeof(TemplateCompletionHandlerProvider).GetCustomAttributes(false).OfType<TextViewRoleAttribute>().Single();
             Assert.Equal(PredefinedTextViewRoles.Editable, attribute.TextViewRoles);
         }
 
         [Fact]
-        public void TextViewCreatedCreatesTemplateCompletionHandlerWhenViewAdapterHasTextView()
+        public static void TextViewCreatedCreatesTemplateCompletionHandlerWhenViewAdapterHasTextView()
         {
             var viewProperties = new PropertyCollection();
             
@@ -128,7 +128,7 @@ namespace T4Toolbox.VisualStudio.Editor
 
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Microsoft.VisualStudio.TextManager.Interop.IVsTextView.AddCommandFilter(Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget,Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget@)", Justification = "This test does not call AddCommandFilter method; it only asserts it was.")]
         [Fact]
-        public void TextViewCreatedAddsTemplateCompletionHandlerToTextViewCommandFilters()
+        public static void TextViewCreatedAddsTemplateCompletionHandlerToTextViewCommandFilters()
         {
             var viewProperties = new PropertyCollection();
          
@@ -151,7 +151,7 @@ namespace T4Toolbox.VisualStudio.Editor
 
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Microsoft.VisualStudio.TextManager.Interop.IVsTextView.AddCommandFilter(Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget,Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget@)", Justification = "This test does not call AddCommandFilter method; it only asserts it was.")] 
         [Fact]
-        public void TestViewCreatedSetsNextHandlerOfTemplateCompletionHandler()
+        public static void TestViewCreatedSetsNextHandlerOfTemplateCompletionHandler()
         {
             var viewProperties = new PropertyCollection();
 
@@ -173,7 +173,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TextViewCreatedDoesNotCreateTemplateCompletionHandlerWhenCompletionListsAreDisabled()
+        public static void TextViewCreatedDoesNotCreateTemplateCompletionHandlerWhenCompletionListsAreDisabled()
         {
             ITemplateEditorOptions options = OptionsWithCompletionListsEnabled(false);
             var adapterFactory = Substitute.For<IVsEditorAdaptersFactoryService>();
@@ -186,7 +186,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TextViewCreatedDoesNotCreateTemplateCompletionHandlerWhenViewAdapterDoesNotHaveTextView()
+        public static void TextViewCreatedDoesNotCreateTemplateCompletionHandlerWhenViewAdapterDoesNotHaveTextView()
         {
             ITemplateEditorOptions options = OptionsWithCompletionListsEnabled(true);
             var adapterFactory = Substitute.For<IVsEditorAdaptersFactoryService>();

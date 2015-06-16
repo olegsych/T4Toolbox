@@ -11,22 +11,22 @@ namespace T4Toolbox.VisualStudio.Editor
     using Xunit;
     using Template = T4Toolbox.TemplateAnalysis.Template;
 
-    public class TemplateAnalyzerTest
+    public static class TemplateAnalyzerTest
     {
         [Fact]
-        public void TemplateAnalyzerIsInternalAndNotIntendedForConsumptionOutsideOfT4Toolbox()
+        public static void TemplateAnalyzerIsInternalAndNotIntendedForConsumptionOutsideOfT4Toolbox()
         {
             Assert.True(typeof(TemplateAnalyzer).IsNotPublic);
         }
 
         [Fact]
-        public void TemplateAnalyzerIsSealedAndNotIntendedToHaveChildClasses()
+        public static void TemplateAnalyzerIsSealedAndNotIntendedToHaveChildClasses()
         {
             Assert.True(typeof(TemplateAnalyzer).IsSealed);
         }
 
         [Fact]
-        public void CurrentAnalysisReturnsLastTemplateAnalysisResult()
+        public static void CurrentAnalysisReturnsLastTemplateAnalysisResult()
         {
             var buffer = new FakeTextBuffer("<#@");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
@@ -35,7 +35,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CurrentAnalysisReturnsSyntaxErrorsDetectedInTextBuffer()
+        public static void CurrentAnalysisReturnsSyntaxErrorsDetectedInTextBuffer()
         {
             var buffer = new FakeTextBuffer("<#@");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
@@ -43,7 +43,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CurrentAnalysisReturnsSemanticErrorsDetectedInTextBuffer()
+        public static void CurrentAnalysisReturnsSemanticErrorsDetectedInTextBuffer()
         {
             var buffer = new FakeTextBuffer("<#@ template bad=\"puppy\" #>");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
@@ -51,7 +51,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CurrentAnalysisReturnsUpdatedErrorsWhenTextBufferChanges()
+        public static void CurrentAnalysisReturnsUpdatedErrorsWhenTextBufferChanges()
         {
             var buffer = new FakeTextBuffer("<#@");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
@@ -62,7 +62,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CurrentAnalysisReturnsTemplateParsedFromTextBuffer()
+        public static void CurrentAnalysisReturnsTemplateParsedFromTextBuffer()
         {
             var buffer = new FakeTextBuffer("<#@ template language=\"VB\" #>");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
@@ -72,7 +72,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CurrentAnalysisReturnsDefaultTemplateIfParserCouldNotCreateOne()
+        public static void CurrentAnalysisReturnsDefaultTemplateIfParserCouldNotCreateOne()
         {
             var buffer = new FakeTextBuffer("<#@ t");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
@@ -82,7 +82,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CurrentAnalysisReturnsUpdatedTemplateWhenTextBufferChanges()
+        public static void CurrentAnalysisReturnsUpdatedTemplateWhenTextBufferChanges()
         {
             var buffer = new FakeTextBuffer("<#@ template language=\"VB\" #>");
             var target = TemplateAnalyzer.GetOrCreate(buffer);
@@ -93,7 +93,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CurrentAnalysisReturnsTextSnapshotForWhichItWasCreated()
+        public static void CurrentAnalysisReturnsTextSnapshotForWhichItWasCreated()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var analyzer = TemplateAnalyzer.GetOrCreate(buffer);
@@ -102,7 +102,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void GetOrCreateReturnsNewTemplateAnalyzerFirstTimeItIsRequestedForTextBuffer()
+        public static void GetOrCreateReturnsNewTemplateAnalyzerFirstTimeItIsRequestedForTextBuffer()
         {
             ITextBuffer buffer = new FakeTextBuffer(string.Empty);
             TemplateAnalyzer analyzer = TemplateAnalyzer.GetOrCreate(buffer);
@@ -110,7 +110,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void GetOrCreateReturnsExistingTemplateAnalyzerSecondTimeItIsRequestedForTextBuffer()
+        public static void GetOrCreateReturnsExistingTemplateAnalyzerSecondTimeItIsRequestedForTextBuffer()
         {
             ITextBuffer buffer = new FakeTextBuffer(string.Empty);
             TemplateAnalyzer analyzer1 = TemplateAnalyzer.GetOrCreate(buffer);
@@ -119,7 +119,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
-        public void GetOrCreateDoesNotPreventGarbageCollectionOfPreviouslyCreatedTemplateAnalyzers()
+        public static void GetOrCreateDoesNotPreventGarbageCollectionOfPreviouslyCreatedTemplateAnalyzers()
         {
             var analyzer = new WeakReference(TemplateAnalyzer.GetOrCreate(new FakeTextBuffer(string.Empty)));
 
@@ -130,7 +130,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
-        public void GetOrCreateDoesNotPreventGarbageCollectionOfTextBuffers()
+        public static void GetOrCreateDoesNotPreventGarbageCollectionOfTextBuffers()
         {
             var buffer = new WeakReference(new FakeTextBuffer(string.Empty));
             TemplateAnalyzer.GetOrCreate((ITextBuffer)buffer.Target);
@@ -142,7 +142,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TemplateChangedEventIsRaisedWhenTextBufferChanges()
+        public static void TemplateChangedEventIsRaisedWhenTextBufferChanges()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var target = TemplateAnalyzer.GetOrCreate(buffer);
@@ -153,7 +153,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TemplateChangeEventArgumentSuppliesCurrentTemplateAnalysis()
+        public static void TemplateChangeEventArgumentSuppliesCurrentTemplateAnalysis()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var target = TemplateAnalyzer.GetOrCreate(buffer);

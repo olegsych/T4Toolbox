@@ -10,46 +10,46 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio.Utilities;
     using Xunit;
 
-    public class TemplateCompletionSourceProviderTest
+    public static class TemplateCompletionSourceProviderTest
     {
         [Fact]
-        public void TemplateCompletionSourceProviderIsInternalAndNotMeantForPublicConsumption()
+        public static void TemplateCompletionSourceProviderIsInternalAndNotMeantForPublicConsumption()
         {
             Assert.False(typeof(TemplateCompletionSourceProvider).IsPublic);
         }
 
         [Fact]
-        public void TemplateCompletionSourceProviderIsSealedAndNotMeantToHaveChildClasses()
+        public static void TemplateCompletionSourceProviderIsSealedAndNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateCompletionSourceProvider).IsSealed);
         }
 
         [Fact]
-        public void TemplateCompletionSourceProviderImplementsICompletionSourceProviderInterfaceExpectedByVisualStudioEditor()
+        public static void TemplateCompletionSourceProviderImplementsICompletionSourceProviderInterfaceExpectedByVisualStudioEditor()
         {
             Assert.Equal(typeof(ICompletionSourceProvider), typeof(TemplateCompletionSourceProvider).GetInterfaces()[0]);
         }
 
         [Fact]
-        public void TemplateCompletionSourceProviderExportsICompletionSourceProviderInterfaceExpectedByVisualStudioEditor()
+        public static void TemplateCompletionSourceProviderExportsICompletionSourceProviderInterfaceExpectedByVisualStudioEditor()
         {
             Assert.Equal(typeof(ICompletionSourceProvider), typeof(TemplateCompletionSourceProvider).GetCustomAttributes(false).OfType<ExportAttribute>().Single().ContractType);
         }
 
         [Fact]
-        public void TemplateCompletionSourceProviderSpecifiesTextTemplateContentType()
+        public static void TemplateCompletionSourceProviderSpecifiesTextTemplateContentType()
         {
             Assert.Equal(TemplateContentType.Name, typeof(TemplateCompletionSourceProvider).GetCustomAttributes(false).OfType<ContentTypeAttribute>().Single().ContentTypes);
         }
 
         [Fact]
-        public void TemplateCompletionSourceProviderSpecifiesNameRequiredByVisualStudioEditor()
+        public static void TemplateCompletionSourceProviderSpecifiesNameRequiredByVisualStudioEditor()
         {
             Assert.False(string.IsNullOrEmpty(typeof(TemplateCompletionSourceProvider).GetCustomAttributes(false).OfType<NameAttribute>().Single().Name));
         }
 
         [Fact]
-        public void TryCreateCompletionSourceReturnsTemplateCompletionSource()
+        public static void TryCreateCompletionSourceReturnsTemplateCompletionSource()
         {
             var provider = new TemplateCompletionSourceProvider();
             var buffer = new FakeTextBuffer(string.Empty);
@@ -57,7 +57,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TryCreateCompletionSourceReturnsSameCompletionSourceForSameBuffer()
+        public static void TryCreateCompletionSourceReturnsSameCompletionSourceForSameBuffer()
         {
             var provider = new TemplateCompletionSourceProvider();
             var buffer = new FakeTextBuffer(string.Empty);

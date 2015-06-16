@@ -7,7 +7,7 @@ namespace T4Toolbox.VisualStudio.Editor
     using System.ComponentModel.Composition;
     using NSubstitute;
 
-    internal class SubstituteExporter<T> where T: class
+    internal class SubstituteExporter<T> where T : class
     {
         [Export]
         public T Instance = Substitute.For<T>(); 

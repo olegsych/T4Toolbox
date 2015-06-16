@@ -10,49 +10,49 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio.Text;
     using Xunit;
 
-    public class TemplateCompletionSourceTest
+    public static class TemplateCompletionSourceTest
     {
         [Fact]
-        public void TemplateCompletionSourceIsInternalAndNotMeantForPublicConsumption()
+        public static void TemplateCompletionSourceIsInternalAndNotMeantForPublicConsumption()
         {
             Assert.False(typeof(TemplateCompletionSource).IsPublic);
         }
 
         [Fact]
-        public void TemplateCompletionSourceIsSealedAndNotMeantToHaveChildClasses()
+        public static void TemplateCompletionSourceIsSealedAndNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateCompletionSource).IsSealed);
         }
 
         [Fact]
-        public void TemplateCompletionSourceImplementsICompletionSourceExpectedByVisualStudioEditor()
+        public static void TemplateCompletionSourceImplementsICompletionSourceExpectedByVisualStudioEditor()
         {
             Assert.Equal(typeof(ICompletionSource), typeof(TemplateCompletionSource).GetInterfaces()[0]);
         }
 
         [Fact]
-        public void AugmentCompletionSessionReturnsCompletionSetWhenTriggerPointIsInsideSyntaxNodeThatSupportsCompletions()
+        public static void AugmentCompletionSessionReturnsCompletionSetWhenTriggerPointIsInsideSyntaxNodeThatSupportsCompletions()
         {
             IList<CompletionSet> completionSets = AugmentCompletionSession("<#@ t #>", 5);
             Assert.Equal(1, completionSets.Count);
         }
 
         [Fact]
-        public void AugmentCompletionSessionSortsCompletionsByDisplayTextToMakeThemEasierToRead()
+        public static void AugmentCompletionSessionSortsCompletionsByDisplayTextToMakeThemEasierToRead()
         {
             CompletionSet completionSet = AugmentCompletionSession("<#@ template culture=\"en\" #>", 23)[0];
             Assert.Equal(completionSet.Completions.OrderBy(c => c.DisplayText).ToList(), completionSet.Completions.ToList());
         }
 
         [Fact]
-        public void AugmentCompletionSessionDoesNotReturnCompletionSetWhenTriggerPointIsInsideSyntaxNodeThatDoesNotSupportCompletions()
+        public static void AugmentCompletionSessionDoesNotReturnCompletionSetWhenTriggerPointIsInsideSyntaxNodeThatDoesNotSupportCompletions()
         {
             IList<CompletionSet> completionSets = AugmentCompletionSession("<#@ t #>", 1);
             Assert.Equal(0, completionSets.Count);
         }
 
         [Fact]
-        public void AugmentCompletionSessionReturnsCompletionSetApplicableToTheSpanOfSyntaxNodeThatContainsTriggerPoint()
+        public static void AugmentCompletionSessionReturnsCompletionSetApplicableToTheSpanOfSyntaxNodeThatContainsTriggerPoint()
         {
             ITextSnapshot snapshot;
             CompletionSet completionSet = AugmentCompletionSession("<#@ t #>", 5, out snapshot).Single();
@@ -60,7 +60,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void DisposeRemovesCompletionSourceFromTextBufferProperties()
+        public static void DisposeRemovesCompletionSourceFromTextBufferProperties()
         {
             ITextBuffer buffer = new FakeTextBuffer(string.Empty);
             var completionSource = buffer.Properties.GetOrCreateSingletonProperty(() => new TemplateCompletionSource(buffer));

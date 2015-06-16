@@ -13,73 +13,74 @@ namespace T4Toolbox.VisualStudio.Editor
     using NSubstitute;
     using Xunit;
 
-    public class TemplateQuickInfoSourceProviderTest
+    public static class TemplateQuickInfoSourceProviderTest
     {
         [Fact]
-        public void TemplateQuickInfoSourceProviderIsInternalAndNotMeantForPublicConsumption()
+        public static void TemplateQuickInfoSourceProviderIsInternalAndNotMeantForPublicConsumption()
         {
             Assert.False(typeof(TemplateQuickInfoSourceProvider).IsPublic);
         }
 
         [Fact]
-        public void TemplateQuickInfoSourceProviderIsSealedAndNotMeantToHaveChildClasses()
+        public static void TemplateQuickInfoSourceProviderIsSealedAndNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateQuickInfoSourceProvider).IsSealed);
         }
 
         [Fact]
-        public void TemplateQuickInfoSourceProviderImplementsIQuickSourceProviderInterface()
+        public static void TemplateQuickInfoSourceProviderImplementsIQuickSourceProviderInterface()
         {
             Assert.Equal(typeof(IQuickInfoSourceProvider), typeof(TemplateQuickInfoSourceProvider).GetInterfaces()[0]);
         }
 
         [Fact]
-        public void TemplateQuickInfoSourceProviderExportsIQuickSourceProviderInterface()
+        public static void TemplateQuickInfoSourceProviderExportsIQuickSourceProviderInterface()
         {
             ExportAttribute attribute = typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<ExportAttribute>().Single();
             Assert.Equal(typeof(IQuickInfoSourceProvider), attribute.ContractType);
         }
 
         [Fact]
-        public void TemplateQuickInfoSourceProviderSpecifiesTextTemplateContentType()
+        public static void TemplateQuickInfoSourceProviderSpecifiesTextTemplateContentType()
         {
             ContentTypeAttribute attribute = typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<ContentTypeAttribute>().Single();
             Assert.Equal(TemplateContentType.Name, attribute.ContentTypes);
         }
 
         [Fact]
-        public void TemplateQuickInfoSourceProviderSpecifiesNameAttributeRequiredByVisualStudio()
+        public static void TemplateQuickInfoSourceProviderSpecifiesNameAttributeRequiredByVisualStudio()
         {
             Assert.Equal(1, typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<NameAttribute>().Count());
         }
 
         [Fact]
-        public void TemplateQuickInfoSourceProviderSpecifiesOrderAttributeRequiredByVisualStudio()
+        public static void TemplateQuickInfoSourceProviderSpecifiesOrderAttributeRequiredByVisualStudio()
         {
             Assert.Equal(1, typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<OrderAttribute>().Count());
         }
 
         [Fact]
-        public void TemplateQuickInfoSourceProviderCanBeConstructedByVisualStudio()
+        public static void TemplateQuickInfoSourceProviderCanBeConstructedByVisualStudio()
         {
-            var catalog = new TypeCatalog(
+            using (var catalog = new TypeCatalog(
                 typeof(TemplateQuickInfoSourceProvider),
-                typeof(SubstituteExporter<ITemplateEditorOptions>));
-            var container = new CompositionContainer(catalog);
-
-            Lazy<IQuickInfoSourceProvider> export = container.GetExport<IQuickInfoSourceProvider>();
-            Assert.IsType<TemplateQuickInfoSourceProvider>(export.Value);
+                typeof(SubstituteExporter<ITemplateEditorOptions>)))
+            using (var container = new CompositionContainer(catalog))
+            {
+                Lazy<IQuickInfoSourceProvider> export = container.GetExport<IQuickInfoSourceProvider>();
+                Assert.IsType<TemplateQuickInfoSourceProvider>(export.Value);
+            }
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateQuickInfoSourceProvider(null));
             Assert.Equal("options", e.ParamName);
         }
 
         [Fact]
-        public void CreateTaggerThrowsArgumentNullExceptionWhenBufferIsNullToFailFast()
+        public static void CreateTaggerThrowsArgumentNullExceptionWhenBufferIsNullToFailFast()
         {
             var provider = new TemplateQuickInfoSourceProvider(Substitute.For<ITemplateEditorOptions>());
             var e = Assert.Throws<ArgumentNullException>(() => provider.TryCreateQuickInfoSource(null));
@@ -87,7 +88,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TryCreateQuickInfoSourceReturnsTemplateQuickInfoSource()
+        public static void TryCreateQuickInfoSourceReturnsTemplateQuickInfoSource()
         {
             ITemplateEditorOptions options = OptionsWithQuickInfoTooltipsEnabled(true);
             var provider = new TemplateQuickInfoSourceProvider(options);
@@ -97,7 +98,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TryCreateQuickInfoSourceReturnsSameObjectWhenCalledMultipleTimesForSameBuffer()
+        public static void TryCreateQuickInfoSourceReturnsSameObjectWhenCalledMultipleTimesForSameBuffer()
         {
             ITemplateEditorOptions options = OptionsWithQuickInfoTooltipsEnabled(true);
             var provider = new TemplateQuickInfoSourceProvider(options);
@@ -108,7 +109,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TryCreateQuickInfoSourceReturnsNullWhenQuickInfoTooltipsAreDisabled()
+        public static void TryCreateQuickInfoSourceReturnsNullWhenQuickInfoTooltipsAreDisabled()
         {
             ITemplateEditorOptions options = OptionsWithQuickInfoTooltipsEnabled(false);
             var provider = new TemplateQuickInfoSourceProvider(options);

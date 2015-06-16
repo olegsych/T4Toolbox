@@ -6,40 +6,39 @@ namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.OLE.Interop;
     using NSubstitute;
     using Xunit;
 
-    public class TemplateCompletionHandlerTest
+    public static class TemplateCompletionHandlerTest
     {
         [Fact]
-        public void TemplateCompletionHandlerIsInternalBecauseItIsOnlyMeantToBeImportedByVisualStudio()
+        public static void TemplateCompletionHandlerIsInternalBecauseItIsOnlyMeantToBeImportedByVisualStudio()
         {
             Assert.False(typeof(TemplateCompletionHandler).IsPublic);
         }
 
         [Fact]
-        public void TemplateCompletionHandlerIsSealedBecauseItIsNotMeantToHaveChildClasses()
+        public static void TemplateCompletionHandlerIsSealedBecauseItIsNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateCompletionHandler).IsSealed);
         }
 
         [Fact]
-        public void TemplateCompletionHandlerImplementsIOleCommandTargetToInterceptKeystrokes()
+        public static void TemplateCompletionHandlerImplementsIOleCommandTargetToInterceptKeystrokes()
         {
             Assert.Equal(typeof(IOleCommandTarget), typeof(TemplateCompletionHandler).GetInterfaces()[0]);
         }
 
         [Fact(Skip = "Not Implemented")]
-        public void TestExecMethod()
+        public static void TestExecMethod()
         {
             // TODO: Test this
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Microsoft.VisualStudio.OLE.Interop.IOleCommandTarget.QueryStatus(System.Guid@,System.UInt32,Microsoft.VisualStudio.OLE.Interop.OLECMD[],System.IntPtr)", Justification = "This test does not call QueryStatus, it only asserts it was called.")]
         [Fact]
-        public void QueryStatusCallsNextCommandTargetToSupportDefaultCommandHandling()
+        public static void QueryStatusCallsNextCommandTargetToSupportDefaultCommandHandling()
         {
             var nextHandler = Substitute.For<IOleCommandTarget>();
             var handler = new TemplateCompletionHandler { NextHandler = nextHandler };

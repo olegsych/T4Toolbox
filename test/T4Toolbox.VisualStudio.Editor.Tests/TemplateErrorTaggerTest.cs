@@ -4,27 +4,28 @@
 
 namespace T4Toolbox.VisualStudio.Editor
 {
+    using System;
     using System.Linq;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
     using Xunit;
 
-    public class TemplateErrorTaggerTest
+    public static class TemplateErrorTaggerTest
     {
         [Fact]
-        public void TemplateErrorTaggerIsInternalAndNotIntendedForConsumptionOutsideOfT4Toolbox()
+        public static void TemplateErrorTaggerIsInternalAndNotIntendedForConsumptionOutsideOfT4Toolbox()
         {
             Assert.True(typeof(TemplateErrorTagger).IsNotPublic);
         }
 
         [Fact]
-        public void TemplateErrorTaggerIsSealedAndNotIntendedHaveChildClasses()
+        public static void TemplateErrorTaggerIsSealedAndNotIntendedHaveChildClasses()
         {
             Assert.True(typeof(TemplateErrorTagger).IsSealed);
         }
 
         [Fact]
-        public void GetTagsReturnsErrorSpanForSyntaxError()
+        public static void GetTagsReturnsErrorSpanForSyntaxError()
         {
             var buffer = new FakeTextBuffer("<#");
             var tagger = new TemplateErrorTagger(buffer);
@@ -33,11 +34,11 @@ namespace T4Toolbox.VisualStudio.Editor
             ITagSpan<ErrorTag> errorSpan = tagger.GetTags(snapshotSpans).Single();
 
             Assert.Equal(new Span(2, 0), errorSpan.Span);
-            Assert.Contains("#>", (string)errorSpan.Tag.ToolTipContent);
+            Assert.Contains("#>", (string)errorSpan.Tag.ToolTipContent, StringComparison.Ordinal);
         }
 
         [Fact]
-        public void GetTagsReturnsErrorSpanForSemanticError()
+        public static void GetTagsReturnsErrorSpanForSemanticError()
         {
             var buffer = new FakeTextBuffer("<#@ include file=\" \" #>");
             var tagger = new TemplateErrorTagger(buffer);
@@ -46,7 +47,7 @@ namespace T4Toolbox.VisualStudio.Editor
             ITagSpan<ErrorTag> errorSpan = tagger.GetTags(snapshotSpans).Single();
 
             Assert.Equal(new Span(12, 8), errorSpan.Span);
-            Assert.Contains("File", (string)errorSpan.Tag.ToolTipContent);
+            Assert.Contains("File", (string)errorSpan.Tag.ToolTipContent, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

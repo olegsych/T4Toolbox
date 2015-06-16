@@ -2,7 +2,7 @@
 //  Copyright © Oleg Sych. All Rights Reserved.
 // </copyright>
 
-namespace T4Toolbox.VisualStudio.Editor.Tests
+namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
     using System.ComponentModel.Composition;
@@ -14,78 +14,79 @@ namespace T4Toolbox.VisualStudio.Editor.Tests
     using NSubstitute;
     using Xunit;
 
-    public class TemplateErrorReporterProviderTest
+    public static class TemplateErrorReporterProviderTest
     {
         [Fact]
-        public void ClassIsInternalAndNotMeantForPublicConsumption()
+        public static void ClassIsInternalAndNotMeantForPublicConsumption()
         {
             Assert.False(typeof(TemplateErrorReporterProvider).IsPublic);
         }
 
         [Fact]
-        public void ClassIsSealedAndNotMeantToHaveChildClasses()
+        public static void ClassIsSealedAndNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateErrorReporterProvider).IsSealed);
         }
 
         [Fact]
-        public void ClassExportsITaggerProviderToInstantiateTemplateErrorReporterAtTheSameTimeWithTemplateErrorTagger()
+        public static void ClassExportsITaggerProviderToInstantiateTemplateErrorReporterAtTheSameTimeWithTemplateErrorTagger()
         {
             var export = (ExportAttribute)typeof(TemplateErrorReporterProvider).GetCustomAttributes(typeof(ExportAttribute), false)[0];
             Assert.Equal(typeof(ITaggerProvider), export.ContractType);
         }
 
         [Fact]
-        public void ClassSpecifiesErrorTagType()
+        public static void ClassSpecifiesErrorTagType()
         {
             var tagType = (TagTypeAttribute)typeof(TemplateErrorReporterProvider).GetCustomAttributes(typeof(TagTypeAttribute), false)[0];
             Assert.Equal(typeof(ErrorTag), tagType.TagTypes);
         }
 
         [Fact]
-        public void ClassAppliesOnlyToTextTemplateContentType()
+        public static void ClassAppliesOnlyToTextTemplateContentType()
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateErrorReporterProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
             Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
         }
 
         [Fact]
-        public void ClassCanBeConstructedByVisualStudio()
+        public static void ClassCanBeConstructedByVisualStudio()
         {
-            var catalog = new TypeCatalog(
+            using (var catalog = new TypeCatalog(
                 typeof(TemplateErrorReporterProvider),
                 typeof(SubstituteExporter<ITemplateEditorOptions>),
                 typeof(SubstituteExporter<SVsServiceProvider>),
-                typeof(SubstituteExporter<ITextDocumentFactoryService>));
-            var container = new CompositionContainer(catalog);
-
-            Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
-            Assert.IsType<TemplateErrorReporterProvider>(export.Value);
+                typeof(SubstituteExporter<ITextDocumentFactoryService>)))
+            using (var container = new CompositionContainer(catalog))
+            {
+                Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
+                Assert.IsType<TemplateErrorReporterProvider>(export.Value);
+            }
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateErrorReporterProvider(null, Substitute.For<SVsServiceProvider>(), Substitute.For<ITextDocumentFactoryService>()));
             Assert.Equal("options", e.ParamName);
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenServiceProviderIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenServiceProviderIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateErrorReporterProvider(Substitute.For<ITemplateEditorOptions>(), null, Substitute.For<ITextDocumentFactoryService>()));
             Assert.Equal("serviceProvider", e.ParamName);
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenTextDocumentFactoryIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenTextDocumentFactoryIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateErrorReporterProvider(Substitute.For<ITemplateEditorOptions>(), Substitute.For<SVsServiceProvider>(), null));
             Assert.Equal("textDocumentFactory", e.ParamName);
         }
 
         [Fact]
-        public void CreateTaggerAlwaysReturnsNullBecauseTemplateErrorReporterIsNotATagger()
+        public static void CreateTaggerAlwaysReturnsNullBecauseTemplateErrorReporterIsNotATagger()
         {
             ITemplateEditorOptions options = OptionsWithErrorReportingEnabled(true);
             var provider = new TemplateErrorReporterProvider(options, Substitute.For<SVsServiceProvider>(), Substitute.For<ITextDocumentFactoryService>());
@@ -93,7 +94,7 @@ namespace T4Toolbox.VisualStudio.Editor.Tests
         }
 
         [Fact]
-        public void CreateTaggerCreatesTemplateErrorReporterWhenErrorReportingIsEnabled()
+        public static void CreateTaggerCreatesTemplateErrorReporterWhenErrorReportingIsEnabled()
         {
             ITemplateEditorOptions options = OptionsWithErrorReportingEnabled(true);
             var provider = new TemplateErrorReporterProvider(options, Substitute.For<SVsServiceProvider>(), Substitute.For<ITextDocumentFactoryService>());
@@ -105,7 +106,7 @@ namespace T4Toolbox.VisualStudio.Editor.Tests
         }
 
         [Fact]
-        public void CreateTaggerDoesNotCreateTemplateErrorReporterWhenErrorReportingIsDisabled()
+        public static void CreateTaggerDoesNotCreateTemplateErrorReporterWhenErrorReportingIsDisabled()
         {
             ITemplateEditorOptions options = OptionsWithErrorReportingEnabled(false);
             var provider = new TemplateErrorReporterProvider(options, Substitute.For<SVsServiceProvider>(), Substitute.For<ITextDocumentFactoryService>());

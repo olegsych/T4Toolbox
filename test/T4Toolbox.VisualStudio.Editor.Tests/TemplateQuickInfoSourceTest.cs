@@ -4,26 +4,27 @@
 
 namespace T4Toolbox.VisualStudio.Editor
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.VisualStudio.Text;
     using Xunit;
 
-    public class TemplateQuickInfoSourceTest
+    public static class TemplateQuickInfoSourceTest
     {
         [Fact]
-        public void TemplateQuickInfoSourceIsInternalAndConsumedOnlyByVisualStudioEditor()
+        public static void TemplateQuickInfoSourceIsInternalAndConsumedOnlyByVisualStudioEditor()
         {
             Assert.False(typeof(TemplateQuickInfoSource).IsPublic);
         }
 
         [Fact]
-        public void TemplateQuickInfoSourceIsSealedAndNotMeantToBeExtended()
+        public static void TemplateQuickInfoSourceIsSealedAndNotMeantToBeExtended()
         {
             Assert.True(typeof(TemplateQuickInfoSource).IsSealed);
         }
 
         [Fact]
-        public void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanWhenBufferIsEmpty()
+        public static void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanWhenBufferIsEmpty()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var session = new FakeQuickInfoSession();
@@ -39,7 +40,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanSyntaxNodeAtTriggerPointHasNoDescription()
+        public static void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanSyntaxNodeAtTriggerPointHasNoDescription()
         {
             var buffer = new FakeTextBuffer("<# code #>");
             var session = new FakeQuickInfoSession { SnapshotTriggerPoint = new SnapshotPoint(buffer.CurrentSnapshot, 3) };
@@ -55,7 +56,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanWhenBufferContainsTemplateThatCouldNotBeParsed()
+        public static void AugmentQuickInfoSessionReturnsNoContentOrApplicableSpanWhenBufferContainsTemplateThatCouldNotBeParsed()
         {
             var buffer = new FakeTextBuffer("<#");
             var session = new FakeQuickInfoSession { SnapshotTriggerPoint = new SnapshotPoint(buffer.CurrentSnapshot, 1) };
@@ -71,7 +72,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void AugmentQuickInfoSessionReturnsDescriptionOfSyntaxNodeAtTriggerPoint()
+        public static void AugmentQuickInfoSessionReturnsDescriptionOfSyntaxNodeAtTriggerPoint()
         {
             var buffer = new FakeTextBuffer("<#@ assembly name=\"System\" #>");
             var session = new FakeQuickInfoSession { SnapshotTriggerPoint = new SnapshotPoint(buffer.CurrentSnapshot, 5) };
@@ -81,12 +82,12 @@ namespace T4Toolbox.VisualStudio.Editor
                 ITrackingSpan applicableToSpan;
                 source.AugmentQuickInfoSession(session, quickInfoContent, out applicableToSpan);
 
-                Assert.Contains("assembly", (string)quickInfoContent[0]);
+                Assert.Contains("assembly", (string)quickInfoContent[0], StringComparison.Ordinal);
             }
         }
 
         [Fact]
-        public void AugmentQuickInfoSessionReturnsSpanOfSyntaxNodeProvidingDescription()
+        public static void AugmentQuickInfoSessionReturnsSpanOfSyntaxNodeProvidingDescription()
         {
             var buffer = new FakeTextBuffer("<#@ assembly name=\"System\" #>");
             var session = new FakeQuickInfoSession { SnapshotTriggerPoint = new SnapshotPoint(buffer.CurrentSnapshot, 15) };

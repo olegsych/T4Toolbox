@@ -12,68 +12,69 @@ namespace T4Toolbox.VisualStudio.Editor
     using NSubstitute;
     using Xunit;
 
-    public class TemplateOutliningTaggerProviderTest
+    public static class TemplateOutliningTaggerProviderTest
     {
         [Fact]
-        public void TemplateOutliningTaggerProviderIsInternalAndNotMeantForPublicConsumption()
+        public static void TemplateOutliningTaggerProviderIsInternalAndNotMeantForPublicConsumption()
         {
             Assert.False(typeof(TemplateOutliningTaggerProvider).IsPublic);
         }
 
         [Fact]
-        public void TemplateOutliningTaggerProviderIsSealedAndNotMeantToHaveChildClasses()
+        public static void TemplateOutliningTaggerProviderIsSealedAndNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateOutliningTaggerProvider).IsSealed);
         }
 
         [Fact]
-        public void TemplateOutliningTaggerProviderImplementsITaggerProvider()
+        public static void TemplateOutliningTaggerProviderImplementsITaggerProvider()
         {
             Assert.Equal(typeof(ITaggerProvider), typeof(TemplateOutliningTaggerProvider).GetInterfaces()[0]);
         }
 
         [Fact]
-        public void TemplateOutliningTaggerProviderExportsITaggerProvider()
+        public static void TemplateOutliningTaggerProviderExportsITaggerProvider()
         {
             var export = (ExportAttribute)typeof(TemplateOutliningTaggerProvider).GetCustomAttributes(typeof(ExportAttribute), false)[0];
             Assert.Equal(typeof(ITaggerProvider), export.ContractType);
         }
 
         [Fact]
-        public void TemplateOutliningTaggerProviderExportSpecifiesOutliningTagType()
+        public static void TemplateOutliningTaggerProviderExportSpecifiesOutliningTagType()
         {
             var tagType = (TagTypeAttribute)typeof(TemplateOutliningTaggerProvider).GetCustomAttributes(typeof(TagTypeAttribute), false)[0];
             Assert.Equal(typeof(OutliningRegionTag), tagType.TagTypes);
         }
 
         [Fact]
-        public void TemplateOutliningTaggerProviderAppliesOnlyToTextTemplateContentType()
+        public static void TemplateOutliningTaggerProviderAppliesOnlyToTextTemplateContentType()
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateOutliningTaggerProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
             Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
         }
 
         [Fact]
-        public void TemplateOutliningTaggerProviderCanBeConstructedByVisualStudio()
+        public static void TemplateOutliningTaggerProviderCanBeConstructedByVisualStudio()
         {
-            var catalog = new TypeCatalog(
+            using (var catalog = new TypeCatalog(
                 typeof(TemplateOutliningTaggerProvider),
-                typeof(SubstituteExporter<ITemplateEditorOptions>));
-            var container = new CompositionContainer(catalog);
-
-            Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
-            Assert.IsType<TemplateOutliningTaggerProvider>(export.Value);           
+                typeof(SubstituteExporter<ITemplateEditorOptions>)))
+            using (var container = new CompositionContainer(catalog))
+            {
+                Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
+                Assert.IsType<TemplateOutliningTaggerProvider>(export.Value);
+            }
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateOutliningTaggerProvider(null));
             Assert.Equal("options", e.ParamName);
         }
 
         [Fact]
-        public void CreateTaggerThrowsArgumentNullExceptionWhenBufferIsNullToFailFast()
+        public static void CreateTaggerThrowsArgumentNullExceptionWhenBufferIsNullToFailFast()
         {
             var provider = new TemplateOutliningTaggerProvider(Substitute.For<ITemplateEditorOptions>());
             var e = Assert.Throws<ArgumentNullException>(() => provider.CreateTagger<OutliningRegionTag>(null));
@@ -81,7 +82,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTaggerReturnsTemplateOutliningTagger()
+        public static void CreateTaggerReturnsTemplateOutliningTagger()
         {
             ITemplateEditorOptions options = OptionsWithTemplateOutliningEnabled(true);
             var provider = new TemplateOutliningTaggerProvider(options);
@@ -90,7 +91,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTaggerReturnsSingleTaggerWhenCalledMultipleTimesForSameBuffer()
+        public static void CreateTaggerReturnsSingleTaggerWhenCalledMultipleTimesForSameBuffer()
         {
             ITemplateEditorOptions options = OptionsWithTemplateOutliningEnabled(true);
             var provider = new TemplateOutliningTaggerProvider(options);
@@ -101,7 +102,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTaggerDoesNotReturnTaggerWhenTemplateOutliningIsDisabled()
+        public static void CreateTaggerDoesNotReturnTaggerWhenTemplateOutliningIsDisabled()
         {
             ITemplateEditorOptions options = OptionsWithTemplateOutliningEnabled(false);
             var provider = new TemplateOutliningTaggerProvider(options);

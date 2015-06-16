@@ -42,11 +42,12 @@ namespace T4Toolbox.VisualStudio.Tests
         [TestMethod]
         public void ClassExportsITemplateEditorOptionsForConsumptionByEditorClasses()
         {
-            var catalog = new TypeCatalog(typeof(T4ToolboxOptions));
-            var container = new CompositionContainer(catalog);
-
-            Lazy<ITemplateEditorOptions> export = container.GetExport<ITemplateEditorOptions>();
-            Assert.IsInstanceOfType(export.Value, typeof(T4ToolboxOptions));
+            using (var catalog = new TypeCatalog(typeof(T4ToolboxOptions)))
+            using (var container = new CompositionContainer(catalog))
+            {
+                Lazy<ITemplateEditorOptions> export = container.GetExport<ITemplateEditorOptions>();
+                Assert.IsInstanceOfType(export.Value, typeof(T4ToolboxOptions));
+            }
         }
 
         #region CompletionListsEnabled

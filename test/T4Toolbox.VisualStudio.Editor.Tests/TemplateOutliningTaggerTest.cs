@@ -11,43 +11,43 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio.Text.Tagging;
     using Xunit;
 
-    public class TemplateOutliningTaggerTest
+    public static class TemplateOutliningTaggerTest
     {
         [Fact]
-        public void TemplateOutliningTaggerIsInternalAndNotMeantForUseOutsideOfT4Toolbox()
+        public static void TemplateOutliningTaggerIsInternalAndNotMeantForUseOutsideOfT4Toolbox()
         {
             Assert.False(typeof(TemplateOutliningTagger).IsPublic);
         }
 
         [Fact]
-        public void TemplateOutliningTaggerIsSealedAndNotMeantToHaveChildClasses()
+        public static void TemplateOutliningTaggerIsSealedAndNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateOutliningTagger).IsSealed);
         }
 
         [Fact]
-        public void GetTagsReturnsOutliningRegionSpanForCodeBlocks()
+        public static void GetTagsReturnsOutliningRegionSpanForCodeBlocks()
         {
             ITagSpan<OutliningRegionTag> outliningSpan = GetTags("<# code #>").Single();
             Assert.Equal(new Span(0, 10), outliningSpan.Span);
         }
 
         [Fact]
-        public void GetTagsReturnsOutliningRegionSpanWithCollapsedFormWhereEllipsisReplacesCode()
+        public static void GetTagsReturnsOutliningRegionSpanWithCollapsedFormWhereEllipsisReplacesCode()
         {
             ITagSpan<OutliningRegionTag> outliningSpan = GetTags("<# code #>").Single();
             Assert.Equal("<#...#>", outliningSpan.Tag.CollapsedForm);
         }
 
         [Fact]
-        public void GetTagsReturnsOutliningRegionSpanWithCollapsedHintFormShowingFullCodeBlock()
+        public static void GetTagsReturnsOutliningRegionSpanWithCollapsedHintFormShowingFullCodeBlock()
         {
             ITagSpan<OutliningRegionTag> outliningSpan = GetTags("<# code #>").Single();
             Assert.Equal("<# code #>", outliningSpan.Tag.CollapsedHintForm);
         }
 
         [Fact]
-        public void GetTagsReturnsOutliningRegionsSpanWithCollapsedHintFormShowingEllipsisAfter10Lines()
+        public static void GetTagsReturnsOutliningRegionsSpanWithCollapsedHintFormShowingEllipsisAfter10Lines()
         {
             string codeBlock = "<#" + Environment.NewLine;
 
@@ -68,7 +68,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTagSpansDoesNotThrowWhenTemplateCouldNotBeParsedFromText()
+        public static void CreateTagSpansDoesNotThrowWhenTemplateCouldNotBeParsedFromText()
         {
             Assert.False(GetTags("<#").Any());
         }

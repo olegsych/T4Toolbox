@@ -13,70 +13,71 @@ namespace T4Toolbox.VisualStudio.Editor
     using NSubstitute;
     using Xunit;
 
-    public class TemplateClassificationTaggerProviderTest
+    public static class TemplateClassificationTaggerProviderTest
     {
         [Fact]
-        public void TemplateClassificationTaggerProviderIsInternalAndNotMeantForPublicConsumption()
+        public static void TemplateClassificationTaggerProviderIsInternalAndNotMeantForPublicConsumption()
         {
             Assert.False(typeof(TemplateClassificationTaggerProvider).IsPublic);
         }
 
         [Fact]
-        public void TemplateClassificationTaggerProviderIsSealedAndNotMeantToHaveChildClasses()
+        public static void TemplateClassificationTaggerProviderIsSealedAndNotMeantToHaveChildClasses()
         {
             Assert.True(typeof(TemplateClassificationTaggerProvider).IsSealed);
         }
 
         [Fact]
-        public void TemplateClassificationTaggerProviderExportsITaggerProvider()
+        public static void TemplateClassificationTaggerProviderExportsITaggerProvider()
         {
             var export = (ExportAttribute)typeof(TemplateClassificationTaggerProvider).GetCustomAttributes(typeof(ExportAttribute), false)[0];
             Assert.Equal(typeof(ITaggerProvider), export.ContractType);
         }
 
         [Fact]
-        public void TemplateClassificationTaggerProviderSpecifiesClassificationTagType()
+        public static void TemplateClassificationTaggerProviderSpecifiesClassificationTagType()
         {
             var tagType = (TagTypeAttribute)typeof(TemplateClassificationTaggerProvider).GetCustomAttributes(typeof(TagTypeAttribute), false)[0];
             Assert.Equal(typeof(ClassificationTag), tagType.TagTypes);
         }
 
         [Fact]
-        public void TemplateClassificationTaggerProviderAppliesOnlyToTextTemplateContentType()
+        public static void TemplateClassificationTaggerProviderAppliesOnlyToTextTemplateContentType()
         {
             var contentType = (ContentTypeAttribute)typeof(TemplateClassificationTaggerProvider).GetCustomAttributes(typeof(ContentTypeAttribute), false)[0];
             Assert.Equal(TemplateContentType.Name, contentType.ContentTypes);
         }
 
         [Fact]
-        public void TemplateClassificationTaggerProviderCanBeConstructedByVisualStudio()
+        public static void TemplateClassificationTaggerProviderCanBeConstructedByVisualStudio()
         {
-            var catalog = new TypeCatalog(
+            using (var catalog = new TypeCatalog(
                 typeof(TemplateClassificationTaggerProvider),
                 typeof(SubstituteExporter<ITemplateEditorOptions>),
-                typeof(SubstituteExporter<IClassificationTypeRegistryService>));
-            var container = new CompositionContainer(catalog);
-
-            Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
-            Assert.IsType<TemplateClassificationTaggerProvider>(export.Value);
+                typeof(SubstituteExporter<IClassificationTypeRegistryService>)))
+            using (var container = new CompositionContainer(catalog))
+            {
+                Lazy<ITaggerProvider> export = container.GetExport<ITaggerProvider>();
+                Assert.IsType<TemplateClassificationTaggerProvider>(export.Value);
+            }
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenOptionsIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateClassificationTaggerProvider(null, Substitute.For<IClassificationTypeRegistryService>()));
             Assert.Equal("options", e.ParamName);
         }
 
         [Fact]
-        public void ConstructorThrowsArgumentNullExceptionWhenClassificationTypeRegistryIsNullToFailFast()
+        public static void ConstructorThrowsArgumentNullExceptionWhenClassificationTypeRegistryIsNullToFailFast()
         {
             var e = Assert.Throws<ArgumentNullException>(() => new TemplateClassificationTaggerProvider(Substitute.For<ITemplateEditorOptions>(), null));
             Assert.Equal("classificationTypeRegistry", e.ParamName);
         }
 
         [Fact]
-        public void CreateTaggerReturnsTemplateClassificationTagger()
+        public static void CreateTaggerReturnsTemplateClassificationTagger()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(true);
             var target = new TemplateClassificationTaggerProvider(options, new FakeClassificationTypeRegistryService());
@@ -84,7 +85,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTaggerReturnsSameTaggerWhenCalledMultipleTimesForSameBuffer()
+        public static void CreateTaggerReturnsSameTaggerWhenCalledMultipleTimesForSameBuffer()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(true);
             var target = new TemplateClassificationTaggerProvider(options, new FakeClassificationTypeRegistryService());
@@ -95,7 +96,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CreateTaggerDoesNotReturnTaggerWhenSyntaxColorizationIsDisabled()
+        public static void CreateTaggerDoesNotReturnTaggerWhenSyntaxColorizationIsDisabled()
         {
             ITemplateEditorOptions options = OptionsWithSyntaxColorizationEnabled(false);
             var target = new TemplateClassificationTaggerProvider(options, new FakeClassificationTypeRegistryService());

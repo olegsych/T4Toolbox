@@ -5,23 +5,22 @@
 namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
-    using System.Globalization;
     using System.Linq;
     using Microsoft.VisualStudio.Language.Intellisense;
     using T4Toolbox.TemplateAnalysis;
     using Xunit;
     using Attribute = T4Toolbox.TemplateAnalysis.Attribute;
 
-    public class TemplateCompletionBuilderTest
+    public static class TemplateCompletionBuilderTest
     {
         [Fact]
-        public void TemplateCompletionBuilderIsInternalAndNotMeantForPublicConsumption()
+        public static void TemplateCompletionBuilderIsInternalAndNotMeantForPublicConsumption()
         {
             Assert.False(typeof(TemplateCompletionBuilder).IsPublic);
         }
 
         [Fact]
-        public void TemplateCompletionBuilderIsSealedAndNotMeantToHaveDerivedClasses()
+        public static void TemplateCompletionBuilderIsSealedAndNotMeantToHaveDerivedClasses()
         {
             Assert.True(typeof(TemplateCompletionBuilder).IsSealed);
         }
@@ -29,7 +28,7 @@ namespace T4Toolbox.VisualStudio.Editor
         #region Completions for Directive Names
 
         [Fact]
-        public void CompletionsReturnsDirectiveNamesWhenPositionIsWithinDirectiveName()
+        public static void CompletionsReturnsDirectiveNamesWhenPositionIsWithinDirectiveName()
         {
             var builder = new TemplateCompletionBuilder(42);
             builder.Visit(new DirectiveName(42, string.Empty));
@@ -44,7 +43,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CompletionsReturnsDirectiveNamesWithDescriptions()
+        public static void CompletionsReturnsDirectiveNamesWithDescriptions()
         {
             var builder = new TemplateCompletionBuilder(42);
             builder.Visit(new DirectiveName(42, string.Empty));
@@ -55,7 +54,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CompletionsReturnsNullWhenPositionIsOutsideOfDirectiveName()
+        public static void CompletionsReturnsNullWhenPositionIsOutsideOfDirectiveName()
         {
             var builder = new TemplateCompletionBuilder(0);
             builder.Visit(new DirectiveName(42, string.Empty));
@@ -67,7 +66,7 @@ namespace T4Toolbox.VisualStudio.Editor
         #region Completions for Attribute Names
 
         [Fact]
-        public void CompletionsReturnsAttributeNamesWhenPositionIsWithinAttributeName()
+        public static void CompletionsReturnsAttributeNamesWhenPositionIsWithinAttributeName()
         {
             // <#@ output e="" #>
             var directive = new OutputDirective(
@@ -83,7 +82,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CompletionsReturnsAttributeNamesWithDescriptions()
+        public static void CompletionsReturnsAttributeNamesWithDescriptions()
         {
             var directive = new OutputDirective(
                 new DirectiveBlockStart(0),
@@ -99,7 +98,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CompletionsExcludeAttributesAlreadyPresentInDirective()
+        public static void CompletionsExcludeAttributesAlreadyPresentInDirective()
         {
             // <#@ output extension="txt" e="" #>
             var attributes = new[] 
@@ -114,7 +113,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CompletionsReturnsNullWhenAllAttributesAreAlreadyPresentInDirective()
+        public static void CompletionsReturnsNullWhenAllAttributesAreAlreadyPresentInDirective()
         {
             // <#@ output extension="txt" encoding="UTF8" #>
             var attributes = new[] 
@@ -129,7 +128,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CompletionsReturnsNullWhenPositionIsOutsideOfAttributeName()
+        public static void CompletionsReturnsNullWhenPositionIsOutsideOfAttributeName()
         {
             // <#@ output e="" #>
             var directive = new OutputDirective(
@@ -147,7 +146,7 @@ namespace T4Toolbox.VisualStudio.Editor
         #region Completions for Attribute Values
 
         [Fact]
-        public void CompletionsReturnsWellKnownValuesWhenPositionIsWithinAttributeValue()
+        public static void CompletionsReturnsWellKnownValuesWhenPositionIsWithinAttributeValue()
         {
             // <#@ template debug="" #>
             var directive = new TemplateDirective(
@@ -158,12 +157,12 @@ namespace T4Toolbox.VisualStudio.Editor
             var builder = new TemplateCompletionBuilder(20);
             builder.Visit(directive);
             Assert.NotNull(builder.Completions);
-            Assert.Equal("false", builder.Completions[0].DisplayText, StringComparer.InvariantCultureIgnoreCase);
-            Assert.Equal("true", builder.Completions[1].DisplayText, StringComparer.InvariantCultureIgnoreCase);
+            Assert.Equal("false", builder.Completions[0].DisplayText, StringComparer.OrdinalIgnoreCase);
+            Assert.Equal("true", builder.Completions[1].DisplayText, StringComparer.OrdinalIgnoreCase);
         }
 
         [Fact]
-        public void CompletionsReturnsAttributeValuesWithDescriptions()
+        public static void CompletionsReturnsAttributeValuesWithDescriptions()
         {
             // <#@ template debug="" #>
             var directive = new TemplateDirective(
@@ -180,7 +179,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CompletionsReturnsNullWhenPositionIsOutsideOfAttributeValue()
+        public static void CompletionsReturnsNullWhenPositionIsOutsideOfAttributeValue()
         {
             // <#@ template debug="" #>
             var directive = new TemplateDirective(
@@ -194,7 +193,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void CompletionReturnsNullWhenPositionIsInsideValueOfUnrecognizedAttribute()
+        public static void CompletionReturnsNullWhenPositionIsInsideValueOfUnrecognizedAttribute()
         {
             // <#@ template debug="" #>
             var directive = new TemplateDirective(
@@ -210,7 +209,7 @@ namespace T4Toolbox.VisualStudio.Editor
         #endregion
 
         [Fact]
-        public void NodeReturnsDirectiveNameWhenPositionIsWithinDirectiveName()
+        public static void NodeReturnsDirectiveNameWhenPositionIsWithinDirectiveName()
         {
             var node = new DirectiveName(42, string.Empty);
             var builder = new TemplateCompletionBuilder(42);
@@ -219,7 +218,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void NodeReturnsNullWhenPositionIsOutsideOfDirectiveName()
+        public static void NodeReturnsNullWhenPositionIsOutsideOfDirectiveName()
         {
             var builder = new TemplateCompletionBuilder(0);
             builder.Visit(new DirectiveName(42, string.Empty));
@@ -227,7 +226,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void NodeReturnsAttributeNameWhenPositionIsWithinAttributeName()
+        public static void NodeReturnsAttributeNameWhenPositionIsWithinAttributeName()
         {
             AttributeName attributeName;
             var directive = new OutputDirective(
@@ -241,7 +240,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void NodeReturnsNullWhenPositionIsOutsideOfAttributeName()
+        public static void NodeReturnsNullWhenPositionIsOutsideOfAttributeName()
         {
             var directive = new OutputDirective(
                 new DirectiveBlockStart(0),
@@ -254,7 +253,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void NodeReturnsAttributeValueWhenPositionIsWithinAttributeValue()
+        public static void NodeReturnsAttributeValueWhenPositionIsWithinAttributeValue()
         {
             AttributeValue attributeValue;
             var directive = new TemplateDirective(
@@ -268,7 +267,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void NodeReturnsNullWhenPositionIsOutsideOfAttributeValue()
+        public static void NodeReturnsNullWhenPositionIsOutsideOfAttributeValue()
         {
             var directive = new TemplateDirective(
                 new DirectiveBlockStart(0),

@@ -11,16 +11,16 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio.Text.Tagging;
     using Xunit;
 
-    public class TemplateTaggerTest
+    public static class TemplateTaggerTest
     {
         [Fact]
-        public void TemplateTaggerIsInternalAndNotIntendedForPublicConsumption()
+        public static void TemplateTaggerIsInternalAndNotIntendedForPublicConsumption()
         {
             Assert.True(typeof(TemplateTagger<ITag>).IsNotPublic);
         }
 
         [Fact]
-        public void TemplateChangeCreatesNewTagSpans()
+        public static void TemplateChangeCreatesNewTagSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger = new TestableTemplateTagger(buffer);
@@ -33,7 +33,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TemplateChangeRemovesOldTagSpans()
+        public static void TemplateChangeRemovesOldTagSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger = new TestableTemplateTagger(buffer);
@@ -45,7 +45,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void TemplateChangeRaisesTagsChangedEvent()
+        public static void TemplateChangeRaisesTagsChangedEvent()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger = new TestableTemplateTagger(buffer);
@@ -59,7 +59,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void UpdateTagSpansCreatesNewTagSpans()
+        public static void UpdateTagSpansCreatesNewTagSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger = new TestableTemplateTagger(buffer);
@@ -72,7 +72,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void UpdateTagSpansRemovesOldSpans()
+        public static void UpdateTagSpansRemovesOldSpans()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger = new TestableTemplateTagger(buffer);
@@ -84,7 +84,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact]
-        public void UpdateTagSpansRaisesTagsChangedEventOnlyOnce()
+        public static void UpdateTagSpansRaisesTagsChangedEventOnlyOnce()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var tagger = new TestableTemplateTagger(buffer);
@@ -102,7 +102,7 @@ namespace T4Toolbox.VisualStudio.Editor
         }
 
         [Fact, SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.GC.Collect", Justification = "This is a test of garbage collection")]
-        public void TemplateAnalyzerDoesNotPreventTemplateErrorTaggerFromGarbageCollection()
+        public static void TemplateAnalyzerDoesNotPreventTemplateErrorTaggerFromGarbageCollection()
         {
             var buffer = new FakeTextBuffer(string.Empty);
             var analyzer = TemplateAnalyzer.GetOrCreate(buffer); 
