@@ -7,35 +7,34 @@ namespace T4Toolbox.TemplateAnalysis
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
+    using Xunit;
 
-    [TestClass]
-    public class TerminalNodeTest
+    public static class TerminalNodeTest
     {
-        [TestMethod]
-        public void ConstructorSetsPositionProperty()
+        [Fact]
+        public static void ConstructorSetsPositionProperty()
         {
             var target = new TestableTerminalNode(new Position(4, 2));
-            Assert.AreEqual(new Position(4, 2), target.Position);
+            Assert.Equal(new Position(4, 2), target.Position);
         }
 
-        [TestMethod]
-        public void ChildNodesReturnsEmptyEnumerable()
+        [Fact]
+        public static void ChildNodesReturnsEmptyEnumerable()
         {
             var node = new TestableTerminalNode();
             IEnumerable<SyntaxNode> childNodes = node.ChildNodes();
-            Assert.IsNotNull(childNodes);
-            Assert.IsFalse(childNodes.Any());
+            Assert.NotNull(childNodes);
+            Assert.False(childNodes.Any());
         }
 
-        [TestMethod]
-        public void ValidateReturnsEmptyEnumerable()
+        [Fact]
+        public static void ValidateReturnsEmptyEnumerable()
         {
             var node = new TestableTerminalNode();
             IEnumerable<TemplateError> errors = node.Validate();
-            Assert.IsNotNull(errors);
-            Assert.IsFalse(errors.Any());
+            Assert.NotNull(errors);
+            Assert.False(errors.Any());
         }
 
         private class TestableTerminalNode : TerminalNode

@@ -5,27 +5,26 @@
 namespace T4Toolbox.TemplateAnalysis
 {
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class TemplateTest
+    public static class TemplateTest
     {
-        [TestMethod]
-        public void TemplateIsSubclassOfNonterminalNode()
+        [Fact]
+        public static void TemplateIsSubclassOfNonterminalNode()
         {
-            Assert.IsTrue(typeof(Template).IsSubclassOf(typeof(NonterminalNode)));
+            Assert.True(typeof(Template).IsSubclassOf(typeof(NonterminalNode)));
         }
 
-        [TestMethod]
-        public void TemplateIsSealed()
+        [Fact]
+        public static void TemplateIsSealed()
         {
-            Assert.IsTrue(typeof(Template).IsSealed);
+            Assert.True(typeof(Template).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitTemplateMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitTemplateMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var template = new Template();
@@ -33,51 +32,51 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitTemplate(template);
         }
 
-        [TestMethod]
-        public void KindReturnsTemplateSyntaxKind()
+        [Fact]
+        public static void KindReturnsTemplateSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.Template, new Template().Kind);
+            Assert.Equal(SyntaxKind.Template, new Template().Kind);
         }
 
-        [TestMethod]
-        public void PositionReturnsFixedValue()
+        [Fact]
+        public static void PositionReturnsFixedValue()
         {
             var target = new Template();
-            Assert.AreEqual(new Position(0, 0), target.Position);
+            Assert.Equal(new Position(0, 0), target.Position);
         }
 
-        [TestMethod]
-        public void SpanStartReturnsMinStartOfChildNodes()
+        [Fact]
+        public static void SpanStartReturnsMinStartOfChildNodes()
         {
             var end = new BlockEnd(40);
             var start = new StatementBlockStart(4);
             var target = new Template(end, start); // intentionally reversed
-            Assert.AreEqual(start.Span.Start, target.Span.Start);
+            Assert.Equal(start.Span.Start, target.Span.Start);
         }
 
-        [TestMethod]
-        public void SpanEndReturnsMaxEndOfChildNodes()
+        [Fact]
+        public static void SpanEndReturnsMaxEndOfChildNodes()
         {
             var end = new BlockEnd(40);
             var start = new StatementBlockStart(4);
             var target = new Template(end, start); // intentionally reversed
-            Assert.AreEqual(end.Span.End, target.Span.End);
+            Assert.Equal(end.Span.End, target.Span.End);
         }
 
-        [TestMethod]
-        public void SpanIsEmptyWhenNodeHasNoChildren()
+        [Fact]
+        public static void SpanIsEmptyWhenNodeHasNoChildren()
         {
-            Assert.AreEqual(new Span(), new Template().Span);
+            Assert.Equal(new Span(), new Template().Span);
         }
 
-        [TestMethod]
-        public void ChildNodesReturnsNodesSpecifiedInConstructor()
+        [Fact]
+        public static void ChildNodesReturnsNodesSpecifiedInConstructor()
         {
             var start = new StatementBlockStart(0);
             var end = new BlockEnd(2);
             var node = new Template(start, end);
-            Assert.AreSame(start, node.ChildNodes().First());
-            Assert.AreSame(end, node.ChildNodes().Last());
+            Assert.Same(start, node.ChildNodes().First());
+            Assert.Same(end, node.ChildNodes().Last());
         }
     }
 }

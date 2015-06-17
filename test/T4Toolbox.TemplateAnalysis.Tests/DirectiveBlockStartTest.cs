@@ -4,27 +4,27 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class DirectiveBlockStartTest
+    public static class DirectiveBlockStartTest
     {
-        [TestMethod]
-        public void DirectiveBlockStartIsSubclassOfSyntaxToken()
+        [Fact]
+        public static void DirectiveBlockStartIsSubclassOfSyntaxToken()
         {
-            Assert.IsTrue(typeof(DirectiveBlockStart).IsSubclassOf(typeof(SyntaxToken)));
+            Assert.True(typeof(DirectiveBlockStart).IsSubclassOf(typeof(SyntaxToken)));
         }
 
-        [TestMethod]
-        public void DirectiveBlockStartIsSealed()
+        [Fact]
+        public static void DirectiveBlockStartIsSealed()
         {
-            Assert.IsTrue(typeof(DirectiveBlockStart).IsSealed);
+            Assert.True(typeof(DirectiveBlockStart).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitDirectiveBlockStartMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitDirectiveBlockStartMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new DirectiveBlockStart(default(int));
@@ -32,27 +32,27 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitDirectiveBlockStart(node);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfDirectiveBlockStart()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfDirectiveBlockStart()
         {
             var target = new DirectiveBlockStart(0);
             string description;
             Span applicableTo;
-            Assert.IsTrue(target.TryGetDescription(0, out description, out applicableTo));
-            StringAssert.Contains(description, "directive");
-            Assert.AreEqual(target.Span, applicableTo);
+            Assert.True(target.TryGetDescription(0, out description, out applicableTo));
+            Assert.Contains("directive", description, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(target.Span, applicableTo);
         }
 
-        [TestMethod]
-        public void KindReturnsDirectiveBlockStartSyntaxKind()
+        [Fact]
+        public static void KindReturnsDirectiveBlockStartSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.DirectiveBlockStart, new DirectiveBlockStart(0).Kind);
+            Assert.Equal(SyntaxKind.DirectiveBlockStart, new DirectiveBlockStart(0).Kind);
         }
 
-        [TestMethod]
-        public void SpanLengthReturnsLengthOfToken()
+        [Fact]
+        public static void SpanLengthReturnsLengthOfToken()
         {
-            Assert.AreEqual("<#@".Length, new DirectiveBlockStart(0).Span.Length);
+            Assert.Equal("<#@".Length, new DirectiveBlockStart(0).Span.Length);
         }
     }
 }

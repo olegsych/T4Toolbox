@@ -7,20 +7,19 @@ namespace T4Toolbox.TemplateAnalysis
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
+    using Xunit;
 
-    [TestClass]
-    public class NonterminalNodeTest
+    public static class NonterminalNodeTest
     {
-        [TestMethod]
-        public void NonterminalNodeIsSubclassOfSyntaxNode()
+        [Fact]
+        public static void NonterminalNodeIsSubclassOfSyntaxNode()
         {
-            Assert.IsTrue(typeof(NonterminalNode).IsSubclassOf(typeof(SyntaxNode)));
+            Assert.True(typeof(NonterminalNode).IsSubclassOf(typeof(SyntaxNode)));
         }
 
-        [TestMethod]
-        public void ValidateReturnsMultipleErrorsFromSingleChild()
+        [Fact]
+        public static void ValidateReturnsMultipleErrorsFromSingleChild()
         {
             var child = new TestableNonterminalNode();
             child.ValidationErrors = new[]
@@ -29,16 +28,16 @@ namespace T4Toolbox.TemplateAnalysis
                 new TemplateError(string.Empty, default(Span), default(Position))
             };
             var parent = new TestableNonterminalNode(child);
-            Assert.AreEqual(2, parent.Validate().Count());
+            Assert.Equal(2, parent.Validate().Count());
         }
 
-        [TestMethod]
-        public void ValidateReturnsErrorsFromMultipleChildren()
+        [Fact]
+        public static void ValidateReturnsErrorsFromMultipleChildren()
         {
             var child1 = new TestableNonterminalNode { ValidationErrors = new[] { new TemplateError(string.Empty, default(Span), default(Position)) } };
             var child2 = new TestableNonterminalNode { ValidationErrors = new[] { new TemplateError(string.Empty, default(Span), default(Position)) } };
             var parent = new TestableNonterminalNode(child1, child2);
-            Assert.AreEqual(2, parent.Validate().Count());
+            Assert.Equal(2, parent.Validate().Count());
         }
 
         private class TestableNonterminalNode : NonterminalNode

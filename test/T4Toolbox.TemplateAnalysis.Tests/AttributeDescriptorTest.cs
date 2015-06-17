@@ -6,71 +6,67 @@ namespace T4Toolbox.TemplateAnalysis
 {
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
+    using Xunit;
 
-    [TestClass]
-    public class AttributeDescriptorTest
+    public static class AttributeDescriptorTest
     {
-        [TestMethod]
-        public void AttributeDescriptorIsInternalAndNotMeantForPublicConsumption()
+        [Fact]
+        public static void AttributeDescriptorIsInternalAndNotMeantForPublicConsumption()
         {
-            Assert.IsFalse(typeof(AttributeDescriptor).IsPublic);
+            Assert.False(typeof(AttributeDescriptor).IsPublic);
         }
 
-        [TestMethod]
-        public void AttributeDescriptorIsSealedAndNotMeantToHaveChildClasses()
+        [Fact]
+        public static void AttributeDescriptorIsSealedAndNotMeantToHaveChildClasses()
         {
-            Assert.IsTrue(typeof(AttributeDescriptor).IsSealed);
+            Assert.True(typeof(AttributeDescriptor).IsSealed);
         }
 
-        [TestMethod]
-        public void DescriptionReturnsValueSpecifiedInDescriptionAttributeAppliedToAttributeProperty()
+        [Fact]
+        public static void DescriptionReturnsValueSpecifiedInDescriptionAttributeAppliedToAttributeProperty()
         {
             PropertyDescriptor property = TypeDescriptor.GetProperties(typeof(TemplateDirective))["Language"];
             var attribute = (DescriptionAttribute)property.Attributes[typeof(DescriptionAttribute)];
             var descriptor = new AttributeDescriptor(property);
-            Assert.AreEqual(attribute.Description, descriptor.Description);
+            Assert.Equal(attribute.Description, descriptor.Description);
         }
 
-        [TestMethod]
-        public void DisplayNameReturnsNameOfAttributeProperty()
+        [Fact]
+        public static void DisplayNameReturnsNameOfAttributeProperty()
         {
             PropertyDescriptor property = TypeDescriptor.GetProperties(typeof(TemplateDirective))["Language"];
             var descriptor = new AttributeDescriptor(property);
-            Assert.AreEqual("Language", descriptor.DisplayName);
+            Assert.Equal("Language", descriptor.DisplayName);
         }
 
-        [TestMethod]
-        public void DisplayNameReturnsValueSpecifiedInDisplayNameAttributeAppliedToAttributeProperty()
+        [Fact]
+        public static void DisplayNameReturnsValueSpecifiedInDisplayNameAttributeAppliedToAttributeProperty()
         {
             PropertyDescriptor property = TypeDescriptor.GetProperties(typeof(AssemblyDirective))["AssemblyName"];
             var descriptor = new AttributeDescriptor(property);
-            Assert.AreEqual("Name", descriptor.DisplayName);
+            Assert.Equal("Name", descriptor.DisplayName);
         }
 
-        [TestMethod]
-        public void ValuesReturnsEmptyDictionaryForPropertyWithoutWellKnownValues()
+        [Fact]
+        public static void ValuesReturnsEmptyDictionaryForPropertyWithoutWellKnownValues()
         {
             var attribute = new AttributeDescriptor(TypeDescriptor.GetProperties(typeof(TestDirective))["PropertyWithoutKnownValues"]);        
-            Assert.AreEqual(0, attribute.Values.Count);
+            Assert.Equal(0, attribute.Values.Count);
         }
 
-        [TestMethod]
-        public void ValuesReturnsDictionaryOfValuesForPropertyWithKnownValuesAttribute()
+        [Fact]
+        public static void ValuesReturnsDictionaryOfValuesForPropertyWithKnownValuesAttribute()
         {
             var attribute = new AttributeDescriptor(TypeDescriptor.GetProperties(typeof(TestDirective))["PropertyWithKnownValues"]);
             IReadOnlyDictionary<string, ValueDescriptor> values = attribute.Values;
-            Assert.AreEqual(3, values.Count);
+            Assert.Equal(3, values.Count);
         }
 
-        [TestMethod]
-        public void ValueCachesResultToImprovePerformance()
+        [Fact]
+        public static void ValueCachesResultToImprovePerformance()
         {
             var attribute = new AttributeDescriptor(TypeDescriptor.GetProperties(typeof(TestDirective))["PropertyWithKnownValues"]);
-            Assert.AreSame(attribute.Values, attribute.Values);
+            Assert.Same(attribute.Values, attribute.Values);
         }
 
         private enum TestEnum

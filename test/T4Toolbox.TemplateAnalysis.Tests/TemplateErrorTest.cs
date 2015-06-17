@@ -4,31 +4,30 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
+    using Xunit;
 
-    [TestClass]
-    public class TemplateErrorTest
+    public static class TemplateErrorTest
     {
-        [TestMethod]
-        public void MessageReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void MessageReturnsValueSpecifiedInConstructor()
         {
             var target = new TemplateError("42", default(Span), default(Position));
-            Assert.AreEqual("42", target.Message);
+            Assert.Equal("42", target.Message);
         }
 
-        [TestMethod]
-        public void PositionReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void PositionReturnsValueSpecifiedInConstructor()
         {
             var target = new TemplateError(string.Empty, default(Span), new Position(4, 2));
-            Assert.AreEqual(new Position(4, 2), target.Position);
+            Assert.Equal(new Position(4, 2), target.Position);
         }
 
-        [TestMethod]
-        public void SpanReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void SpanReturnsValueSpecifiedInConstructor()
         {
             var target = new TemplateError(string.Empty, new Span(4, 2), default(Position));
-            Assert.AreEqual(new Span(4, 2), target.Span);
+            Assert.Equal(new Span(4, 2), target.Span);
         }
     }
 }

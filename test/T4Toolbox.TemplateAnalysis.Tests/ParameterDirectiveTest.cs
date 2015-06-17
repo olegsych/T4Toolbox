@@ -4,28 +4,28 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
+    using System;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class ParameterDirectiveTest
+    public static class ParameterDirectiveTest
     {
-        [TestMethod]
-        public void ParameterDirectiveIsSubclassOfDirective()
+        [Fact]
+        public static void ParameterDirectiveIsSubclassOfDirective()
         {
-            Assert.IsTrue(typeof(ParameterDirective).IsSubclassOf(typeof(Directive)));
+            Assert.True(typeof(ParameterDirective).IsSubclassOf(typeof(Directive)));
         }
 
-        [TestMethod]
-        public void ParameterDirectiveIsSealed()
+        [Fact]
+        public static void ParameterDirectiveIsSealed()
         {
-            Assert.IsTrue(typeof(ParameterDirective).IsSealed);
+            Assert.True(typeof(ParameterDirective).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitParameterDirectiveMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitParameterDirectiveMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var directive = new ParameterDirective(new DirectiveBlockStart(0), new DirectiveName(4, "parameter"), new Attribute[0], new BlockEnd(24));
@@ -33,18 +33,18 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitParameterDirective(directive);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfDirective()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfDirective()
         {
             var directive = new ParameterDirective(new DirectiveBlockStart(0), new DirectiveName(4, "parameter"), new Attribute[0], new BlockEnd(24));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(4, out description, out applicableTo));
-            StringAssert.Contains(description, "property in template code");
+            Assert.True(directive.TryGetDescription(4, out description, out applicableTo));
+            Assert.Contains("property in template code", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfNameAttribute()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfNameAttribute()
         {
             var directive = new ParameterDirective(
                 new DirectiveBlockStart(0),
@@ -53,12 +53,12 @@ namespace T4Toolbox.TemplateAnalysis
                 new BlockEnd(24));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(14, out description, out applicableTo));
-            StringAssert.Contains(description, "Name of the property");
+            Assert.True(directive.TryGetDescription(14, out description, out applicableTo));
+            Assert.Contains("Name of the property", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfTypeAttribute()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfTypeAttribute()
         {
             var directive = new ParameterDirective(
                 new DirectiveBlockStart(0),
@@ -67,48 +67,48 @@ namespace T4Toolbox.TemplateAnalysis
                 new BlockEnd(24));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(14, out description, out applicableTo));
-            StringAssert.Contains(description, "Fully-qualified name of the property type");
+            Assert.True(directive.TryGetDescription(14, out description, out applicableTo));
+            Assert.Contains("Fully-qualified name of the property type", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void ParameterNameReturnsValueOfNameAttribute()
+        [Fact]
+        public static void ParameterNameReturnsValueOfNameAttribute()
         {
             var directive = new ParameterDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "parameter"),
                 new[] { new Attribute(new AttributeName(14, "name"), new Equals(18), new DoubleQuote(19), new AttributeValue(20, "42"), new DoubleQuote(22)) },
                 new BlockEnd(24));
-            Assert.AreEqual("42", directive.ParameterName);
+            Assert.Equal("42", directive.ParameterName);
         }
 
-        [TestMethod]
-        public void ParameterNameReturnsEmptyStringWhenNameAttributeIsNotSpecified()
+        [Fact]
+        public static void ParameterNameReturnsEmptyStringWhenNameAttributeIsNotSpecified()
         {
             var directive = new ParameterDirective(new DirectiveBlockStart(0), new DirectiveName(4, "parameter"), new Attribute[0], new BlockEnd(24));
-            Assert.AreEqual(string.Empty, directive.ParameterName);            
+            Assert.Equal(string.Empty, directive.ParameterName);            
         }
 
-        [TestMethod]
-        public void ParameterTypeReturnsValueOfTypeAttribute()
+        [Fact]
+        public static void ParameterTypeReturnsValueOfTypeAttribute()
         {
             var directive = new ParameterDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "parameter"),
                 new[] { new Attribute(new AttributeName(14, "type"), new Equals(18), new DoubleQuote(19), new AttributeValue(20, "42"), new DoubleQuote(22)) },
                 new BlockEnd(24));
-            Assert.AreEqual("42", directive.ParameterType);
+            Assert.Equal("42", directive.ParameterType);
         }
 
-        [TestMethod]
-        public void ParameterTypeReturnsEmptyStringWhenTypeAttributeIsNotSpecified()
+        [Fact]
+        public static void ParameterTypeReturnsEmptyStringWhenTypeAttributeIsNotSpecified()
         {
             var directive = new ParameterDirective(new DirectiveBlockStart(0), new DirectiveName(4, "parameter"), new Attribute[0], new BlockEnd(24));
-            Assert.AreEqual(string.Empty, directive.ParameterType);
+            Assert.Equal(string.Empty, directive.ParameterType);
         }
 
-        [TestMethod]
-        public void ValidateReturnsErrorWhenNameAttributeIsNotSpecified()
+        [Fact]
+        public static void ValidateReturnsErrorWhenNameAttributeIsNotSpecified()
         {
             var directive = new ParameterDirective(
                 new DirectiveBlockStart(0),
@@ -116,11 +116,11 @@ namespace T4Toolbox.TemplateAnalysis
                 new[] { new Attribute(new AttributeName(14, "type"), new Equals(18), new DoubleQuote(19), new AttributeValue(20, "System.Int32"), new DoubleQuote(22)) },
                 new BlockEnd(24));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, "Name");
+            Assert.Contains("Name", error.Message, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void ValidateReturnsErrorWhenTypeAttributeIsNotSpecified()
+        [Fact]
+        public static void ValidateReturnsErrorWhenTypeAttributeIsNotSpecified()
         {
             var directive = new ParameterDirective(
                 new DirectiveBlockStart(0),
@@ -128,7 +128,7 @@ namespace T4Toolbox.TemplateAnalysis
                 new[] { new Attribute(new AttributeName(14, "name"), new Equals(18), new DoubleQuote(19), new AttributeValue(20, "p1"), new DoubleQuote(22)) },
                 new BlockEnd(24));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, "Type");
+            Assert.Contains("Type", error.Message, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

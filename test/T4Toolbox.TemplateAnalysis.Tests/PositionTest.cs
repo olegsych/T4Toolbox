@@ -4,57 +4,56 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 
-    [TestClass]
-    public class PositionTest
+    public static class PositionTest
     {
-        [TestMethod]
-        public void PositionIsValueType() // to be lightweight
+        [Fact]
+        public static void PositionIsValueType() // to be lightweight
         {
-            Assert.IsTrue(typeof(Position).IsValueType);
+            Assert.True(typeof(Position).IsValueType);
         }
 
-        [TestMethod]
-        public void PositionIsInternal() // for internal consumption only
+        [Fact]
+        public static void PositionIsInternal() // for internal consumption only
         {
-            Assert.IsTrue(typeof(Position).IsNotPublic);
+            Assert.True(typeof(Position).IsNotPublic);
         }
 
-        [TestMethod]
-        public void LineReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void LineReturnsValueSpecifiedInConstructor()
         {
             var target = new Position(42, 0);
-            Assert.AreEqual(42, target.Line);
+            Assert.Equal(42, target.Line);
         }
 
-        [TestMethod]
-        public void ColumnReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void ColumnReturnsValueSpecifiedInConstructor()
         {
             var target = new Position(0, 42);
-            Assert.AreEqual(42, target.Column);
+            Assert.Equal(42, target.Column);
         }
 
-        [TestMethod]
-        public void EqualsReturnsTrueWhenLineAndColumnAreSame()
+        [Fact]
+        public static void EqualsReturnsTrueWhenLineAndColumnAreSame()
         {
             var a = new Position(4, 2);
             var b = new Position(4, 2);
-            Assert.AreEqual(a, b);
+            Assert.Equal(a, b);
         }
 
-        [TestMethod]
-        public void GetHashCodeReturnsValueCalculatedFromLineAndColumn()
+        [Fact]
+        public static void GetHashCodeReturnsValueCalculatedFromLineAndColumn()
         {
             var a = new Position(4, 2);
             var b = new Position(4, 2);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            Assert.Equal(a.GetHashCode(), b.GetHashCode());
         }
 
-        [TestMethod]
-        public void ToStringReturnsLineAndColumnInParenthesis() // consistently with MSBuild messages
+        [Fact]
+        public static void ToStringReturnsLineAndColumnInParenthesis() // consistently with MSBuild messages
         {
-            Assert.AreEqual("(4,2)", new Position(4, 2).ToString());
+            Assert.Equal("(4,2)", new Position(4, 2).ToString());
         }
     }
 }

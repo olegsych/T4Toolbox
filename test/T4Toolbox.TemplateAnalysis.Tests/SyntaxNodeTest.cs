@@ -6,58 +6,57 @@ namespace T4Toolbox.TemplateAnalysis
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
-    using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
+    using Xunit;
 
-    [TestClass]
-    public class SyntaxNodeTest
+    public static class SyntaxNodeTest
     {
         #region Equals
 
-        [TestMethod]
-        public void EqualsReturnsTrueWhenKindAndSpanAreTheSame()
+        [Fact]
+        public static void EqualsReturnsTrueWhenKindAndSpanAreTheSame()
         {
             var left = new TestableSyntaxNode(SyntaxKind.BlockEnd, new Span(4, 2));
             var right = new TestableSyntaxNode(SyntaxKind.BlockEnd, new Span(4, 2));
-            Assert.IsTrue(left.Equals(right));
+            Assert.True(left.Equals(right));
         }
 
-        [TestMethod]
-        public void EqualsReturnsFalseWhenKindIsDifferent()
+        [Fact]
+        public static void EqualsReturnsFalseWhenKindIsDifferent()
         {
             var left = new TestableSyntaxNode(SyntaxKind.BlockEnd, new Span(4, 2));
             var right = new TestableSyntaxNode(SyntaxKind.StatementBlockStart, new Span(4, 2));
-            Assert.IsFalse(left.Equals(right));            
+            Assert.False(left.Equals(right));            
         }
 
-        [TestMethod]
-        public void EqualsReturnsTrueWhenPositionIsSame()
+        [Fact]
+        public static void EqualsReturnsTrueWhenPositionIsSame()
         {
             var left = new TestableSyntaxNode(new Position(4, 2));
             var right = new TestableSyntaxNode(new Position(4, 2));
-            Assert.IsTrue(left.Equals(right));
+            Assert.True(left.Equals(right));
         }
 
-        [TestMethod]
-        public void EqualsReturnsFalseWhenPositionIsDifferent()
+        [Fact]
+        public static void EqualsReturnsFalseWhenPositionIsDifferent()
         {
             var left = new TestableSyntaxNode(new Position(4, 2));
             var right = new TestableSyntaxNode(new Position(2, 4));
-            Assert.IsFalse(left.Equals(right));            
+            Assert.False(left.Equals(right));            
         }
 
-        [TestMethod]
-        public void EqualsReturnsFalseWhenSpanIsDifferent()
+        [Fact]
+        public static void EqualsReturnsFalseWhenSpanIsDifferent()
         {
             var left = new TestableSyntaxNode(SyntaxKind.BlockEnd, new Span(4, 2));
             var right = new TestableSyntaxNode(SyntaxKind.BlockEnd, new Span(2, 4));
-            Assert.IsFalse(left.Equals(right));            
+            Assert.False(left.Equals(right));            
         }
 
-        [TestMethod]
-        public void EqualsReturnsTrueWhenChildNodesAreSame()
+        [Fact]
+        public static void EqualsReturnsTrueWhenChildNodesAreSame()
         {
             var left = new TestableSyntaxNode(
                 SyntaxKind.CodeBlock,
@@ -67,11 +66,11 @@ namespace T4Toolbox.TemplateAnalysis
                 SyntaxKind.CodeBlock,
                 new TestableSyntaxNode(SyntaxKind.StatementBlockStart, new Span(0, 2)),
                 new TestableSyntaxNode(SyntaxKind.BlockEnd, new Span(2, 2)));
-            Assert.IsTrue(left.Equals(right));
+            Assert.True(left.Equals(right));
         }
 
-        [TestMethod]
-        public void EqualsReturnsFalseWhenChildNodesAreDifferent()
+        [Fact]
+        public static void EqualsReturnsFalseWhenChildNodesAreDifferent()
         {
             var left = new TestableSyntaxNode(
                 SyntaxKind.CodeBlock,
@@ -81,97 +80,97 @@ namespace T4Toolbox.TemplateAnalysis
                 SyntaxKind.CodeBlock,
                 new TestableSyntaxNode(SyntaxKind.ExpressionBlockStart, new Span(0, 3)),
                 new TestableSyntaxNode(SyntaxKind.BlockEnd, new Span(3, 2)));
-            Assert.IsFalse(left.Equals(right));
+            Assert.False(left.Equals(right));
         }
 
         #endregion
 
         #region GetHashCode
 
-        [TestMethod]
-        public void GetHashCodeReturnsSameValuesForSamePositions()
+        [Fact]
+        public static void GetHashCodeReturnsSameValuesForSamePositions()
         {
             var left = new TestableSyntaxNode(new Position(4, 2));
             var right = new TestableSyntaxNode(new Position(4, 2));
-            Assert.AreEqual(left.GetHashCode(), right.GetHashCode());
+            Assert.Equal(left.GetHashCode(), right.GetHashCode());
         }
 
-        [TestMethod]
-        public void GetHashCodeReturnsDifferentValuesForDifferentPositions()
+        [Fact]
+        public static void GetHashCodeReturnsDifferentValuesForDifferentPositions()
         {
             var left = new TestableSyntaxNode(new Position(4, 2));
             var right = new TestableSyntaxNode(new Position(2, 4));
-            Assert.AreNotEqual(left.GetHashCode(), right.GetHashCode());
+            Assert.NotEqual(left.GetHashCode(), right.GetHashCode());
         }
 
         #endregion
 
-        [TestMethod]
-        public void GetTextReturnsSubstringOfTemplateBasedOnSpan()
+        [Fact]
+        public static void GetTextReturnsSubstringOfTemplateBasedOnSpan()
         {
             var node = new TestableSyntaxNode(SyntaxKind.DirectiveName, new Span(4, 9));
-            Assert.AreEqual("directive", node.GetText("<#@ directive #>"));
+            Assert.Equal("directive", node.GetText("<#@ directive #>"));
         }
 
         #region TryGetDescription
 
-        [TestMethod]
-        public void TryGetDescriptionReturnsEmptyDescriptionAndSpanGivenPositionOutsideOfItsSpan()
+        [Fact]
+        public static void TryGetDescriptionReturnsEmptyDescriptionAndSpanGivenPositionOutsideOfItsSpan()
         {
             var target = new TestableSyntaxNode(SyntaxKind.Template, new Span(1, 1));
             string description;
             Span applicableTo;
-            Assert.IsFalse(target.TryGetDescription(2, out description, out applicableTo));
-            Assert.AreEqual(string.Empty, description);
-            Assert.AreEqual(default(Span), applicableTo);
+            Assert.False(target.TryGetDescription(2, out description, out applicableTo));
+            Assert.Equal(string.Empty, description);
+            Assert.Equal(default(Span), applicableTo);
         }
 
-        [TestMethod]
-        public void TryGetDescriptionReturnsEmptyDescriptionAndSpanWhenNodeHasNoDescriptionAttributeAndNoChildren()
+        [Fact]
+        public static void TryGetDescriptionReturnsEmptyDescriptionAndSpanWhenNodeHasNoDescriptionAttributeAndNoChildren()
         {
             var target = new TestableSyntaxNode(SyntaxKind.Template, new Span(0, 1));
             string description;
             Span applicableTo;
-            Assert.IsFalse(target.TryGetDescription(0, out description, out applicableTo));
-            Assert.AreEqual(string.Empty, description);
-            Assert.AreEqual(default(Span), applicableTo);
+            Assert.False(target.TryGetDescription(0, out description, out applicableTo));
+            Assert.Equal(string.Empty, description);
+            Assert.Equal(default(Span), applicableTo);
         }
 
-        [TestMethod]
-        public void TryGetDescriptionReturnsDescriptionAndSpanOfNodeWhenNodeHasNoChildren()
+        [Fact]
+        public static void TryGetDescriptionReturnsDescriptionAndSpanOfNodeWhenNodeHasNoChildren()
         {
             var target = new TestableSyntaxNodeWithDescription(new Span(0, 1));
             var attribute = typeof(TestableSyntaxNodeWithDescription).GetCustomAttributes(false).OfType<DescriptionAttribute>().Single();
             string description;
             Span applicableTo;
-            Assert.IsTrue(target.TryGetDescription(0, out description, out applicableTo));
-            Assert.AreEqual(attribute.Description, description);
-            Assert.AreEqual(target.Span, applicableTo);
+            Assert.True(target.TryGetDescription(0, out description, out applicableTo));
+            Assert.Equal(attribute.Description, description);
+            Assert.Equal(target.Span, applicableTo);
         }
 
-        [TestMethod]
-        public void TryGetDescriptionReturnsDescriptionAndSpanOfChildNodeWhoseSpanContainsGivenPosition()
+        [Fact]
+        public static void TryGetDescriptionReturnsDescriptionAndSpanOfChildNodeWhoseSpanContainsGivenPosition()
         {
             SyntaxNode child = new TestableSyntaxNodeWithDescription(new Span(0, 2));
             var childAttribute = typeof(TestableSyntaxNodeWithDescription).GetCustomAttributes(false).OfType<DescriptionAttribute>().Single();
             var parent = new TestableSyntaxNode(default(SyntaxKind), new Span(0, 4), child);
             string description;
             Span applicableTo;
-            Assert.IsTrue(parent.TryGetDescription(0, out description, out applicableTo));
-            Assert.AreEqual(childAttribute.Description, description);
-            Assert.AreEqual(child.Span, applicableTo);
+            Assert.True(parent.TryGetDescription(0, out description, out applicableTo));
+            Assert.Equal(childAttribute.Description, description);
+            Assert.Equal(child.Span, applicableTo);
         }
 
-        [TestMethod]
-        public void TryGetDescriptionReturnsDescriptionAndSpanOfParentIfChildsDescriptionIsEmpty()
+        [Fact]
+        public static void TryGetDescriptionReturnsDescriptionAndSpanOfParentIfChildsDescriptionIsEmpty()
         {
             var parent = new TestableSyntaxNodeWithDescription(new Span(0, 4), new TestableSyntaxNode(SyntaxKind.BlockEnd, new Span(0, 2)));
             var parentAttribute = typeof(TestableSyntaxNodeWithDescription).GetCustomAttributes(false).OfType<DescriptionAttribute>().Single();
             string description;
             Span applicableTo;
-            Assert.IsTrue(parent.TryGetDescription(0, out description, out applicableTo));
-            Assert.AreEqual(parentAttribute.Description, description);
-            Assert.AreEqual(parent.Span, applicableTo);
+            Assert.True(parent.TryGetDescription(0, out description, out applicableTo));
+            Assert.Equal(parentAttribute.Description, description);
+            Assert.Equal(parent.Span, applicableTo);
         }
 
         #endregion

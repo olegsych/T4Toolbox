@@ -5,26 +5,25 @@
 namespace T4Toolbox.TemplateAnalysis
 {
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class AttributeTest
+    public static class AttributeTest
     {
-        [TestMethod]
-        public void AttributeIsSubclassOfNonterminalNode()
+        [Fact]
+        public static void AttributeIsSubclassOfNonterminalNode()
         {
-            Assert.IsTrue(typeof(Attribute).IsSubclassOf(typeof(NonterminalNode)));
+            Assert.True(typeof(Attribute).IsSubclassOf(typeof(NonterminalNode)));
         }
 
-        [TestMethod]
-        public void AttributeIsSealed()
+        [Fact]
+        public static void AttributeIsSealed()
         {
-            Assert.IsTrue(typeof(Attribute).IsSealed);
+            Assert.True(typeof(Attribute).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitAttributeMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitAttributeMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var attribute = new Attribute(new AttributeName(0, string.Empty), new Equals(0), new DoubleQuote(0), new AttributeValue(0, string.Empty), new DoubleQuote(0));
@@ -32,8 +31,8 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitAttribute(attribute);
         }
 
-        [TestMethod]
-        public void ChildNodesReturnsNodesSpecifiedInConstructor()
+        [Fact]
+        public static void ChildNodesReturnsNodesSpecifiedInConstructor()
         {
             var name = new AttributeName(0, "language");
             var equals = new Equals(8);
@@ -41,39 +40,39 @@ namespace T4Toolbox.TemplateAnalysis
             var value = new AttributeValue(10, "C#");
             var quote2 = new DoubleQuote(12);
             var attribute = new Attribute(name, equals, quote1, value, quote2);
-            Assert.IsTrue(new SyntaxNode[] { name, equals, quote1, value, quote2 }.SequenceEqual(attribute.ChildNodes()));
+            Assert.True(new SyntaxNode[] { name, equals, quote1, value, quote2 }.SequenceEqual(attribute.ChildNodes()));
         }
 
-        [TestMethod]
-        public void KindReturnsAttributeSyntaxKind()
+        [Fact]
+        public static void KindReturnsAttributeSyntaxKind()
         {
             var attribute = new Attribute(new AttributeName(0, "language"), new Equals(8), new DoubleQuote(9), new AttributeValue(10, "C#"), new DoubleQuote(12));
-            Assert.AreEqual(SyntaxKind.Attribute, attribute.Kind);
+            Assert.Equal(SyntaxKind.Attribute, attribute.Kind);
         }
 
-        [TestMethod]
-        public void NameReturnsTextOfAttributeName()
+        [Fact]
+        public static void NameReturnsTextOfAttributeName()
         {
             var attribute = new Attribute(new AttributeName(0, "language"), new Equals(8), new DoubleQuote(9), new AttributeValue(10, "C#"), new DoubleQuote(12));
-            Assert.AreEqual("language", attribute.Name);
+            Assert.Equal("language", attribute.Name);
         }
 
-        [TestMethod]
-        public void PositionReturnsPositionOfAttributeName()
+        [Fact]
+        public static void PositionReturnsPositionOfAttributeName()
         {
             var attribute = new Attribute(new AttributeName(0, "language", new Position(4, 2)), new Equals(8), new DoubleQuote(9), new AttributeValue(10, "C#"), new DoubleQuote(12));
-            Assert.AreEqual(new Position(4, 2), attribute.Position);
+            Assert.Equal(new Position(4, 2), attribute.Position);
         }
 
-        [TestMethod]
-        public void ValueReturnsTextOfAttributeValue()
+        [Fact]
+        public static void ValueReturnsTextOfAttributeValue()
         {
             var attribute = new Attribute(new AttributeName(0, "language"), new Equals(8), new DoubleQuote(9), new AttributeValue(10, "C#"), new DoubleQuote(12));
-            Assert.AreEqual("C#", attribute.Value);
+            Assert.Equal("C#", attribute.Value);
         }
 
-        [TestMethod]
-        public void SpanStartsAtName()
+        [Fact]
+        public static void SpanStartsAtName()
         {
             AttributeName name;
             var attribute = new Attribute(
@@ -82,11 +81,11 @@ namespace T4Toolbox.TemplateAnalysis
                 new DoubleQuote(19), 
                 new AttributeValue(20, "C#"), 
                 new DoubleQuote(22));
-            Assert.AreEqual(name.Span.Start, attribute.Span.Start);
+            Assert.Equal(name.Span.Start, attribute.Span.Start);
         }
 
-        [TestMethod]
-        public void SpanEndsAtSecondDoubleQuote()
+        [Fact]
+        public static void SpanEndsAtSecondDoubleQuote()
         {
             DoubleQuote quote2;
             var attribute = new Attribute(
@@ -95,7 +94,7 @@ namespace T4Toolbox.TemplateAnalysis
                 new DoubleQuote(19),
                 new AttributeValue(20, "C#"),
                 quote2 = new DoubleQuote(22));
-            Assert.AreEqual(quote2.Span.End, attribute.Span.End);
+            Assert.Equal(quote2.Span.End, attribute.Span.End);
         }
     }
 }

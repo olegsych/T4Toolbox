@@ -4,30 +4,29 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using System.Collections.Generic;
+    using System;
     using System.ComponentModel;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class OutputDirectiveTest
+    public static class OutputDirectiveTest
     {
-        [TestMethod]
-        public void OutputDirectiveIsSubclassOfDirective()
+        [Fact]
+        public static void OutputDirectiveIsSubclassOfDirective()
         {
-            Assert.IsTrue(typeof(OutputDirective).IsSubclassOf(typeof(Directive)));
+            Assert.True(typeof(OutputDirective).IsSubclassOf(typeof(Directive)));
         }
 
-        [TestMethod]
-        public void OutputDirectiveIsSealed()
+        [Fact]
+        public static void OutputDirectiveIsSealed()
         {
-            Assert.IsTrue(typeof(OutputDirective).IsSealed);
+            Assert.True(typeof(OutputDirective).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitOutputDirectiveMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitOutputDirectiveMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var directive = new OutputDirective(new DirectiveBlockStart(0), new DirectiveName(4, "output"), new Attribute[0], new BlockEnd(24));
@@ -35,64 +34,64 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitOutputDirective(directive);
         }
 
-        [TestMethod]
-        public void ExtensionReturnsValueOfExtensionAttribute()
+        [Fact]
+        public static void ExtensionReturnsValueOfExtensionAttribute()
         {
             var directive = new OutputDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "output"),
                 new[] { new Attribute(new AttributeName(14, "extension"), new Equals(18), new DoubleQuote(19), new AttributeValue(20, ".txt"), new DoubleQuote(22)) },
                 new BlockEnd(24));
-            Assert.AreEqual(".txt", directive.Extension);
+            Assert.Equal(".txt", directive.Extension);
         }
 
-        [TestMethod]
-        public void ExtensionReturnsEmptyStringWhenExtensionAttributeIsNotSpecified()
+        [Fact]
+        public static void ExtensionReturnsEmptyStringWhenExtensionAttributeIsNotSpecified()
         {
             var directive = new OutputDirective(new DirectiveBlockStart(0), new DirectiveName(4, "output"), new Attribute[0], new BlockEnd(24));
-            Assert.AreEqual(string.Empty, directive.Extension);
+            Assert.Equal(string.Empty, directive.Extension);
         }
 
-        [TestMethod]
-        public void EncodingReturnsValueOfEncodingAttribute()
+        [Fact]
+        public static void EncodingReturnsValueOfEncodingAttribute()
         {
             var directive = new OutputDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "output"),
                 new[] { new Attribute(new AttributeName(14, "encoding"), new Equals(18), new DoubleQuote(19), new AttributeValue(20, "utf-8"), new DoubleQuote(22)) },
                 new BlockEnd(24));
-            Assert.AreEqual("utf-8", directive.Encoding);
+            Assert.Equal("utf-8", directive.Encoding);
         }
 
-        [TestMethod]
-        public void EncodingReturnsEmptyStringWhenEncodingAttributeIsNotSpecified()
+        [Fact]
+        public static void EncodingReturnsEmptyStringWhenEncodingAttributeIsNotSpecified()
         {
             var directive = new OutputDirective(new DirectiveBlockStart(0), new DirectiveName(4, "output"), new Attribute[0], new BlockEnd(24));
-            Assert.AreEqual(string.Empty, directive.Encoding);
+            Assert.Equal(string.Empty, directive.Encoding);
         }
 
-        [TestMethod]
-        public void EncodingProvidesMetadataAboutKnownValues()
+        [Fact]
+        public static void EncodingProvidesMetadataAboutKnownValues()
         {
             var attributeDescriptor = new AttributeDescriptor(TypeDescriptor.GetProperties(typeof(OutputDirective))["Encoding"]);
-            Assert.AreNotEqual(0, attributeDescriptor.Values.Count);
+            Assert.NotEqual(0, attributeDescriptor.Values.Count);
             ValueDescriptor valueDescriptor = attributeDescriptor.Values["utf-16"];
-            Assert.AreEqual("Unicode", valueDescriptor.Description);
+            Assert.Equal("Unicode", valueDescriptor.Description);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfOutputDirective()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfOutputDirective()
         {
             var directive = new OutputDirective(new DirectiveBlockStart(0), new DirectiveName(4, "output"), new Attribute[0], new BlockEnd(24));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(4, out description, out applicableTo));
-            StringAssert.Contains(description, "extension");
-            StringAssert.Contains(description, "encoding");
+            Assert.True(directive.TryGetDescription(4, out description, out applicableTo));
+            Assert.Contains("extension", description, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("encoding", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfEncodingAttribute()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfEncodingAttribute()
         {
             var directive = new OutputDirective(
                 new DirectiveBlockStart(0),
@@ -101,12 +100,12 @@ namespace T4Toolbox.TemplateAnalysis
                 new BlockEnd(24));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(14, out description, out applicableTo));
-            StringAssert.Contains(description, "Encoding of the output file");
+            Assert.True(directive.TryGetDescription(14, out description, out applicableTo));
+            Assert.Contains("Encoding of the output file", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfExtensionAttribute()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfExtensionAttribute()
         {
             var directive = new OutputDirective(
                 new DirectiveBlockStart(0),
@@ -115,12 +114,12 @@ namespace T4Toolbox.TemplateAnalysis
                 new BlockEnd(24));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(14, out description, out applicableTo));
-            StringAssert.Contains(description, "Extension of the output file");
+            Assert.True(directive.TryGetDescription(14, out description, out applicableTo));
+            Assert.Contains("Extension of the output file", description, StringComparison.OrdinalIgnoreCase);
         }
         
-        [TestMethod]
-        public void ValidateReturnsErrorWhenExtensionAttributeIsNotSpecified()
+        [Fact]
+        public static void ValidateReturnsErrorWhenExtensionAttributeIsNotSpecified()
         {
             var directive = new OutputDirective(
                 new DirectiveBlockStart(0),
@@ -128,18 +127,18 @@ namespace T4Toolbox.TemplateAnalysis
                 new[] { new Attribute(new AttributeName(14, "encoding"), new Equals(18), new DoubleQuote(19), new AttributeValue(20, "utf-8"), new DoubleQuote(22)) },
                 new BlockEnd(24));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, "Extension");
+            Assert.Contains("Extension", error.Message, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void ValidateDoesNotReturnErrorWhenEncodingAttributeIsNotSpecified()
+        [Fact]
+        public static void ValidateDoesNotReturnErrorWhenEncodingAttributeIsNotSpecified()
         {
             var directive = new OutputDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "output"),
                 new[] { new Attribute(new AttributeName(14, "extension"), new Equals(18), new DoubleQuote(19), new AttributeValue(20, ".ext"), new DoubleQuote(22)) },
                 new BlockEnd(24));
-            Assert.IsFalse(directive.Validate().Any());
+            Assert.False(directive.Validate().Any());
        }
     }
 }

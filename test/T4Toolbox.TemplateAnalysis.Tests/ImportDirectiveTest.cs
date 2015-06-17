@@ -4,28 +4,28 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
+    using System;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class ImportDirectiveTest
+    public static class ImportDirectiveTest
     {
-        [TestMethod]
-        public void ImportDirectiveIsSubclassOfDirective()
+        [Fact]
+        public static void ImportDirectiveIsSubclassOfDirective()
         {
-            Assert.IsTrue(typeof(ImportDirective).IsSubclassOf(typeof(Directive)));
+            Assert.True(typeof(ImportDirective).IsSubclassOf(typeof(Directive)));
         }
 
-        [TestMethod]
-        public void ImportDirectiveIsSealed()
+        [Fact]
+        public static void ImportDirectiveIsSealed()
         {
-            Assert.IsTrue(typeof(ImportDirective).IsSealed);
+            Assert.True(typeof(ImportDirective).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitImportDirectiveMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitImportDirectiveMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var directive = new ImportDirective(new DirectiveBlockStart(0), new DirectiveName(4, "import"), new Attribute[0], new BlockEnd(18));
@@ -33,19 +33,19 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitImportDirective(directive);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfDirective()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfDirective()
         {
             var directive = new ImportDirective(new DirectiveBlockStart(0), new DirectiveName(4, "import"), new Attribute[0], new BlockEnd(18));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(4, out description, out applicableTo));
-            StringAssert.Contains(description, "imports");
-            StringAssert.Contains(description, "using");
+            Assert.True(directive.TryGetDescription(4, out description, out applicableTo));
+            Assert.Contains("imports", description, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("using", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfNamespaceAttribute()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfNamespaceAttribute()
         {
             var directive = new ImportDirective(
                 new DirectiveBlockStart(0),
@@ -54,34 +54,34 @@ namespace T4Toolbox.TemplateAnalysis
                 new BlockEnd(18));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(11, out description, out applicableTo));
-            StringAssert.Contains(description, "fully-qualified name of the namespace being imported");
+            Assert.True(directive.TryGetDescription(11, out description, out applicableTo));
+            Assert.Contains("fully-qualified name of the namespace being imported", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void NamespaceReturnsValueOfNamespaceAttribute()
+        [Fact]
+        public static void NamespaceReturnsValueOfNamespaceAttribute()
         {
             var directive = new ImportDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "import"),
                 new[] { new Attribute(new AttributeName(11, "namespace"), new Equals(12), new DoubleQuote(13), new AttributeValue(14, "42"), new DoubleQuote(16)) },
                 new BlockEnd(18));
-            Assert.AreEqual("42", directive.Namespace);
+            Assert.Equal("42", directive.Namespace);
         }
 
-        [TestMethod]
-        public void NamespaceReturnsEmptyStringWhenNamespaceAttributeIsNotSpecified()
+        [Fact]
+        public static void NamespaceReturnsEmptyStringWhenNamespaceAttributeIsNotSpecified()
         {
             var directive = new ImportDirective(new DirectiveBlockStart(0), new DirectiveName(4, "import"), new Attribute[0], new BlockEnd(18));
-            Assert.AreEqual(string.Empty, directive.Namespace);
+            Assert.Equal(string.Empty, directive.Namespace);
         }
 
-        [TestMethod]
-        public void ValidateReturnsErrorWhenNamespaceAttributeIsNotSpecified()
+        [Fact]
+        public static void ValidateReturnsErrorWhenNamespaceAttributeIsNotSpecified()
         {
             var directive = new ImportDirective(new DirectiveBlockStart(0), new DirectiveName(4, "import"), new Attribute[0], new BlockEnd(18));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, "Namespace");
+            Assert.Contains("Namespace", error.Message, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

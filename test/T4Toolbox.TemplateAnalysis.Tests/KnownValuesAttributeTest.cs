@@ -3,84 +3,82 @@
 // </copyright>
 namespace T4Toolbox.TemplateAnalysis
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 
-    [TestClass]
-    public class KnownValuesAttributeTest
+    public static class KnownValuesAttributeTest
     {
-        [TestMethod]
-        public void ClassIsInternalAndNotMeantForPublicConsumption()
+        [Fact]
+        public static void ClassIsInternalAndNotMeantForPublicConsumption()
         {
-            Assert.IsFalse(typeof(KnownValuesAttribute).IsPublic);
+            Assert.False(typeof(KnownValuesAttribute).IsPublic);
         }
 
-        [TestMethod]
-        public void ClassIsSealedAndNotMeantToHaveDerivedClasses()
+        [Fact]
+        public static void ClassIsSealedAndNotMeantToHaveDerivedClasses()
         {
-            Assert.IsTrue(typeof(KnownValuesAttribute).IsSealed);
+            Assert.True(typeof(KnownValuesAttribute).IsSealed);
         }
 
-        [TestMethod]
-        public void KnownValuesReturnsValuesProducedByTheFunctionSpecifiedInConstructor()
+        [Fact]
+        public static void KnownValuesReturnsValuesProducedByTheFunctionSpecifiedInConstructor()
         {
-            var attribute = new KnownValuesAttribute(this.GetType(), "TestValueFactory");
-            Assert.AreEqual(2, attribute.KnownValues.Count);
-            Assert.AreSame("Value1", attribute.KnownValues[0].DisplayName);
-            Assert.AreSame("Value2", attribute.KnownValues[1].DisplayName);
+            var attribute = new KnownValuesAttribute(typeof(KnownValuesAttributeTest), "TestValueFactory");
+            Assert.Equal(2, attribute.KnownValues.Count);
+            Assert.Same("Value1", attribute.KnownValues[0].DisplayName);
+            Assert.Same("Value2", attribute.KnownValues[1].DisplayName);
         }
 
         #region Enum support
 
-        [TestMethod]
-        public void KnownValuesReturnsListOfValuesDefinedInEnumType()
+        [Fact]
+        public static void KnownValuesReturnsListOfValuesDefinedInEnumType()
         {
             var attribute = new KnownValuesAttribute(typeof(EnumWithThreeValues));
-            Assert.AreEqual(3, attribute.KnownValues.Count);
+            Assert.Equal(3, attribute.KnownValues.Count);
         }
 
-        [TestMethod]
-        public void KnownValueCachesResultToImprovePerformance()
+        [Fact]
+        public static void KnownValueCachesResultToImprovePerformance()
         {
             var attribute = new KnownValuesAttribute(typeof(EnumWithThreeValues));
-            Assert.AreSame(attribute.KnownValues, attribute.KnownValues);
+            Assert.Same(attribute.KnownValues, attribute.KnownValues);
         }
 
-        [TestMethod]
-        public void KnownValueDisplayNameReturnsNameOfEnumValueWithoutDisplayAttribute()
+        [Fact]
+        public static void KnownValueDisplayNameReturnsNameOfEnumValueWithoutDisplayAttribute()
         {
             var attribute = new KnownValuesAttribute(typeof(EnumWithoutDisplayAttribute));
-            Assert.AreEqual("Value", attribute.KnownValues[0].DisplayName);
+            Assert.Equal("Value", attribute.KnownValues[0].DisplayName);
         }
 
-        [TestMethod]
-        public void KnownValueDisplayNameReturnsValueSpecifiedInDisplayAttribute()
+        [Fact]
+        public static void KnownValueDisplayNameReturnsValueSpecifiedInDisplayAttribute()
         {
             var attribute = new KnownValuesAttribute(typeof(EnumWithDisplayName));
-            Assert.AreEqual("Display.Name", attribute.KnownValues[0].DisplayName);
+            Assert.Equal("Display.Name", attribute.KnownValues[0].DisplayName);
         }
 
-        [TestMethod]
-        public void KnownValueDisplayNameReturnsNameOfEnumValueWhenDisplayAttributeDoesNotSpecifyName()
+        [Fact]
+        public static void KnownValueDisplayNameReturnsNameOfEnumValueWhenDisplayAttributeDoesNotSpecifyName()
         {
             var attribute = new KnownValuesAttribute(typeof(EnumWithDescription));
-            Assert.AreEqual("Value", attribute.KnownValues[0].DisplayName);
+            Assert.Equal("Value", attribute.KnownValues[0].DisplayName);
         }
 
-        [TestMethod]
-        public void KnownValueDescriptionReturnsEmptyStringWhenEnumValueHasNoDisplayAttribute()
+        [Fact]
+        public static void KnownValueDescriptionReturnsEmptyStringWhenEnumValueHasNoDisplayAttribute()
         {
             var attribute = new KnownValuesAttribute(typeof(EnumWithoutDisplayAttribute));
-            Assert.AreEqual(string.Empty, attribute.KnownValues[0].Description);
+            Assert.Equal(string.Empty, attribute.KnownValues[0].Description);
         }
 
-        [TestMethod]
-        public void KnownValueDescriptionReturnsDescriptionSpecifiedInDisplayAttribute()
+        [Fact]
+        public static void KnownValueDescriptionReturnsDescriptionSpecifiedInDisplayAttribute()
         {
             var attribute = new KnownValuesAttribute(typeof(EnumWithDescription));
-            Assert.AreEqual("Display.Description", attribute.KnownValues[0].Description);
+            Assert.Equal("Display.Description", attribute.KnownValues[0].Description);
         }
 
         private enum EnumWithThreeValues

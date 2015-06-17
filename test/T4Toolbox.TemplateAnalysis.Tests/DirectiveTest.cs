@@ -10,40 +10,37 @@ namespace T4Toolbox.TemplateAnalysis
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
+    using Xunit;
 
-    using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
-
-    [TestClass]
-    public class DirectiveTest
+    public static class DirectiveTest
     {
-        [TestMethod]
-        public void DirectiveIsSubclassOfNonterminalNode()
+        [Fact]
+        public static void DirectiveIsSubclassOfNonterminalNode()
         {
-            Assert.IsTrue(typeof(Directive).IsSubclassOf(typeof(NonterminalNode)));
+            Assert.True(typeof(Directive).IsSubclassOf(typeof(NonterminalNode)));
         }
 
-        [TestMethod]
-        public void DirectiveIsAbstract()
+        [Fact]
+        public static void DirectiveIsAbstract()
         {
-            Assert.IsTrue(typeof(Directive).IsAbstract);
+            Assert.True(typeof(Directive).IsAbstract);
         }
 
-        [TestMethod]
-        public void AttributesReturnsCaseInsensitiveDictionaryOfAttributesByName()
+        [Fact]
+        public static void AttributesReturnsCaseInsensitiveDictionaryOfAttributesByName()
         {
             var a1 = new Attribute(new AttributeName(13, "language"), new Equals(21), new DoubleQuote(22), new AttributeValue(23, "C#"), new DoubleQuote(25));
             var a2 = new Attribute(new AttributeName(27, "debug"), new Equals(32), new DoubleQuote(33), new AttributeValue(34, "True"), new DoubleQuote(38));
             var directive = new TestableDirective(new DirectiveBlockStart(0), new DirectiveName(4, "template"), new[] { a1, a2 }, new BlockEnd(27));            
             IReadOnlyDictionary<string, Attribute> dictionary = directive.Attributes;
-            Assert.IsNotNull(dictionary);
-            Assert.AreSame(a1, dictionary["Language"]);
-            Assert.AreSame(a2, dictionary["Debug"]);
+            Assert.NotNull(dictionary);
+            Assert.Same(a1, dictionary["Language"]);
+            Assert.Same(a2, dictionary["Debug"]);
         }
 
-        [TestMethod]
-        public void ChildNodesReturnsNodesSpecifiedInConstructor()
+        [Fact]
+        public static void ChildNodesReturnsNodesSpecifiedInConstructor()
         {
             var start = new DirectiveBlockStart(0);
             var name = new DirectiveName(4, "template");
@@ -51,111 +48,111 @@ namespace T4Toolbox.TemplateAnalysis
             var a2 = new Attribute(new AttributeName(27, "debug"), new Equals(32), new DoubleQuote(33), new AttributeValue(34, "True"), new DoubleQuote(38));
             var end = new BlockEnd(27);
             var directive = new TestableDirective(start, name, new[] { a1, a2 }, end);
-            Assert.IsTrue(directive.ChildNodes().SequenceEqual(new SyntaxNode[] { start, name, a1, a2, end }));
+            Assert.True(directive.ChildNodes().SequenceEqual(new SyntaxNode[] { start, name, a1, a2, end }));
         }
 
         #region Create
 
-        [TestMethod]
-        public void CreateReturnsAssemblyDirectiveGivenAssemblyDirectiveName()
+        [Fact]
+        public static void CreateReturnsAssemblyDirectiveGivenAssemblyDirectiveName()
         {
             var directive = Directive.Create(new DirectiveBlockStart(0), new DirectiveName(4, "assembly"), new Attribute[0], new BlockEnd(0));
-            Assert.AreEqual(typeof(AssemblyDirective), directive.GetType());
+            Assert.Equal(typeof(AssemblyDirective), directive.GetType());
         }
 
-        [TestMethod]
-        public void CreateReturnsCustomDirectiveGivenUnrecognizedDirectiveName()
+        [Fact]
+        public static void CreateReturnsCustomDirectiveGivenUnrecognizedDirectiveName()
         {
             var directive = Directive.Create(new DirectiveBlockStart(0), new DirectiveName(4, "custom"), new Attribute[0], new BlockEnd(0));
-            Assert.AreEqual(typeof(CustomDirective), directive.GetType());
+            Assert.Equal(typeof(CustomDirective), directive.GetType());
         }
 
-        [TestMethod]
-        public void CreateReturnsIncludeDirectiveGivenIncludeDirectiveName()
+        [Fact]
+        public static void CreateReturnsIncludeDirectiveGivenIncludeDirectiveName()
         {
             var directive = Directive.Create(new DirectiveBlockStart(0), new DirectiveName(4, "Include"), new Attribute[0], new BlockEnd(0));
-            Assert.AreEqual(typeof(IncludeDirective), directive.GetType());
+            Assert.Equal(typeof(IncludeDirective), directive.GetType());
         }
 
-        [TestMethod]
-        public void CreateReturnsImportDirectiveGivenImportDirectiveName()
+        [Fact]
+        public static void CreateReturnsImportDirectiveGivenImportDirectiveName()
         {
             var directive = Directive.Create(new DirectiveBlockStart(0), new DirectiveName(4, "Import"), new Attribute[0], new BlockEnd(0));
-            Assert.AreEqual(typeof(ImportDirective), directive.GetType());
+            Assert.Equal(typeof(ImportDirective), directive.GetType());
         }
 
-        [TestMethod]
-        public void CreateReturnsOutputDirectiveGivenOutputDirectiveName()
+        [Fact]
+        public static void CreateReturnsOutputDirectiveGivenOutputDirectiveName()
         {
             var directive = Directive.Create(new DirectiveBlockStart(0), new DirectiveName(4, "Output"), new Attribute[0], new BlockEnd(0));
-            Assert.AreEqual(typeof(OutputDirective), directive.GetType());
+            Assert.Equal(typeof(OutputDirective), directive.GetType());
         }
 
-        [TestMethod]
-        public void CreateReturnsParameterDirectiveGivenParameterDirectiveName()
+        [Fact]
+        public static void CreateReturnsParameterDirectiveGivenParameterDirectiveName()
         {
             var directive = Directive.Create(new DirectiveBlockStart(0), new DirectiveName(4, "Parameter"), new Attribute[0], new BlockEnd(0));
-            Assert.AreEqual(typeof(ParameterDirective), directive.GetType());
+            Assert.Equal(typeof(ParameterDirective), directive.GetType());
         }
 
-        [TestMethod]
-        public void CreateReturnsTemplateDirectiveGivenTemplateDirectiveName()
+        [Fact]
+        public static void CreateReturnsTemplateDirectiveGivenTemplateDirectiveName()
         {
             var directive = Directive.Create(new DirectiveBlockStart(0), new DirectiveName(4, "Template"), new Attribute[0], new BlockEnd(0));
-            Assert.AreEqual(typeof(TemplateDirective), directive.GetType());
+            Assert.Equal(typeof(TemplateDirective), directive.GetType());
         }
 
         #endregion
 
-        [TestMethod]
-        public void DirectiveNameReturnsTextOfDirectiveNameNode()
+        [Fact]
+        public static void DirectiveNameReturnsTextOfDirectiveNameNode()
         {
             var directive = new TestableDirective(new DirectiveBlockStart(0), new DirectiveName(4, "template"), new Attribute[0], new BlockEnd(13));
-            Assert.AreEqual("template", directive.DirectiveName);
+            Assert.Equal("template", directive.DirectiveName);
         }
 
-        [TestMethod]
-        public void KindReturnsDirectiveSyntaxKind()
+        [Fact]
+        public static void KindReturnsDirectiveSyntaxKind()
         {
             var directive = new TestableDirective(new DirectiveBlockStart(0), new DirectiveName(4, "template"), new Attribute[0], new BlockEnd(13));
-            Assert.AreEqual(SyntaxKind.Directive, directive.Kind);
+            Assert.Equal(SyntaxKind.Directive, directive.Kind);
         }
 
-        [TestMethod]
-        public void GetAttributeNameReturnsValueOfAttributeWithGivenName()
+        [Fact]
+        public static void GetAttributeNameReturnsValueOfAttributeWithGivenName()
         {
             var directive = new TestableDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "template"),
                 new[] { new Attribute(new AttributeName(13, "hostspecific"), new Equals(26), new DoubleQuote(27), new AttributeValue(28, "true"), new DoubleQuote(32)) },
                 new BlockEnd(23));
-            Assert.AreEqual("true", directive.GetAttributeValue("hostspecific"));
+            Assert.Equal("true", directive.GetAttributeValue("hostspecific"));
         }
 
-        [TestMethod]
-        public void GetAttributeNameReturnsValueOfAttributeWithGivenDisplayName()
+        [Fact]
+        public static void GetAttributeNameReturnsValueOfAttributeWithGivenDisplayName()
         {
             var directive = new DirectiveWithAttributeProperty(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "directive"),
                 new[] { new Attribute(new AttributeName(13, "attribute"), new Equals(26), new DoubleQuote(27), new AttributeValue(28, "true"), new DoubleQuote(32)) },
                 new BlockEnd(23));
-            Assert.AreEqual("true", directive.GetAttributeValue("property"));
+            Assert.Equal("true", directive.GetAttributeValue("property"));
         }
 
         #region GetDescription
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfBlockStart()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfBlockStart()
         {
             var directive = new DirectiveWithDescription(new DirectiveBlockStart(0), new DirectiveName(4, "directive"), new Attribute[0], new BlockEnd(14));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(0, out description, out applicableTo));
+            Assert.True(directive.TryGetDescription(0, out description, out applicableTo));
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsStringSpecifiedInDescriptionAttributeForAttributeProperty()
+        [Fact]
+        public static void GetDescriptionReturnsStringSpecifiedInDescriptionAttributeForAttributeProperty()
         {
             var attribute = new Attribute(new AttributeName(13, "attribute"), new Equals(26), new DoubleQuote(27), new AttributeValue(28, "true"), new DoubleQuote(32));
             var directive = new DirectiveWithAttributeProperty(
@@ -166,55 +163,55 @@ namespace T4Toolbox.TemplateAnalysis
             DescriptionAttribute descriptionAttribute = directive.GetType().GetProperty("Property").GetCustomAttributes(false).OfType<DescriptionAttribute>().Single();
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(13, out description, out applicableTo));
-            Assert.AreEqual(descriptionAttribute.Description, description);
-            Assert.AreEqual(attribute.Span, applicableTo);
+            Assert.True(directive.TryGetDescription(13, out description, out applicableTo));
+            Assert.Equal(descriptionAttribute.Description, description);
+            Assert.Equal(attribute.Span, applicableTo);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfDirectiveAndSpanOfDirectiveNameGivenPositionWithinDirectiveName()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfDirectiveAndSpanOfDirectiveNameGivenPositionWithinDirectiveName()
         {
             var directiveName = new DirectiveName(4, "directive");
             var directive = new DirectiveWithDescription(new DirectiveBlockStart(0), directiveName, new Attribute[0], new BlockEnd(14));
             DescriptionAttribute descriptionAttribute = directive.GetType().GetCustomAttributes(false).OfType<DescriptionAttribute>().Single();
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(4, out description, out applicableTo));
-            Assert.AreEqual(descriptionAttribute.Description, description);
-            Assert.AreEqual(directiveName.Span, applicableTo);
+            Assert.True(directive.TryGetDescription(4, out description, out applicableTo));
+            Assert.Equal(descriptionAttribute.Description, description);
+            Assert.Equal(directiveName.Span, applicableTo);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsEmptyStringAndSpanGivenPositionBetweenItsChildNodesToPreventDirectiveTooltipFromStickingDuringHorizontalMouseMovement()
+        [Fact]
+        public static void GetDescriptionReturnsEmptyStringAndSpanGivenPositionBetweenItsChildNodesToPreventDirectiveTooltipFromStickingDuringHorizontalMouseMovement()
         {
             var directive = new DirectiveWithDescription(new DirectiveBlockStart(0), new DirectiveName(4, "directive"), new Attribute[0], new BlockEnd(14));
             string description;
             Span applicableTo;
-            Assert.IsFalse(directive.TryGetDescription(3, out description, out applicableTo));
-            Assert.AreEqual(string.Empty, description);
-            Assert.AreEqual(default(Span), applicableTo);
+            Assert.False(directive.TryGetDescription(3, out description, out applicableTo));
+            Assert.Equal(string.Empty, description);
+            Assert.Equal(default(Span), applicableTo);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfBlockEnd()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfBlockEnd()
         {
             var directive = new DirectiveWithDescription(new DirectiveBlockStart(0), new DirectiveName(4, "directive"), new Attribute[0], new BlockEnd(14));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(14, out description, out applicableTo));
+            Assert.True(directive.TryGetDescription(14, out description, out applicableTo));
         }
 
         #endregion
 
-        [TestMethod]
-        public void PositionReturnsPositionOfBlockStart()
+        [Fact]
+        public static void PositionReturnsPositionOfBlockStart()
         {
             var target = new TestableDirective(new DirectiveBlockStart(0, new Position(4, 2)), new DirectiveName(0, string.Empty), Enumerable.Empty<Attribute>(), new BlockEnd(0));
-            Assert.AreEqual(new Position(4, 2), target.Position);
+            Assert.Equal(new Position(4, 2), target.Position);
         }
 
-        [TestMethod]
-        public void SpanStartsAtBlockStart()
+        [Fact]
+        public static void SpanStartsAtBlockStart()
         {
             DirectiveBlockStart start;
             var directive = new TestableDirective(
@@ -222,11 +219,11 @@ namespace T4Toolbox.TemplateAnalysis
                 new DirectiveName(14, "template"), 
                 new Attribute[0], 
                 new BlockEnd(23));
-            Assert.AreEqual(start.Span.Start, directive.Span.Start);
+            Assert.Equal(start.Span.Start, directive.Span.Start);
         }
 
-        [TestMethod]
-        public void SpanEndsAtBlockEnd()
+        [Fact]
+        public static void SpanEndsAtBlockEnd()
         {
             BlockEnd end;
             var directive = new TestableDirective(
@@ -234,21 +231,21 @@ namespace T4Toolbox.TemplateAnalysis
                 new DirectiveName(14, "template"),
                 new Attribute[0],
                 end = new BlockEnd(23));
-            Assert.AreEqual(end.Span.End, directive.Span.End);
+            Assert.Equal(end.Span.End, directive.Span.End);
         }
 
-        [TestMethod]
-        public void ValidateReturnsTemplateErrorWhenAttributeValueDoesNotPassPropertyValidationAttributes()
+        [Fact]
+        public static void ValidateReturnsTemplateErrorWhenAttributeValueDoesNotPassPropertyValidationAttributes()
         {
             var directive = new DirectiveWithRequiredAttribute(new DirectiveBlockStart(0), new DirectiveName(4, "template"), new Attribute[0], new BlockEnd(13));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, "RequiredAttribute");
-            Assert.AreEqual(directive.Span, error.Span);
-            Assert.AreEqual(directive.Position, error.Position);
+            Assert.Contains("RequiredAttribute", error.Message, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(directive.Span, error.Span);
+            Assert.Equal(directive.Position, error.Position);
         }
 
-        [TestMethod]
-        public void ValidateReturnsTemplateErrorWhenAttributeValueDoesNotMatchKnownValues()
+        [Fact]
+        public static void ValidateReturnsTemplateErrorWhenAttributeValueDoesNotMatchKnownValues()
         {
             AttributeValue value;
             var directive = new DirectiveWithKnownAttributeValues(
@@ -257,25 +254,25 @@ namespace T4Toolbox.TemplateAnalysis
                 new[] { new Attribute(new AttributeName(13, "attributeWithKnownValues"), new Equals(37), new DoubleQuote(38), value = new AttributeValue(39, "wrong"), new DoubleQuote(44)) },
                 new BlockEnd(46));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, "attributeWithKnownValues");
-            StringAssert.Contains(error.Message, "wrong");
-            Assert.AreEqual(value.Span, error.Span);
-            Assert.AreEqual(value.Position, error.Position);
+            Assert.Contains("attributeWithKnownValues", error.Message, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("wrong", error.Message, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(value.Span, error.Span);
+            Assert.Equal(value.Position, error.Position);
         }
 
-        [TestMethod]
-        public void ValidateIgnoresCaseWhenComparingAttributeValuesToKnownValues()
+        [Fact]
+        public static void ValidateIgnoresCaseWhenComparingAttributeValuesToKnownValues()
         {
             var directive = new DirectiveWithKnownAttributeValues(
                 new DirectiveBlockStart(0), 
                 new DirectiveName(4, "directive"), 
                 new[] { new Attribute(new AttributeName(13, "attributeWithKnownValues"), new Equals(37), new DoubleQuote(38), new AttributeValue(39, "KNOWNVALUE"), new DoubleQuote(49)) },
                 new BlockEnd(51));
-            Assert.IsFalse(directive.Validate().Any());            
+            Assert.False(directive.Validate().Any());            
         }
 
-        [TestMethod]
-        public void ValidateReturnsTemplateErrorWhenDirectiveContainsUnrecognizedAttribute()
+        [Fact]
+        public static void ValidateReturnsTemplateErrorWhenDirectiveContainsUnrecognizedAttribute()
         {
             var unrecognizedAttribute = new Attribute(new AttributeName(27, "UnrecognizedAttribute"), new Equals(32), new DoubleQuote(33), new AttributeValue(34, "v2"), new DoubleQuote(38));
             var directive = new TestableDirective(
@@ -284,20 +281,20 @@ namespace T4Toolbox.TemplateAnalysis
                 new[] { unrecognizedAttribute },
                 new BlockEnd(23));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, unrecognizedAttribute.Name);
-            Assert.AreEqual(unrecognizedAttribute.Span, error.Span);
-            Assert.AreEqual(unrecognizedAttribute.Position, error.Position);
+            Assert.Contains(unrecognizedAttribute.Name, error.Message, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(unrecognizedAttribute.Span, error.Span);
+            Assert.Equal(unrecognizedAttribute.Position, error.Position);
         }
 
-        [TestMethod]
-        public void ValidateDoesNotReturnErrorsForAttributesWithoutKnownValues()
+        [Fact]
+        public static void ValidateDoesNotReturnErrorsForAttributesWithoutKnownValues()
         {
             var directive = new DirectiveWithAttributeProperty(
                 new DirectiveBlockStart(10),
                 new DirectiveName(14, "directive"),
                 new[] { new Attribute(new AttributeName(27, "attribute"), new Equals(32), new DoubleQuote(33), new AttributeValue(34, "value"), new DoubleQuote(38)) },
                 new BlockEnd(23));
-            Assert.IsFalse(directive.Validate().Any());
+            Assert.False(directive.Validate().Any());
         }
 
         private class TestableDirective : Directive

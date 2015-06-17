@@ -4,38 +4,37 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class EndOfFileTest
+    public static class EndOfFileTest
     {
-        [TestMethod]
-        public void EndOfFileIsSubclassOfSyntaxToken()
+        [Fact]
+        public static void EndOfFileIsSubclassOfSyntaxToken()
         {
-            Assert.IsTrue(typeof(EndOfFile).IsSubclassOf(typeof(SyntaxToken)));
+            Assert.True(typeof(EndOfFile).IsSubclassOf(typeof(SyntaxToken)));
         }
 
-        [TestMethod]
-        public void EndOfFileIsSealed()
+        [Fact]
+        public static void EndOfFileIsSealed()
         {
-            Assert.IsTrue(typeof(EndOfFile).IsSealed);
+            Assert.True(typeof(EndOfFile).IsSealed);
         }
 
-        [TestMethod]
-        public void KindReturnsEndOfFileSyntaxKind()
+        [Fact]
+        public static void KindReturnsEndOfFileSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.EOF, new EndOfFile(0).Kind);
+            Assert.Equal(SyntaxKind.EOF, new EndOfFile(0).Kind);
         }
 
-        [TestMethod]
-        public void SpanLengthReturnsLengthOfToken()
+        [Fact]
+        public static void SpanLengthReturnsLengthOfToken()
         {
-            Assert.AreEqual(0, new EndOfFile(0).Span.Length);
+            Assert.Equal(0, new EndOfFile(0).Span.Length);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitEndOfFileMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitEndOfFileMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new EndOfFile(default(int));

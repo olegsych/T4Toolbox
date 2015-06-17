@@ -4,28 +4,28 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
+    using System;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class IncludeDirectiveTest
+    public static class IncludeDirectiveTest
     {
-        [TestMethod]
-        public void IncludeDirectiveIsSubclassOfDirective()
+        [Fact]
+        public static void IncludeDirectiveIsSubclassOfDirective()
         {
-            Assert.IsTrue(typeof(IncludeDirective).IsSubclassOf(typeof(Directive)));
+            Assert.True(typeof(IncludeDirective).IsSubclassOf(typeof(Directive)));
         }
 
-        [TestMethod]
-        public void IncludeDirectiveIsSealed()
+        [Fact]
+        public static void IncludeDirectiveIsSealed()
         {
-            Assert.IsTrue(typeof(IncludeDirective).IsSealed);
+            Assert.True(typeof(IncludeDirective).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitIncludeDirectiveMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitIncludeDirectiveMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var directive = new IncludeDirective(new DirectiveBlockStart(0), new DirectiveName(4, "include"), new Attribute[0], new BlockEnd(12));
@@ -33,36 +33,36 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitIncludeDirective(directive);
         }
 
-        [TestMethod]
-        public void FileReturnsValueOfFileAttribute()
+        [Fact]
+        public static void FileReturnsValueOfFileAttribute()
         {
             var directive = new IncludeDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "include"),
                 new[] { new Attribute(new AttributeName(12, "file"), new Equals(16), new DoubleQuote(17), new AttributeValue(18, "template.tt"), new DoubleQuote(29)) },
                 new BlockEnd(30));
-            Assert.AreEqual("template.tt", directive.File);
+            Assert.Equal("template.tt", directive.File);
         }
 
-        [TestMethod]
-        public void FileReturnsEmptyStringWhenFileAttributeIsNotSpecified()
+        [Fact]
+        public static void FileReturnsEmptyStringWhenFileAttributeIsNotSpecified()
         {
             var directive = new IncludeDirective(new DirectiveBlockStart(0), new DirectiveName(4, "include"), new Attribute[0], new BlockEnd(12));
-            Assert.AreEqual(string.Empty, directive.File);
+            Assert.Equal(string.Empty, directive.File);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfDirective()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfDirective()
         {
             var directive = new IncludeDirective(new DirectiveBlockStart(0), new DirectiveName(4, "include"), new Attribute[0], new BlockEnd(12));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(4, out description, out applicableTo));            
-            StringAssert.Contains(description, "text from another file");
+            Assert.True(directive.TryGetDescription(4, out description, out applicableTo));            
+            Assert.Contains("text from another file", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfNameAttribute()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfNameAttribute()
         {
             var directive = new IncludeDirective(
                 new DirectiveBlockStart(0),
@@ -71,16 +71,16 @@ namespace T4Toolbox.TemplateAnalysis
                 new BlockEnd(30));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(12, out description, out applicableTo));
-            StringAssert.Contains(description, "path to the included file");
+            Assert.True(directive.TryGetDescription(12, out description, out applicableTo));
+            Assert.Contains("path to the included file", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void ValidateReturnsErrorWhenFileAttributeIsNotSpecified()
+        [Fact]
+        public static void ValidateReturnsErrorWhenFileAttributeIsNotSpecified()
         {
             var directive = new IncludeDirective(new DirectiveBlockStart(0), new DirectiveName(4, "include"), new Attribute[0], new BlockEnd(12));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, "File");
+            Assert.Contains("File", error.Message, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -5,30 +5,29 @@
 namespace T4Toolbox.TemplateAnalysis
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
+    using Xunit;
 
-    [TestClass]
-    public class SyntaxTokenTest
+    public static class SyntaxTokenTest
     {
-        [TestMethod]
-        public void ConstructorSetsPositionProperty()
+        [Fact]
+        public static void ConstructorSetsPositionProperty()
         {
             var target = new TestableSyntaxToken(0, new Position(4, 2));
-            Assert.AreEqual(new Position(4, 2), target.Position);
+            Assert.Equal(new Position(4, 2), target.Position);
         }
 
-        [TestMethod]
-        public void SyntaxTokenIsSubclassOfTerminalNode()
+        [Fact]
+        public static void SyntaxTokenIsSubclassOfTerminalNode()
         {
-            Assert.IsTrue(typeof(SyntaxToken).IsSubclassOf(typeof(TerminalNode)));
+            Assert.True(typeof(SyntaxToken).IsSubclassOf(typeof(TerminalNode)));
         }
 
-        [TestMethod]
-        public void StartReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void StartReturnsValueSpecifiedInConstructor()
         {
             var target = new TestableSyntaxToken(42);
-            Assert.AreEqual(42, target.Start);
+            Assert.Equal(42, target.Start);
         }
 
         private class TestableSyntaxToken : SyntaxToken

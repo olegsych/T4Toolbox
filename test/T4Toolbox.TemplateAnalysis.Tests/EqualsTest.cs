@@ -4,38 +4,37 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class EqualsTest
+    public static class EqualsTest
     {
-        [TestMethod]
-        public void EqualsIsSubclassOfSyntaxToken()
+        [Fact]
+        public static void EqualsIsSubclassOfSyntaxToken()
         {
-            Assert.IsTrue(typeof(Equals).IsSubclassOf(typeof(SyntaxToken)));
+            Assert.True(typeof(Equals).IsSubclassOf(typeof(SyntaxToken)));
         }
 
-        [TestMethod]
-        public void EqualsIsSealed()
+        [Fact]
+        public static void EqualsIsSealed()
         {
-            Assert.IsTrue(typeof(Equals).IsSealed);
+            Assert.True(typeof(Equals).IsSealed);
         }
 
-        [TestMethod]
-        public void KindReturnsEqualsSyntaxKind()
+        [Fact]
+        public static void KindReturnsEqualsSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.Equals, new Equals(0).Kind);
+            Assert.Equal(SyntaxKind.Equals, new Equals(0).Kind);
         }
 
-        [TestMethod]
-        public void SpanLengthReturnsLengthOfToken()
+        [Fact]
+        public static void SpanLengthReturnsLengthOfToken()
         {
-            Assert.AreEqual("=".Length, new Equals(0).Span.Length);
+            Assert.Equal("=".Length, new Equals(0).Span.Length);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitEqualsMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitEqualsMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new Equals(default(int));

@@ -5,40 +5,39 @@
 namespace T4Toolbox.TemplateAnalysis
 {
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class CodeBlockTest
+    public static class CodeBlockTest
     {
-        [TestMethod]
-        public void CodeBlockIsSubclassOfNonterminalNode()
+        [Fact]
+        public static void CodeBlockIsSubclassOfNonterminalNode()
         {
-            Assert.IsTrue(typeof(CodeBlock).IsSubclassOf(typeof(NonterminalNode)));
+            Assert.True(typeof(CodeBlock).IsSubclassOf(typeof(NonterminalNode)));
         }
 
-        [TestMethod]
-        public void CodeBlockIsSealed()
+        [Fact]
+        public static void CodeBlockIsSealed()
         {
-            Assert.IsTrue(typeof(CodeBlock).IsSealed);
+            Assert.True(typeof(CodeBlock).IsSealed);
         }
 
-        [TestMethod]
-        public void KindReturnsCodeBlockSyntaxKind()
+        [Fact]
+        public static void KindReturnsCodeBlockSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.CodeBlock, new CodeBlock(new StatementBlockStart(default(int)), new BlockEnd(default(int))).Kind);
+            Assert.Equal(SyntaxKind.CodeBlock, new CodeBlock(new StatementBlockStart(default(int)), new BlockEnd(default(int))).Kind);
         }
 
-        [TestMethod]
-        public void PositionReturnsPositionOfCodeBlockStart()
+        [Fact]
+        public static void PositionReturnsPositionOfCodeBlockStart()
         {
             var target = new CodeBlock(new StatementBlockStart(0, new Position(4, 2)), new BlockEnd(0));
-            Assert.AreEqual(new Position(4, 2), target.Position);
+            Assert.Equal(new Position(4, 2), target.Position);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitCodeBlockMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitCodeBlockMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var codeBlock = new CodeBlock(new StatementBlockStart(0), new BlockEnd(0));
@@ -46,39 +45,39 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitCodeBlock(codeBlock);
         }
 
-        [TestMethod]
-        public void ChildNodesReturnsBlockStartCodeAndBlockEnd()
+        [Fact]
+        public static void ChildNodesReturnsBlockStartCodeAndBlockEnd()
         {
             var start = new StatementBlockStart(default(int));
             var code = new Code(default(Span));
             var end = new BlockEnd(default(int));
             var codeBlock = new CodeBlock(start, code, end);
-            Assert.IsTrue(codeBlock.ChildNodes().SequenceEqual(new SyntaxNode[] { start, code, end }));
+            Assert.True(codeBlock.ChildNodes().SequenceEqual(new SyntaxNode[] { start, code, end }));
         }
 
-        [TestMethod]
-        public void ChildNodesReturnsBlockStartAndBlockEnd()
+        [Fact]
+        public static void ChildNodesReturnsBlockStartAndBlockEnd()
         {
             var start = new StatementBlockStart(default(int));
             var end = new BlockEnd(default(int));
             var codeBlock = new CodeBlock(start, end);
-            Assert.IsTrue(codeBlock.ChildNodes().SequenceEqual(new SyntaxNode[] { start, end }));
+            Assert.True(codeBlock.ChildNodes().SequenceEqual(new SyntaxNode[] { start, end }));
         }
 
-        [TestMethod]
-        public void SpanStartsAtBlockStart()
+        [Fact]
+        public static void SpanStartsAtBlockStart()
         {
             StatementBlockStart start;
             var codeBlock = new CodeBlock(start = new StatementBlockStart(42), new BlockEnd(100));
-            Assert.AreEqual(start.Span.Start, codeBlock.Span.Start);
+            Assert.Equal(start.Span.Start, codeBlock.Span.Start);
         }
 
-        [TestMethod]
-        public void SpanEndsAtBlockEnd()
+        [Fact]
+        public static void SpanEndsAtBlockEnd()
         {
             BlockEnd end;
             var codeBlock = new CodeBlock(new StatementBlockStart(0), end = new BlockEnd(40));
-            Assert.AreEqual(end.Span.End, codeBlock.Span.End);
+            Assert.Equal(end.Span.End, codeBlock.Span.End);
         }
     }
 }

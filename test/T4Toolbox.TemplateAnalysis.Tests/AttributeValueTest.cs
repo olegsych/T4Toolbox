@@ -4,33 +4,32 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class AttributeValueTest
+    public static class AttributeValueTest
     {
-        [TestMethod]
-        public void AttributeValueIsSubclassOfCaptureNode()
+        [Fact]
+        public static void AttributeValueIsSubclassOfCaptureNode()
         {
-            Assert.IsTrue(typeof(AttributeValue).IsSubclassOf(typeof(CaptureNode)));
+            Assert.True(typeof(AttributeValue).IsSubclassOf(typeof(CaptureNode)));
         }
 
-        [TestMethod]
-        public void AttributeValueIsSealed()
+        [Fact]
+        public static void AttributeValueIsSealed()
         {
-            Assert.IsTrue(typeof(AttributeValue).IsSealed);
+            Assert.True(typeof(AttributeValue).IsSealed);
         }
 
-        [TestMethod]
-        public void KindReturnsAttributeValueSyntaxKind()
+        [Fact]
+        public static void KindReturnsAttributeValueSyntaxKind()
         {
             var target = new AttributeValue(0, string.Empty);
-            Assert.AreEqual(SyntaxKind.AttributeValue, target.Kind);
+            Assert.Equal(SyntaxKind.AttributeValue, target.Kind);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitAttributeValueMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitAttributeValueMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new AttributeValue(0, string.Empty);

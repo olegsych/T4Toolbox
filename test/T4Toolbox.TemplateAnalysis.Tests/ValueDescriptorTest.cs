@@ -4,47 +4,41 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using System;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 
-    [TestClass]
-    public class ValueDescriptorTest
+    public static class ValueDescriptorTest
     {
-        [TestMethod]
-        public void ClassIsInternalAndNotMeantForPublicConsumption()
+        [Fact]
+        public static void ClassIsInternalAndNotMeantForPublicConsumption()
         {
-            Assert.IsFalse(typeof(ValueDescriptor).IsPublic);
+            Assert.False(typeof(ValueDescriptor).IsPublic);
         }
 
-        [TestMethod]
-        public void ClassIsSealedAndNotMeantToHaveDerivedClasses()
+        [Fact]
+        public static void ClassIsSealedAndNotMeantToHaveDerivedClasses()
         {
-            Assert.IsTrue(typeof(ValueDescriptor).IsSealed);
+            Assert.True(typeof(ValueDescriptor).IsSealed);
         }
 
-        [TestMethod]
-        public void DisplayNameReturnsValueSpecifiedInConstructor()
-        {
-            var value = new ValueDescriptor("DisplayName");
-            Assert.AreEqual("DisplayName", value.DisplayName);
-        }
-
-        [TestMethod]
-        public void DescriptionIsEmptyStringByDefault()
+        [Fact]
+        public static void DisplayNameReturnsValueSpecifiedInConstructor()
         {
             var value = new ValueDescriptor("DisplayName");
-            Assert.IsNotNull(value.Description);
-            Assert.AreEqual("DisplayName", value.DisplayName);
+            Assert.Equal("DisplayName", value.DisplayName);
         }
 
-        [TestMethod]
-        public void DescriptionReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void DescriptionIsEmptyStringByDefault()
+        {
+            var value = new ValueDescriptor("DisplayName");
+            Assert.Empty(value.Description);
+        }
+
+        [Fact]
+        public static void DescriptionReturnsValueSpecifiedInConstructor()
         {
             var value = new ValueDescriptor("DisplayName", "Description");
-            Assert.AreEqual("Description", value.Description);
+            Assert.Equal("Description", value.Description);
         }
     }
 }

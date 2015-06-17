@@ -4,39 +4,38 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class CodeTest
+    public static class CodeTest
     {
-        [TestMethod]
-        public void CodeIsSubclassOfTerminalNode()
+        [Fact]
+        public static void CodeIsSubclassOfTerminalNode()
         {
-            Assert.IsTrue(typeof(Code).IsSubclassOf(typeof(TerminalNode)));
+            Assert.True(typeof(Code).IsSubclassOf(typeof(TerminalNode)));
         }
 
-        [TestMethod]
-        public void CodeIsSealed()
+        [Fact]
+        public static void CodeIsSealed()
         {
-            Assert.IsTrue(typeof(Code).IsSealed);
+            Assert.True(typeof(Code).IsSealed);
         }
 
-        [TestMethod]
-        public void KindReturnsCodeSyntaxKind()
+        [Fact]
+        public static void KindReturnsCodeSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.Code, new Code(default(Span)).Kind);
+            Assert.Equal(SyntaxKind.Code, new Code(default(Span)).Kind);
         }
 
-        [TestMethod]
-        public void SpanReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void SpanReturnsValueSpecifiedInConstructor()
         {
-            Assert.AreEqual(new Span(4, 2), new Code(new Span(4, 2)).Span);
+            Assert.Equal(new Span(4, 2), new Code(new Span(4, 2)).Span);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitCodeMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitCodeMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new Code(default(Span));

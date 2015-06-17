@@ -4,38 +4,37 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class DoubleQuoteTest
+    public static class DoubleQuoteTest
     {
-        [TestMethod]
-        public void DoubleQuoteIsSubclassOfSyntaxToken()
+        [Fact]
+        public static void DoubleQuoteIsSubclassOfSyntaxToken()
         {
-            Assert.IsTrue(typeof(DoubleQuote).IsSubclassOf(typeof(SyntaxToken)));
+            Assert.True(typeof(DoubleQuote).IsSubclassOf(typeof(SyntaxToken)));
         }
 
-        [TestMethod]
-        public void DoubleQuoteIsSealed()
+        [Fact]
+        public static void DoubleQuoteIsSealed()
         {
-            Assert.IsTrue(typeof(DoubleQuote).IsSealed);
+            Assert.True(typeof(DoubleQuote).IsSealed);
         }
 
-        [TestMethod]
-        public void KindReturnsDoubleQuoteSyntaxKind()
+        [Fact]
+        public static void KindReturnsDoubleQuoteSyntaxKind()
         {            
-            Assert.AreEqual(SyntaxKind.DoubleQuote, new DoubleQuote(0).Kind);
+            Assert.Equal(SyntaxKind.DoubleQuote, new DoubleQuote(0).Kind);
         }
 
-        [TestMethod]
-        public void SpanLengthReturnsLengthOfToken()
+        [Fact]
+        public static void SpanLengthReturnsLengthOfToken()
         {
-            Assert.AreEqual("\"".Length, new DoubleQuote(0).Span.Length);
+            Assert.Equal("\"".Length, new DoubleQuote(0).Span.Length);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitDoubleQuoteMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitDoubleQuoteMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var syntaxNode = new DoubleQuote(default(int));

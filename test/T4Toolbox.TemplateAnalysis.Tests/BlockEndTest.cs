@@ -4,51 +4,51 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class BlockEndTest
+    public static class BlockEndTest
     {
-        [TestMethod]
-        public void BlockEndIsSubclassOfSyntaxToken()
+        [Fact]
+        public static void BlockEndIsSubclassOfSyntaxToken()
         {
-            Assert.IsTrue(typeof(BlockEnd).IsSubclassOf(typeof(SyntaxToken)));
+            Assert.True(typeof(BlockEnd).IsSubclassOf(typeof(SyntaxToken)));
         }
 
-        [TestMethod]
-        public void BlockEndIsSealed()
+        [Fact]
+        public static void BlockEndIsSealed()
         {
-            Assert.IsTrue(typeof(BlockEnd).IsSealed);
+            Assert.True(typeof(BlockEnd).IsSealed);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfDirectiveBlockStart()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfDirectiveBlockStart()
         {
             var target = new BlockEnd(0);
             string description;
             Span applicableTo;
-            Assert.IsTrue(target.TryGetDescription(0, out description, out applicableTo));
-            StringAssert.Contains(description, "control block");
-            StringAssert.Contains(description, "directive");
-            Assert.AreEqual(target.Span, applicableTo);
+            Assert.True(target.TryGetDescription(0, out description, out applicableTo));
+            Assert.Contains("control block", description, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("directive", description, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(target.Span, applicableTo);
         }
 
-        [TestMethod]
-        public void KindReturnsBlockEndSyntaxKind()
+        [Fact]
+        public static void KindReturnsBlockEndSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.BlockEnd, new BlockEnd(0).Kind);
+            Assert.Equal(SyntaxKind.BlockEnd, new BlockEnd(0).Kind);
         }
 
-        [TestMethod]
-        public void SpanLengthReturnsLengthOfToken()
+        [Fact]
+        public static void SpanLengthReturnsLengthOfToken()
         {
-            Assert.AreEqual("#>".Length, new BlockEnd(0).Span.Length);
+            Assert.Equal("#>".Length, new BlockEnd(0).Span.Length);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitBlockEndMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitBlockEndMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new BlockEnd(0);

@@ -4,27 +4,27 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class ExpressionBlockStartTest
+    public static class ExpressionBlockStartTest
     {
-        [TestMethod]
-        public void ExpressionBlockStartIsSubclassOfCodeBlockStart()
+        [Fact]
+        public static void ExpressionBlockStartIsSubclassOfCodeBlockStart()
         {
-            Assert.IsTrue(typeof(ExpressionBlockStart).IsSubclassOf(typeof(CodeBlockStart)));
+            Assert.True(typeof(ExpressionBlockStart).IsSubclassOf(typeof(CodeBlockStart)));
         }
 
-        [TestMethod]
-        public void ExpressionBlockStartIsSealed()
+        [Fact]
+        public static void ExpressionBlockStartIsSealed()
         {
-            Assert.IsTrue(typeof(ExpressionBlockStart).IsSealed);
+            Assert.True(typeof(ExpressionBlockStart).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitExpressionBlockStartMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitExpressionBlockStartMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new ExpressionBlockStart(default(int));
@@ -32,27 +32,27 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitExpressionBlockStart(node);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfExpressionCodeBlocks()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfExpressionCodeBlocks()
         {
             var target = new ExpressionBlockStart(0);
             string description;
             Span applicableTo;
-            Assert.IsTrue(target.TryGetDescription(0, out description, out applicableTo));
-            StringAssert.Contains(description, "expression");
-            Assert.AreEqual(target.Span, applicableTo);
+            Assert.True(target.TryGetDescription(0, out description, out applicableTo));
+            Assert.Contains("expression", description, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(target.Span, applicableTo);
         }
 
-        [TestMethod]
-        public void KindReturnsExpressionBlockStartSyntaxKind()
+        [Fact]
+        public static void KindReturnsExpressionBlockStartSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.ExpressionBlockStart, new ExpressionBlockStart(0).Kind);
+            Assert.Equal(SyntaxKind.ExpressionBlockStart, new ExpressionBlockStart(0).Kind);
         }
 
-        [TestMethod]
-        public void SpanLengthReturnsLengthOfToken()
+        [Fact]
+        public static void SpanLengthReturnsLengthOfToken()
         {
-            Assert.AreEqual("<#=".Length, new ExpressionBlockStart(0).Span.Length);
+            Assert.Equal("<#=".Length, new ExpressionBlockStart(0).Span.Length);
         }
     }
 }

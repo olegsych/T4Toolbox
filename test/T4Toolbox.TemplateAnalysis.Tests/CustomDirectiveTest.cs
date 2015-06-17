@@ -4,28 +4,28 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
+    using System;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class CustomDirectiveTest
+    public static class CustomDirectiveTest
     {
-        [TestMethod]
-        public void CustomDirectiveIsSubclassOfDirective()
+        [Fact]
+        public static void CustomDirectiveIsSubclassOfDirective()
         {
-            Assert.IsTrue(typeof(CustomDirective).IsSubclassOf(typeof(Directive)));
+            Assert.True(typeof(CustomDirective).IsSubclassOf(typeof(Directive)));
         }
 
-        [TestMethod]
-        public void CustomDirectiveIsSealed()
+        [Fact]
+        public static void CustomDirectiveIsSealed()
         {
-            Assert.IsTrue(typeof(CustomDirective).IsSealed);
+            Assert.True(typeof(CustomDirective).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitCustomDirectiveMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitCustomDirectiveMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var directive = new CustomDirective(new DirectiveBlockStart(0), new DirectiveName(4, "custom"), new Attribute[0], new BlockEnd(24));
@@ -33,18 +33,18 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitCustomDirective(directive);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfDirective()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfDirective()
         {
             var directive = new CustomDirective(new DirectiveBlockStart(0), new DirectiveName(4, "custom"), new Attribute[0], new BlockEnd(24));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(4, out description, out applicableTo));
-            StringAssert.Contains(description, "directive");
+            Assert.True(directive.TryGetDescription(4, out description, out applicableTo));
+            Assert.Contains("directive", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfProcessorAttribute()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfProcessorAttribute()
         {
             var directive = new CustomDirective(
                 new DirectiveBlockStart(0),
@@ -53,38 +53,38 @@ namespace T4Toolbox.TemplateAnalysis
                 new BlockEnd(24));
             string description;
             Span applicableTo;
-            Assert.IsTrue(directive.TryGetDescription(13, out description, out applicableTo));
-            StringAssert.Contains(description, "processor");
+            Assert.True(directive.TryGetDescription(13, out description, out applicableTo));
+            Assert.Contains("processor", description, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void ProcessorReturnsValueOfProcessorAttribute()
+        [Fact]
+        public static void ProcessorReturnsValueOfProcessorAttribute()
         {
             var directive = new CustomDirective(
                 new DirectiveBlockStart(0),
                 new DirectiveName(4, "custom"),
                 new[] { new Attribute(new AttributeName(13, "processor"), new Equals(21), new DoubleQuote(22), new AttributeValue(23, "CustomProcessor"), new DoubleQuote(22)) },
                 new BlockEnd(24));
-            Assert.AreEqual("CustomProcessor", directive.Processor);
+            Assert.Equal("CustomProcessor", directive.Processor);
         }
 
-        [TestMethod]
-        public void ProcessorReturnsEmptyStringWhenProcessorAttributeIsNotSpecified()
+        [Fact]
+        public static void ProcessorReturnsEmptyStringWhenProcessorAttributeIsNotSpecified()
         {
             var directive = new CustomDirective(new DirectiveBlockStart(0), new DirectiveName(4, "custom"), new Attribute[0], new BlockEnd(24));
-            Assert.AreEqual(string.Empty, directive.Processor);
+            Assert.Equal(string.Empty, directive.Processor);
         }
 
-        [TestMethod]
-        public void ValidateReturnsErrorWhenProcessorAttributeIsNotSpecified()
+        [Fact]
+        public static void ValidateReturnsErrorWhenProcessorAttributeIsNotSpecified()
         {
             var directive = new CustomDirective(new DirectiveBlockStart(0), new DirectiveName(4, "custom"), new Attribute[0], new BlockEnd(24));
             TemplateError error = directive.Validate().Single();
-            StringAssert.Contains(error.Message, "Processor");
+            Assert.Contains("Processor", error.Message, StringComparison.OrdinalIgnoreCase);
         }
 
-        [TestMethod]
-        public void ValidateReturnsNoErrorsWhenDirectiveContainsUnrecognizedAttributes()
+        [Fact]
+        public static void ValidateReturnsNoErrorsWhenDirectiveContainsUnrecognizedAttributes()
         {
             var a1 = new Attribute(new AttributeName(13, "processor"), new Equals(21), new DoubleQuote(22), new AttributeValue(23, "CustomProcessor"), new DoubleQuote(22));
             var a2 = new Attribute(new AttributeName(24, "custom"), new Equals(30), new DoubleQuote(31), new AttributeValue(32, "CustomValue"), new DoubleQuote(43));
@@ -93,7 +93,7 @@ namespace T4Toolbox.TemplateAnalysis
                 new DirectiveName(4, "custom"),
                 new[] { a1, a2 },
                 new BlockEnd(45));
-            Assert.IsFalse(directive.Validate().Any());
+            Assert.False(directive.Validate().Any());
         }
     }
 }

@@ -4,27 +4,27 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
     using Microsoft.VisualStudio.Text;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class StatementBlockStartTest
+    public static class StatementBlockStartTest
     {
-        [TestMethod]
-        public void StatementBlockStartIsSubclassOfCodeBlockStart()
+        [Fact]
+        public static void StatementBlockStartIsSubclassOfCodeBlockStart()
         {
-            Assert.IsTrue(typeof(StatementBlockStart).IsSubclassOf(typeof(CodeBlockStart)));
+            Assert.True(typeof(StatementBlockStart).IsSubclassOf(typeof(CodeBlockStart)));
         }
 
-        [TestMethod]
-        public void StatementBlockStartIsSealed()
+        [Fact]
+        public static void StatementBlockStartIsSealed()
         {
-            Assert.IsTrue(typeof(StatementBlockStart).IsSealed);
+            Assert.True(typeof(StatementBlockStart).IsSealed);
         }
 
-        [TestMethod]
-        public void AcceptCallsAcceptStatementBlockStartMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsAcceptStatementBlockStartMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new StatementBlockStart(default(int));
@@ -32,27 +32,27 @@ namespace T4Toolbox.TemplateAnalysis
             visitor.Received().VisitStatementBlockStart(node);
         }
 
-        [TestMethod]
-        public void GetDescriptionReturnsDescriptionOfStatementCodeBlocks()
+        [Fact]
+        public static void GetDescriptionReturnsDescriptionOfStatementCodeBlocks()
         {
             var target = new StatementBlockStart(0);
             string description;
             Span applicableTo;
-            Assert.IsTrue(target.TryGetDescription(0, out description, out applicableTo));
-            StringAssert.Contains(description, "statement");
-            Assert.AreEqual(target.Span, applicableTo);
+            Assert.True(target.TryGetDescription(0, out description, out applicableTo));
+            Assert.Contains("statement", description, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(target.Span, applicableTo);
         }
 
-        [TestMethod]
-        public void KindReturnsStatementBlockStartSyntaxKind()
+        [Fact]
+        public static void KindReturnsStatementBlockStartSyntaxKind()
         {
-            Assert.AreEqual(SyntaxKind.StatementBlockStart, new StatementBlockStart(0).Kind);
+            Assert.Equal(SyntaxKind.StatementBlockStart, new StatementBlockStart(0).Kind);
         }
 
-        [TestMethod]
-        public void SpanLengthReturnsLengthOfTheToken()
+        [Fact]
+        public static void SpanLengthReturnsLengthOfTheToken()
         {
-            Assert.AreEqual("<#".Length, new StatementBlockStart(0).Span.Length);
+            Assert.Equal("<#".Length, new StatementBlockStart(0).Span.Length);
         }
     }
 }

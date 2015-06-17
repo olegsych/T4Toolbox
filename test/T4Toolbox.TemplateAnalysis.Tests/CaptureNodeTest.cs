@@ -5,43 +5,42 @@
 namespace T4Toolbox.TemplateAnalysis
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 
-    [TestClass]
-    public class CaptureNodeTest
+    public static class CaptureNodeTest
     {
-        [TestMethod]
-        public void CaptureNodeIsSubclassOfTerminalNode()
+        [Fact]
+        public static void CaptureNodeIsSubclassOfTerminalNode()
         {
-            Assert.IsTrue(typeof(CaptureNode).IsSubclassOf(typeof(TerminalNode)));
+            Assert.True(typeof(CaptureNode).IsSubclassOf(typeof(TerminalNode)));
         }
 
-        [TestMethod]
-        public void ConstructorSetsPositionProperty()
+        [Fact]
+        public static void ConstructorSetsPositionProperty()
         {
             var target = new TestableCaptureNode(0, string.Empty, new Position(4, 2));
-            Assert.AreEqual(new Position(4, 2), target.Position);
+            Assert.Equal(new Position(4, 2), target.Position);
         }
 
-        [TestMethod]
-        public void SpanStartsAtPositionSpecifiedInConstructor()
+        [Fact]
+        public static void SpanStartsAtPositionSpecifiedInConstructor()
         {
             var target = new TestableCaptureNode(42, "template");
-            Assert.AreEqual(42, target.Span.Start);
+            Assert.Equal(42, target.Span.Start);
         }
 
-        [TestMethod]
-        public void SpanLengthEqualsToLengthOfTextSpecifiedInConstructor()
+        [Fact]
+        public static void SpanLengthEqualsToLengthOfTextSpecifiedInConstructor()
         {
             var target = new TestableCaptureNode(0, "template");
-            Assert.AreEqual("template".Length, target.Span.Length);
+            Assert.Equal("template".Length, target.Span.Length);
         }
 
-        [TestMethod]
-        public void TextReturnsValueSpecifiedInConstructor()
+        [Fact]
+        public static void TextReturnsValueSpecifiedInConstructor()
         {
             var target = new TestableCaptureNode(0, "template");
-            Assert.AreEqual("template", target.Text);
+            Assert.Equal("template", target.Text);
         }
 
         private class TestableCaptureNode : CaptureNode

@@ -4,33 +4,32 @@
 
 namespace T4Toolbox.TemplateAnalysis
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using NSubstitute;
+    using Xunit;
 
-    [TestClass]
-    public class DirectiveNameTest
+    public static class DirectiveNameTest
     {
-        [TestMethod]
-        public void DirectiveNameIsSubclassOfTerminalNode()
+        [Fact]
+        public static void DirectiveNameIsSubclassOfTerminalNode()
         {
-            Assert.IsTrue(typeof(DirectiveName).IsSubclassOf(typeof(TerminalNode)));
+            Assert.True(typeof(DirectiveName).IsSubclassOf(typeof(TerminalNode)));
         }
 
-        [TestMethod]
-        public void DirectiveNameIsSealed()
+        [Fact]
+        public static void DirectiveNameIsSealed()
         {
-            Assert.IsTrue(typeof(DirectiveName).IsSealed);
+            Assert.True(typeof(DirectiveName).IsSealed);
         }
 
-        [TestMethod]
-        public void KindReturnsDirectiveNameSyntaxKind()
+        [Fact]
+        public static void KindReturnsDirectiveNameSyntaxKind()
         {
             var target = new DirectiveName(0, string.Empty);
-            Assert.AreEqual(SyntaxKind.DirectiveName, target.Kind);
+            Assert.Equal(SyntaxKind.DirectiveName, target.Kind);
         }
 
-        [TestMethod]
-        public void AcceptCallsVisitDirectiveNameMethodOfSyntaxNodeVisitor()
+        [Fact]
+        public static void AcceptCallsVisitDirectiveNameMethodOfSyntaxNodeVisitor()
         {
             var visitor = Substitute.For<SyntaxNodeVisitor>();
             var node = new DirectiveName(0, string.Empty);
