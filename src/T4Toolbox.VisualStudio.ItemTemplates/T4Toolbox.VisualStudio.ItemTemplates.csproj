@@ -3,14 +3,9 @@
   <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{EA04B345-97BE-4A49-9C9C-3EBD4F5D2250}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>T4Toolbox.VisualStudio.ItemTemplates</RootNamespace>
-    <AssemblyName>T4Toolbox.VisualStudio.ItemTemplates</AssemblyName>
     <!-- Suppress C# warning about missing source files -->
     <NoWarn>2008</NoWarn>
     <!-- Disable FxCop. This project does not generate an assembly. -->

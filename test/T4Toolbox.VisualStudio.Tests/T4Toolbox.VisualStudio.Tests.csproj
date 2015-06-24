@@ -1,12 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7CBACA4C-728A-4818-839C-E22C24677AFA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>T4Toolbox.VisualStudio</RootNamespace>
-    <AssemblyName>T4Toolbox.VisualStudio.Tests</AssemblyName>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <NuGetPackageImportStamp>90cf4068</NuGetPackageImportStamp>
   </PropertyGroup>
@@ -17,9 +13,6 @@
     <Reference Include="envdte">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.CoreUtility" />
-    <Reference Include="Microsoft.VisualStudio.Editor" />
-    <Reference Include="Microsoft.VisualStudio.Language.Intellisense" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0" />
@@ -28,11 +21,6 @@
     <Reference Include="Microsoft.VisualStudio.Shell.14.0" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
     <Reference Include="Microsoft.VisualStudio.TemplateWizardInterface" />
-    <Reference Include="Microsoft.VisualStudio.Text.Data" />
-    <Reference Include="Microsoft.VisualStudio.Text.Logic" />
-    <Reference Include="Microsoft.VisualStudio.Text.UI" />
-    <Reference Include="Microsoft.VisualStudio.Text.UI.Wpf" />
-    <Reference Include="Microsoft.VisualStudio.TextManager.Interop" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.VSHost.14.0" />
     <Reference Include="Microsoft.VSSDK.UnitTestLibrary" />
@@ -43,7 +31,6 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
@@ -54,21 +41,6 @@
     <Compile Include="CustomToolParametersTest.cs" />
     <Compile Include="CustomToolParameterTest.cs" />
     <Compile Include="CustomToolTemplateEditorTest.cs" />
-    <Compile Include="Editor\TemplateClassificationTaggerProviderTest.cs" />
-    <Compile Include="Editor\TemplateCompletionSourceProviderTest.cs" />
-    <Compile Include="Editor\TemplateCompletionSourceTest.cs" />
-    <Compile Include="Editor\TemplateErrorTaggerProviderTest.cs" />
-    <Compile Include="Editor\TemplateOutliningTaggerProviderTest.cs" />
-    <Compile Include="Editor\TemplateOutliningTaggerTest.cs" />
-    <Compile Include="Editor\TemplateQuickInfoSourceProviderTest.cs" />
-    <Compile Include="Editor\TemplateQuickInfoSourceTest.cs" />
-    <Compile Include="Editor\TemplateTaggerTest.cs" />
-    <Compile Include="Editor\TemplateCompletionHandlerProviderTest.cs" />
-    <Compile Include="Editor\TemplateCompletionHandlerTest.cs" />
-    <Compile Include="Editor\TemplateCompletionBuilderTest.cs" />
-    <Compile Include="Fakes\FakeClassificationType.cs" />
-    <Compile Include="Fakes\FakeClassificationTypeRegistryService.cs" />
-    <Compile Include="Fakes\FakeCompletionSession.cs" />
     <Compile Include="Fakes\FakeDte.cs" />
     <Compile Include="Fakes\FakeObjectExtenders.cs" />
     <Compile Include="Fakes\FakeProject.cs" />
@@ -77,13 +49,9 @@
     <Compile Include="Fakes\FakeProjects.cs" />
     <Compile Include="Fakes\FakeProperties.cs" />
     <Compile Include="Fakes\FakeProperty.cs" />
-    <Compile Include="Fakes\FakeQuickInfoSession.cs" />
     <Compile Include="Fakes\FakeSolution.cs" />
     <Compile Include="Fakes\FakeTemplateLocator.cs" />
-    <Compile Include="Fakes\FakeTextBuffer.cs" />
-    <Compile Include="Fakes\FakeTextSnapshot.cs" />
     <Compile Include="Fakes\FakeTextTemplating.cs" />
-    <Compile Include="Fakes\FakeTrackingSpan.cs" />
     <Compile Include="Fakes\FakeTypeDescriptorContext.cs" />
     <Compile Include="Fakes\FakeVsActivityLog.cs" />
     <Compile Include="Fakes\StubIPersistDocData.cs" />
@@ -95,50 +63,18 @@
     <Compile Include="T4ToolboxOptionsTest.cs" />
     <Compile Include="T4ToolboxPackageTest.cs" />
     <Compile Include="ItemMetadataWizardTest.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveDescriptorTest.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\EndOfFileTest.cs" />
-    <Compile Include="TemplateAnalysis\ImportDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\SyntaxNodeTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateAnalyzerTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateScannerTest.cs" />
-    <Compile Include="TemplateAnalysis\TerminalNodeTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateParserTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateErrorTest.cs" />
-    <Compile Include="Editor\TemplateClassificationTaggerTest.cs" />
-    <Compile Include="Editor\TemplateErrorTaggerTest.cs" />
-    <Compile Include="TemplateAnalysis\NonterminalNodeTest.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveNameTest.cs" />
-    <Compile Include="TemplateAnalysis\CaptureNodeTest.cs" />
-    <Compile Include="TemplateAnalysis\AttributeNameTest.cs" />
-    <Compile Include="TemplateAnalysis\AttributeValueTest.cs" />
-    <Compile Include="TemplateAnalysis\SyntaxTokenTest.cs" />
-    <Compile Include="TemplateAnalysis\DoubleQuoteTest.cs" />
-    <Compile Include="TemplateAnalysis\EqualsTest.cs" />
-    <Compile Include="TemplateAnalysis\AttributeTest.cs" />
-    <Compile Include="TemplateAnalysis\DirectiveBlockStartTest.cs" />
-    <Compile Include="TemplateAnalysis\BlockEndTest.cs" />
-    <Compile Include="TemplateAnalysis\StatementBlockStartTest.cs" />
-    <Compile Include="TemplateAnalysis\ExpressionBlockStartTest.cs" />
-    <Compile Include="TemplateAnalysis\ClassBlockStartTest.cs" />
-    <Compile Include="TemplateAnalysis\CodeBlockTest.cs" />
-    <Compile Include="TemplateAnalysis\CodeTest.cs" />
-    <Compile Include="TemplateAnalysis\IncludeDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\TemplateTest.cs" />
-    <Compile Include="TemplateAnalysis\AssemblyDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\ParameterDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\OutputDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\CustomDirectiveTest.cs" />
-    <Compile Include="TemplateAnalysis\PositionTest.cs" />
-    <Compile Include="TemplateAnalysis\SyntaxNodeVisitorTest.cs" />
-    <Compile Include="TemplateAnalysis\AttributeDescriptorTest.cs" />
-    <Compile Include="TemplateAnalysis\ValueDescriptorTest.cs" />
-    <Compile Include="TemplateAnalysis\KnownValuesAttributeTest.cs" />
     <Compile Include="TransformationContextProviderTest.cs" />
     <Compile Include="BrowseObjectExtenderTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
+      <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
+      <Name>T4Toolbox.TemplateAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
+      <Project>{fde953d3-ad27-4398-8ef4-293c0cebdc3e}</Project>
+      <Name>T4Toolbox.VisualStudio.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj">
       <Project>{1E1E9161-CBE4-4538-928C-539AA5E70153}</Project>
       <Name>T4Toolbox.VisualStudio</Name>

@@ -54,7 +54,7 @@ want to exclude the unit tests to keep the integration test runs under a minute.
 You can debug unit and integration tests by selecting the Debug commands in Test Explorer. 
 
 Alternatively, you can debug both generator and editor code by running it in Visual Studio. For that, set the 
-`T4Toolbox.VisualStudio` project as the startup project in Solution Explorer and specify the following options on the 
+`T4Toolbox.vsix` project as the startup project in Solution Explorer and specify the following options on the 
 Debug page of the project properties.
 - Start Action / Start external program: ```C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe```
 - Start Options / Command line arguments: ```/rootSuffix Exp```

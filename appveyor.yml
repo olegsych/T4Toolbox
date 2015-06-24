@@ -3,6 +3,7 @@ os: Visual Studio 2015 RC
 branches:
   only:
   - master
+skip_tags: true
 configuration: Release
 environment:
   T4ToolboxSnk:

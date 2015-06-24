@@ -6,17 +6,19 @@ namespace T4Toolbox.VisualStudio
 {
     using System;
     using System.ComponentModel;
+    using System.ComponentModel.Composition;
     using System.Diagnostics;
     using System.Globalization;
     using System.Runtime.CompilerServices;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.Win32;
+    using T4Toolbox.VisualStudio.Editor;
 
     /// <summary>
     /// Represents T4 Toolbox settings.
     /// </summary>
-    internal class T4ToolboxOptions : IProfileManager, INotifyPropertyChanged
+    internal class T4ToolboxOptions : IProfileManager, INotifyPropertyChanged, ITemplateEditorOptions
     {
         internal const string Category = T4Toolbox.AssemblyInfo.Product;
         internal const string Page = "General";
@@ -46,6 +48,7 @@ namespace T4Toolbox.VisualStudio
         /// <remarks>
         /// This object is used to subscribe to property change notifications by the tagger.
         /// </remarks>
+        [Export(typeof(ITemplateEditorOptions))]
         public static T4ToolboxOptions Instance
         {
             get
@@ -185,7 +188,7 @@ namespace T4Toolbox.VisualStudio
 
         public void LoadSettingsFromXml(IVsSettingsReader reader)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void SaveSettingsToStorage()
@@ -209,7 +212,7 @@ namespace T4Toolbox.VisualStudio
 
         public void SaveSettingsToXml(IVsSettingsWriter writer)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void ResetSettings()

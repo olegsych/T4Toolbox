@@ -1,13 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProductVersion>10.0.20506</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{682E771A-76F7-4972-BBDC-1250B67F399B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>T4Toolbox</AssemblyName>
-    <RootNamespace>T4Toolbox</RootNamespace>
     <NuGetPackageImportStamp>6ea57010</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />

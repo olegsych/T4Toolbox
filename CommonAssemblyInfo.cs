@@ -30,8 +30,12 @@ using System.Runtime.InteropServices;
 // in the project increases to the point where limiting access to internals within the 
 // solution becomes beneficial.
 [assembly: InternalsVisibleTo("T4Toolbox.DirectiveProcessors" + T4Toolbox.AssemblyInfo.PublicKey)]
+[assembly: InternalsVisibleTo("T4Toolbox.TemplateAnalysis" + T4Toolbox.AssemblyInfo.PublicKey)]
+[assembly: InternalsVisibleTo("T4Toolbox.TemplateAnalysis.Tests" + T4Toolbox.AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("T4Toolbox.Tests" + T4Toolbox.AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("T4Toolbox.VisualStudio" + T4Toolbox.AssemblyInfo.PublicKey)]
+[assembly: InternalsVisibleTo("T4Toolbox.VisualStudio.Editor" + T4Toolbox.AssemblyInfo.PublicKey)]
+[assembly: InternalsVisibleTo("T4Toolbox.VisualStudio.Editor.Tests" + T4Toolbox.AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("T4Toolbox.VisualStudio.IntegrationTests" + T4Toolbox.AssemblyInfo.PublicKey)]
 [assembly: InternalsVisibleTo("T4Toolbox.VisualStudio.Tests" + T4Toolbox.AssemblyInfo.PublicKey)]
 
