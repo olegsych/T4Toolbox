@@ -42,4 +42,15 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\T4Toolbox.snk</AssemblyOriginatorKeyFile>
     <DefineConstants>$(DefineConstants);SIGN_ASSEMBLY</DefineConstants>
   </PropertyGroup>
+
+  <!-- 
+    Set "Copy Local" assembly references to False by default. 
+    This avoids unnecessary copying of SDK assemblies to build output and 
+    prevents inclusion of unnecessary .dll files in the .vsix.
+  -->
+  <ItemDefinitionGroup>
+    <Reference>
+      <Private>False</Private>
+    </Reference>
+  </ItemDefinitionGroup>
 </Project>
