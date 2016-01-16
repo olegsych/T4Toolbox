@@ -20,6 +20,8 @@ Pre-requisites (can be downloaded from https://www.visualstudio.com/downloads)
 - Visual Studio 2015 Community or paid
 - Visual Studio 2015 SDK 
 - .NET 3.5 (for Lex and Yacc tools)
+- [Visual Studio 205 Color Theme Editor](https://visualstudiogallery.msdn.microsoft.com/6f4b51b6-5c6b-4a81-9cb5-f2daa560430b) 
+  (for editing .vstheme and .pkgdef files)
 
 Open `T4Toolbox.sln` in Visual Studio and build it. The NuGet packages the solution depends on should be restored
 [automatically](http://docs.nuget.org/Consume/Package-Restore) by Visual Studio. If you have disabled the automatic
@@ -59,6 +61,6 @@ Debug page of the project properties.
 - Start Action / Start external program: ```C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe```
 - Start Options / Command line arguments: ```/rootSuffix Exp```
 
-With these settings in place, building the `T4Toolbox.VisualStudio` project will automatically install the extension in the 
+With these settings in place, building the solution will automatically install the extension in the 
 experimental hive of Visual Studio and starting the debugging will automatically launch an experimental instance of Visual 
 Studio and attach your debugger to it.
