@@ -62,6 +62,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DarkTheme.pkgdef">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="Dark.vstheme" />
     <None Include="source.extension.vsixmanifest" />
     <Content Include="License.txt">
       <IncludeInVSIX>true</IncludeInVSIX>

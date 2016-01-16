@@ -1,0 +1,48 @@
+<Themes>
+  <!--
+    This is the source code of the DarkTheme.pkgdef. To generate the .pkgdef, import this file using 
+    the Visual Studio Color Theme Editor extension to and export it as a .pkgdef file. Then edit the 
+    .pkgdef file to leave only the block that contains the "Data" value and change its key to this:
+    
+    [$RootKey$\Themes\{1ded0138-47ce-435e-84ef-9ec1f439b749}\T4Toolbox]
+  -->
+  <Theme Name="T4Toolbox.Dark" GUID="{1ded0138-47ce-435e-84ef-9ec1f439b749}">
+    <!--
+      Theme GUID must match the built-in "Dark" theme of Visual Studio. In the exported .pkgdef it
+      appears in the path of the registry key. The Color Theme Editor regenerates this value each time 
+      when importing a theme file because it conflicts with the built-in value. The original value has 
+      to be manually maintained in the exported .pkgdef file.
+      
+      Theme name is used by the Color Theme Editor to generate the Name and (Default) registry values
+      in the .pkgdef file. Because this is an extension of the Dark theme and not a new theme definitions, 
+      these values should be manually removed from the exported .pkgdef file. 
+    -->
+    <Category Name="T4Toolbox" GUID="{75a05685-00a8-4ded-bae5-e7a50bfa929a}">
+      <!--
+        Category GUID must match the built-in "ColorizedSignatureHelp colors" category of Visual Studio.        
+        In the exported .pkgdef it appears in the binary data. 
+        
+        Category name is used in the name of the registry key which (supposedly) allows extensions like 
+        T4Toolbox to extend the built-in categories. The Color Theme Editor reverts the category name
+        back to the name defined by Visual Studio when exporting .pkgdef files. The T4Toolbox value has 
+        to be manually maintained in the exported .pkgdef file.
+      -->
+      <Color Name="Text Template Attribute Name">
+        <Foreground Type="CT_RAW" Source="FF9CDCFE" />
+      </Color>
+      <Color Name="Text Template Attribute Value">
+        <Foreground Type="CT_RAW" Source="FFC8C8C8" />
+      </Color>
+      <Color Name="Text Template Code Block">
+        <Background Type="CT_RAW" Source="FF505050" />
+      </Color>
+      <Color Name="Text Template Delimiter">
+        <Background Type="CT_RAW" Source="FFFFFFB3" />
+        <Foreground Type="CT_RAW" Source="FF000000" />
+      </Color>
+      <Color Name="Text Template Directive Name">
+        <Foreground Type="CT_RAW" Source="FF569CD6" />
+      </Color>
+    </Category>
+  </Theme>
+</Themes>
