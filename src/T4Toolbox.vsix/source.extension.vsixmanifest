@@ -18,7 +18,7 @@
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio;PkgdefProjectOutputGroup|" />
-    <!--<Asset Type="Microsoft.VisualStudio.VsPackage" Path="T4Toolbox.DarkTheme.pkgdef"/>-->
+    <Asset Type="Microsoft.VisualStudio.VsPackage" Path="DarkTheme.pkgdef" />
     <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="%CurrentProject%.ItemTemplates" d:TargetPath="|T4Toolbox.VisualStudio.ItemTemplates;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
     <Asset Type="Microsoft.T4.Include" Path="Include" />
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio|" />
