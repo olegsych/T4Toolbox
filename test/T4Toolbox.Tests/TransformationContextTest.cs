@@ -6,6 +6,7 @@ namespace T4Toolbox.Tests
 {
     using System;
     using System.CodeDom.Compiler;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -27,6 +28,7 @@ namespace T4Toolbox.Tests
 
         #region Cleanup
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "value", Justification = "C# can't invoke property getter without a variable.")]
         [TestMethod, ExpectedException(typeof(TransformationException))]
         public void CleanupRemovesCurrent()
         {
@@ -224,6 +226,7 @@ namespace T4Toolbox.Tests
 
         #region Current
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "value", Justification = "C# can't invoke property getter without a variable.")]
         [TestMethod, ExpectedException(typeof(TransformationException))]
         public void CurrentThrowsTransformationExceptionWhenContextWasNotInitialized()
         {
