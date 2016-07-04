@@ -80,7 +80,7 @@ we can generate it dynamically, using the database schema information provided b
 <#@ assembly name="Microsoft.SqlServer.Smo" #>
 <#@ import namespace="Microsoft.SqlServer.Management.Smo" #>
 <#
-    var server = new Server("(localdb)\\v11.0");
+    var server = new Server("(localdb)\\ProjectsV13");
     var database = new Database(server, "Northwind");
     var table = new Table(database, "Products");
     table.Refresh();
@@ -95,7 +95,7 @@ as
 This code uses a `template` directive to specify the .NET language (C# or VB) this template uses in its code blocks. 
 The template also contains a _statement block_ which is defined using special markers - `<#` and `#>`. This block uses 
 SQL Server Management Objects (SMO) to retrieve metadata information about the `Products` table from the `Northwind` database 
-running on the `(localdb)\\v11.0` instance of SQL server. This API (SMO) is defined in a .NET assembly, 
+running on the `(localdb)\\ProjectsV13` instance of SQL server. This API (SMO) is defined in a .NET assembly, 
 _Microsoft.SqlServer.Smo_ which is installed in the Global Assembly Cache (GAC) by the SQL Server setup program. 
 In order to use this API, the template uses an `assembly` directive to reference the _assembly_ where it is defined and 
 an `import` directive to specify the _namespace_ where `Server`, `Database` and `Table` types are defined. The `import` 
@@ -117,7 +117,7 @@ Having the metadata information about the target table, we can now generate the 
 <#@ assembly name="Microsoft.SqlServer.Smo" #>
 <#@ import namespace="Microsoft.SqlServer.Management.Smo" #>
 <#
-    var server = new Server("(localdb)\\v11.0");
+    var server = new Server("(localdb)\\ProjectsV13");
     var database = new Database(server, "Northwind");
     var table = new Table(database, "Products");
     table.Refresh();
