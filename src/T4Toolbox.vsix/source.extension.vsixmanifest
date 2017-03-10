@@ -10,7 +10,7 @@
     <ReleaseNotes>https://github.com/olegsych/T4Toolbox/releases</ReleaseNotes>
   </Metadata>
   <Installation InstalledByMsi="false">
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="14.0" />
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Pro" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
@@ -24,4 +24,7 @@
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio|" />
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio.Editor" Path="|T4Toolbox.VisualStudio.Editor|" />
   </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.Net.Component.4.5.2.TargetingPack" Version="[15.0.26208.0,16.0)" DisplayName=".NET Framework 4.5.2 targeting pack" />
+  </Prerequisites>
 </PackageManifest>
