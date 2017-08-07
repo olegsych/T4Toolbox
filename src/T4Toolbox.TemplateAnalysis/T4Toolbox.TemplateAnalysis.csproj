@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />
+  <Import Project="..\..\T4Toolbox.Common.props" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <ProjectGuid>{65BF3FA7-6B2B-47DD-8FC1-BB25754F12D3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <YaccLexTools>$(SolutionDir)packages\YaccLexTools.0.2.2\tools\</YaccLexTools>
+    <YaccLexTools>..\..\packages\YaccLexTools.0.2.2\tools\</YaccLexTools>
     <GplexTool>"$(YaccLexTools)gplex.exe"</GplexTool>
     <GppgTool>"$(YaccLexTools)gppg.exe"</GppgTool>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.Text.Data, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.Data" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(SolutionDir)\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyDirective.cs" />
