@@ -5,7 +5,7 @@
     <OutputType>Library</OutputType>
     <NuGetPackageImportStamp>3fedb98d</NuGetPackageImportStamp>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\T4Toolbox.Common.props" />
+  <Import Project="..\..\T4Toolbox.Common.props" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   <ItemGroup>
@@ -17,7 +17,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(SolutionDir)\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.cs" />
