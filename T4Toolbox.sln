@@ -24,12 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{994DFDA5-9
 		test\T4Toolbox.Tests.ruleset = test\T4Toolbox.Tests.ruleset
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{71EF8BD3-A665-4304-8F9D-D6A849A9830D}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{0658B25D-9363-4E23-99F9-0A371A5AB636}"
 	ProjectSection(SolutionItems) = preProject
 		build\Module.psm1 = build\Module.psm1

@@ -1,6 +1,5 @@
 # This is a PowerShell Unit Test file. To run tests
-# PM> Import-Module .\packages\Pester.3.3.8\tools\Pester.psm1
-# PM> Set-Location .\build
+# PM> Install-Module Pester -Scope CurrentUser
 # PM> Invoke-Pester
 
 Import-Module .\Module.psm1
