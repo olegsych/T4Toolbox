@@ -5,4 +5,10 @@
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\T4Toolbox.Tests.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile/>
   </PropertyGroup>
+  <ItemDefinitionGroup>
+    <!-- Starting with Visual Studio 2017 assemblies are no longer in GAC and have to be copied to build output for tests to run -->
+    <Reference>
+      <Private>true</Private>
+    </Reference>
+  </ItemDefinitionGroup>
 </Project>
