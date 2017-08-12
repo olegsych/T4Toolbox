@@ -51,9 +51,9 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
                 ProjectItem projectItem = this.CreateTestProjectItem(templateName);
 
                 // Verify that project item created from full template has CustomTool/Generator set to enable T4 transformation
-                const string textTemplatingFileGenerator = "TextTemplatingFileGenerator";
-                Assert.AreEqual(textTemplatingFileGenerator, projectItem.GetItemAttribute(ItemMetadata.Generator));
-                Assert.AreEqual(textTemplatingFileGenerator, projectItem.Properties.Item(ProjectItemProperty.CustomTool).Value);
+                const string TextTemplatingFileGenerator = "TextTemplatingFileGenerator";
+                Assert.AreEqual(TextTemplatingFileGenerator, projectItem.GetItemAttribute(ItemMetadata.Generator));
+                Assert.AreEqual(TextTemplatingFileGenerator, projectItem.Properties.Item(ProjectItemProperty.CustomTool).Value);
 
                 // Verify that output file was automatically generated
                 ProjectItem outputItem = projectItem.ProjectItems.Cast<ProjectItem>().Single();
