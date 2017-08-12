@@ -3,7 +3,8 @@
   <Description>Test settings required to run Visual Studio integration tests.</Description>
   <Execution>
     <Hosts type="VS IDE">
-      <VSSDKTestHostRunConfig name="VS IDE" HiveKind="DevEnv" HiveName="15.0_f2ae7957Exp" xmlns="http://microsoft.com/schemas/VisualStudio/SDK/Tools/IdeHostAdapter/2006/06" />
+      <!-- HiveName must be 15.0Exp for IntegrationTests to run correctly. The actual hive used by the VS IDE host is 15.0_f2ae7957Exp. -->
+      <VSSDKTestHostRunConfig name="VS IDE" HiveKind="DevEnv" HiveName="15.0Exp" xmlns="http://microsoft.com/schemas/VisualStudio/SDK/Tools/IdeHostAdapter/2006/06" />
     </Hosts>
   </Execution>
 </TestSettings>
