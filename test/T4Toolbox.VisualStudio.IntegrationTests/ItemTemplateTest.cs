@@ -36,9 +36,11 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             await UIThreadDispatcher.InvokeAsync(delegate
             {
                 ProjectItem projectItem = this.CreateTestProjectItem(templateName);
+
+                // Assert that project item created from partial template doesn't have CustomTool/Generator set to prevent T4 transformation
                 Assert.AreEqual(string.Empty, projectItem.GetItemAttribute(ItemMetadata.Generator));
+                Assert.AreEqual(string.Empty, projectItem.Properties.Item(ProjectItemProperty.CustomTool).Value);
                 Assert.AreEqual(0, projectItem.ProjectItems.Count);
-                Assert.IsFalse(IntegrationTest.ErrorItems.Any(error => error.FileName == projectItem.FileNames[1]));
             });
         }
 
@@ -48,8 +50,10 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             {
                 ProjectItem projectItem = this.CreateTestProjectItem(templateName);
 
-                // Verify that Generator metadata item was set correctly
-                Assert.AreEqual("TextTemplatingFileGenerator", projectItem.GetItemAttribute(ItemMetadata.Generator));
+                // Verify that project item created from full template has CustomTool/Generator set to enable T4 transformation
+                const string TextTemplatingFileGenerator = "TextTemplatingFileGenerator";
+                Assert.AreEqual(TextTemplatingFileGenerator, projectItem.GetItemAttribute(ItemMetadata.Generator));
+                Assert.AreEqual(TextTemplatingFileGenerator, projectItem.Properties.Item(ProjectItemProperty.CustomTool).Value);
 
                 // Verify that output file was automatically generated
                 ProjectItem outputItem = projectItem.ProjectItems.Cast<ProjectItem>().Single();

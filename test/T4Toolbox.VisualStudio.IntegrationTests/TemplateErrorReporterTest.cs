@@ -120,7 +120,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             });
         }
 
-        [TestMethod, Ignore] // TODO: Why does this fail in Visual Studio 2015?
+        [TestMethod]
         public async Task TemplateErrorReporterCanBeGarbageCollectedAfterTextDocumentIsDisposed()
         {
             await UIThreadDispatcher.InvokeAsync(delegate

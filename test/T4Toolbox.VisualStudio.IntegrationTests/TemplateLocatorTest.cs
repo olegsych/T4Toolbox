@@ -26,7 +26,7 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
             });
         }
 
-        [TestMethod]
+        [TestMethod, Ignore] // VS 2017 loads TemplateLocator from the TestResults/Out folder instead of the extension install root
         public async Task TemplateLocatorFindsTemplateRelativeToIncludeFolder()
         {
             await UIThreadDispatcher.InvokeAsync(delegate

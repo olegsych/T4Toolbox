@@ -345,7 +345,7 @@ namespace T4Toolbox.TemplateAnalysis
             bool success = parser.Parse();
             string errorMessages = string.Join(";", parser.Errors.Select(error => error.Message));
             Assert.True(success, errorMessages);
-            Assert.True(0 == parser.Errors.Count, errorMessages);
+            Assert.True(parser.Errors.Count == 0, errorMessages);
         }
 
         private static void AssertParseErrors(string input, params TemplateError[] errors)

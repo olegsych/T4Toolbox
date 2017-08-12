@@ -1,9 +1,9 @@
 # CI build definition for https://ci.appveyor.com/project/olegsych/t4toolbox
 # To learn more, see http://www.appveyor.com/docs/appveyor-yml 
 
-version: 14.0.0.{build}
+version: 15.0.0.{build}
 
-os: Visual Studio 2015
+image: Visual Studio 2017
 
 branches:
   only:
@@ -22,7 +22,6 @@ environment:
 
 before_build:
 - nuget restore
-- set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 - ps: >-
     Import-Module .\build\Module.psm1
 

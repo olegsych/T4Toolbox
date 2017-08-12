@@ -2,7 +2,7 @@
 //  Copyright © Oleg Sych. All Rights Reserved.
 // </copyright>
 
-namespace T4Toolbox.VisualStudio.Tests
+namespace T4Toolbox.VisualStudio.IntegrationTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
