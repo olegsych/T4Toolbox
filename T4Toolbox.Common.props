@@ -7,7 +7,7 @@
     <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <RootNamespace>$(MSBuildProjectName)</RootNamespace>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
