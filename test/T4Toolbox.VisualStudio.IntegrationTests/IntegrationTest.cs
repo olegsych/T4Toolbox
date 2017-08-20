@@ -48,7 +48,9 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
+#pragma warning disable 618
             ThreadHelper.Generic.Invoke(delegate
+#pragma warning restore 618
             {
                 CreateTestSolution();
                 UIThreadDispatcher = Dispatcher.CurrentDispatcher;
@@ -58,7 +60,9 @@ namespace T4Toolbox.VisualStudio.IntegrationTests
         [AssemblyCleanup]
         public static void AssemblyCleanup()
         {
+#pragma warning disable 618
             ThreadHelper.Generic.Invoke(DeleteTestSolution);
+#pragma warning restore 618
         }
 
         public void Dispose()
