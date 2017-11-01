@@ -26,6 +26,12 @@ namespace T4Toolbox.VisualStudio
             this.serviceProvider = serviceProvider;
         }
 
+        // This prevents the host from getting disconnected in long-lasting transformations
+        public override object InitializeLifetimeService()
+        {
+             return null;
+        }
+
         string ITransformationContextProvider.GetMetadataValue(object hierarchyObject, string fileName, string metadataName)
         {
             uint fileItemId;
