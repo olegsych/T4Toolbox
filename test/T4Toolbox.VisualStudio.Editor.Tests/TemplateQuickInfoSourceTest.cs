@@ -34,7 +34,7 @@ namespace T4Toolbox.VisualStudio.Editor
             {
                 var result = await source.GetQuickInfoItemAsync(session, CancellationToken.None);
 
-                Assert.Null(result.ApplicableToSpan);
+                Assert.Null(result?.ApplicableToSpan);
             }
         }
 
@@ -47,7 +47,7 @@ namespace T4Toolbox.VisualStudio.Editor
             {
                 var result = await source.GetQuickInfoItemAsync(session, CancellationToken.None);
 
-                Assert.Null(result.ApplicableToSpan);
+                Assert.Null(result?.ApplicableToSpan);
             }
         }
 
@@ -60,7 +60,7 @@ namespace T4Toolbox.VisualStudio.Editor
             {
                 var result = await source.GetQuickInfoItemAsync(session, CancellationToken.None);
 
-                Assert.Null(result.ApplicableToSpan);
+                Assert.Null(result?.ApplicableToSpan);
             }
         }
 
