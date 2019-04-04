@@ -32,10 +32,8 @@ namespace T4Toolbox.VisualStudio.Editor
             var session = new FakeQuickInfoSession();
             using (var source = new TemplateQuickInfoSource(buffer))
             {
-                var quickInfoContent = new List<object>();
                 var result = await source.GetQuickInfoItemAsync(session, CancellationToken.None);
 
-                Assert.Equal(0, quickInfoContent.Count);
                 Assert.Null(result.ApplicableToSpan);
             }
         }
@@ -47,10 +45,8 @@ namespace T4Toolbox.VisualStudio.Editor
             var session = new FakeQuickInfoSession { SnapshotTriggerPoint = new SnapshotPoint(buffer.CurrentSnapshot, 3) };
             using (var source = new TemplateQuickInfoSource(buffer))
             {
-                var quickInfoContent = new List<object>();
                 var result = await source.GetQuickInfoItemAsync(session, CancellationToken.None);
 
-                Assert.Equal(0, quickInfoContent.Count);
                 Assert.Null(result.ApplicableToSpan);
             }
         }
@@ -62,10 +58,8 @@ namespace T4Toolbox.VisualStudio.Editor
             var session = new FakeQuickInfoSession { SnapshotTriggerPoint = new SnapshotPoint(buffer.CurrentSnapshot, 1) };
             using (var source = new TemplateQuickInfoSource(buffer))
             {
-                var quickInfoContent = new List<object>();
                 var result = await source.GetQuickInfoItemAsync(session, CancellationToken.None);
 
-                Assert.Equal(0, quickInfoContent.Count);
                 Assert.Null(result.ApplicableToSpan);
             }
         }
@@ -90,7 +84,6 @@ namespace T4Toolbox.VisualStudio.Editor
             var session = new FakeQuickInfoSession { SnapshotTriggerPoint = new SnapshotPoint(buffer.CurrentSnapshot, 15) };
             using (var source = new TemplateQuickInfoSource(buffer))
             {
-                var quickInfoContent = new List<object>();
                 var result = await source.GetQuickInfoItemAsync(session, CancellationToken.None);
 
                 Assert.Equal(new Span(13, 13), result.ApplicableToSpan.GetSpan(buffer.CurrentSnapshot).Span);
