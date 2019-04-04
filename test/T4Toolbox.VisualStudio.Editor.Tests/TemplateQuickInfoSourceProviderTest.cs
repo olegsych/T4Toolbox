@@ -30,14 +30,14 @@ namespace T4Toolbox.VisualStudio.Editor
         [Fact]
         public static void TemplateQuickInfoSourceProviderImplementsIQuickSourceProviderInterface()
         {
-            Assert.Equal(typeof(IQuickInfoSourceProvider), typeof(TemplateQuickInfoSourceProvider).GetInterfaces()[0]);
+            Assert.Equal(typeof(IAsyncQuickInfoSourceProvider), typeof(TemplateQuickInfoSourceProvider).GetInterfaces()[0]);
         }
 
         [Fact]
         public static void TemplateQuickInfoSourceProviderExportsIQuickSourceProviderInterface()
         {
             ExportAttribute attribute = typeof(TemplateQuickInfoSourceProvider).GetCustomAttributes(false).OfType<ExportAttribute>().Single();
-            Assert.Equal(typeof(IQuickInfoSourceProvider), attribute.ContractType);
+            Assert.Equal(typeof(IAsyncQuickInfoSourceProvider), attribute.ContractType);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace T4Toolbox.VisualStudio.Editor
                 typeof(SubstituteExporter<ITemplateEditorOptions>)))
             using (var container = new CompositionContainer(catalog))
             {
-                Lazy<IQuickInfoSourceProvider> export = container.GetExport<IQuickInfoSourceProvider>();
+                Lazy<IAsyncQuickInfoSourceProvider> export = container.GetExport<IAsyncQuickInfoSourceProvider>();
                 Assert.IsType<TemplateQuickInfoSourceProvider>(export.Value);
             }
         }
@@ -84,7 +84,7 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             var provider = new TemplateQuickInfoSourceProvider(Substitute.For<ITemplateEditorOptions>());
             var e = Assert.Throws<ArgumentNullException>(() => provider.TryCreateQuickInfoSource(null));
-            Assert.Equal("buffer", e.ParamName);
+            Assert.Equal("textBuffer", e.ParamName);
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace T4Toolbox.VisualStudio.Editor
             ITemplateEditorOptions options = OptionsWithQuickInfoTooltipsEnabled(true);
             var provider = new TemplateQuickInfoSourceProvider(options);
             var textBuffer = new FakeTextBuffer(string.Empty);
-            IQuickInfoSource quickInfoSource = provider.TryCreateQuickInfoSource(textBuffer);
+            IAsyncQuickInfoSource quickInfoSource = provider.TryCreateQuickInfoSource(textBuffer);
             Assert.Equal(typeof(TemplateQuickInfoSource), quickInfoSource.GetType());
         }
 
@@ -103,8 +103,8 @@ namespace T4Toolbox.VisualStudio.Editor
             ITemplateEditorOptions options = OptionsWithQuickInfoTooltipsEnabled(true);
             var provider = new TemplateQuickInfoSourceProvider(options);
             var textBuffer = new FakeTextBuffer(string.Empty);
-            IQuickInfoSource source1 = provider.TryCreateQuickInfoSource(textBuffer);
-            IQuickInfoSource source2 = provider.TryCreateQuickInfoSource(textBuffer);
+            IAsyncQuickInfoSource source1 = provider.TryCreateQuickInfoSource(textBuffer);
+            IAsyncQuickInfoSource source2 = provider.TryCreateQuickInfoSource(textBuffer);
             Assert.Same(source1, source2);
         }
 

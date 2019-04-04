@@ -3,6 +3,8 @@
   <PropertyGroup>
     <ProjectGuid>{E0282961-2D83-48CC-B4D4-8257449CF8F7}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <Import Project="..\..\T4Toolbox.Common.props" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
