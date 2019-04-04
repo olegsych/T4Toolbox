@@ -34,7 +34,7 @@ namespace T4Toolbox.VisualStudio.Editor
                 throw new ArgumentNullException(nameof(textBuffer));
             }
 
-            if (options.QuickInfoTooltipsEnabled)
+            if (this.options.QuickInfoTooltipsEnabled)
             {
                 return textBuffer.Properties.GetOrCreateSingletonProperty(() => new TemplateQuickInfoSource(textBuffer));
             }
