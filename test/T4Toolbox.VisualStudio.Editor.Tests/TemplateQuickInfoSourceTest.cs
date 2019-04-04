@@ -5,10 +5,11 @@
 namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+
     using Microsoft.VisualStudio.Text;
+
     using Xunit;
 
     public static class TemplateQuickInfoSourceTest
