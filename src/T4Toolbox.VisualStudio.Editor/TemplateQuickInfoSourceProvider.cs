@@ -10,11 +10,11 @@ namespace T4Toolbox.VisualStudio.Editor
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Utilities;
 
-    [Export(typeof(IQuickInfoSourceProvider)), ContentType(TemplateContentType.Name)]
+    [Export(typeof(IAsyncQuickInfoSourceProvider)), ContentType(TemplateContentType.Name)]
     [Name("Template Quick Info Source"), Order(Before = "Default Quick Info Presenter")]
-    internal sealed class TemplateQuickInfoSourceProvider : IQuickInfoSourceProvider
+    internal sealed class TemplateQuickInfoSourceProvider : IAsyncQuickInfoSourceProvider
     {
-        private readonly ITemplateEditorOptions options;
+        private readonly ITemplateEditorOptions _options;
 
         [ImportingConstructor]
         public TemplateQuickInfoSourceProvider(ITemplateEditorOptions options)
@@ -24,19 +24,19 @@ namespace T4Toolbox.VisualStudio.Editor
                 throw new ArgumentNullException(nameof(options));
             }
 
-            this.options = options;
+            _options = options;
         }
 
-        public IQuickInfoSource TryCreateQuickInfoSource(ITextBuffer buffer)
+        public IAsyncQuickInfoSource TryCreateQuickInfoSource(ITextBuffer textBuffer)
         {
-            if (buffer == null)
+            if (textBuffer == null)
             {
-                throw new ArgumentNullException(nameof(buffer));
+                throw new ArgumentNullException(nameof(textBuffer));
             }
 
-            if (this.options.QuickInfoTooltipsEnabled)
+            if (_options.QuickInfoTooltipsEnabled)
             {
-                return buffer.Properties.GetOrCreateSingletonProperty(() => new TemplateQuickInfoSource(buffer));                
+                return textBuffer.Properties.GetOrCreateSingletonProperty(() => new TemplateQuickInfoSource(textBuffer));
             }
 
             return null;

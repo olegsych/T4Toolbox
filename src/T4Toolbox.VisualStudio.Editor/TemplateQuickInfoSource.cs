@@ -5,34 +5,31 @@
 namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Text;
 
-    internal sealed class TemplateQuickInfoSource : IQuickInfoSource
+    internal sealed class TemplateQuickInfoSource : IAsyncQuickInfoSource
     {
         private readonly TemplateAnalyzer analyzer;
 
         public TemplateQuickInfoSource(ITextBuffer buffer)
         {
             Debug.Assert(buffer != null, "buffer");
-            this.analyzer = TemplateAnalyzer.GetOrCreate(buffer);
+            analyzer = TemplateAnalyzer.GetOrCreate(buffer);
         }
 
-        public void AugmentQuickInfoSession(IQuickInfoSession session, IList<object> quickInfoContent, out ITrackingSpan applicableToSpan)
+        public Task<QuickInfoItem> GetQuickInfoItemAsync(IAsyncQuickInfoSession session, CancellationToken cancellationToken)
         {
+            QuickInfoItem quickInfoItem = null;
             if (session == null)
             {
                 throw new ArgumentNullException("session");
             }
 
-            if (quickInfoContent == null)
-            {
-                throw new ArgumentNullException("quickInfoContent");
-            }
-
-            TemplateAnalysis analysis = this.analyzer.CurrentAnalysis;
+            TemplateAnalysis analysis = analyzer.CurrentAnalysis;
             SnapshotPoint? triggerPoint = session.GetTriggerPoint(analysis.TextSnapshot);
             if (triggerPoint != null && analysis.Template != null)
             {
@@ -40,13 +37,12 @@ namespace T4Toolbox.VisualStudio.Editor
                 Span applicableTo;
                 if (analysis.Template.TryGetDescription(triggerPoint.Value.Position, out description, out applicableTo))
                 {
-                    quickInfoContent.Add(description);
-                    applicableToSpan = analysis.TextSnapshot.CreateTrackingSpan(applicableTo, SpanTrackingMode.EdgeExclusive); 
-                    return;                    
+                    ITrackingSpan applicableToSpan = analysis.TextSnapshot.CreateTrackingSpan(applicableTo, SpanTrackingMode.EdgeExclusive);
+                    quickInfoItem = new QuickInfoItem(applicableToSpan, description);
                 }
             }
 
-            applicableToSpan = null;
+            return Task.FromResult(quickInfoItem);
         }
 
         public void Dispose()
