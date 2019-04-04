@@ -84,7 +84,7 @@ namespace T4Toolbox.VisualStudio.Editor
         {
             var provider = new TemplateQuickInfoSourceProvider(Substitute.For<ITemplateEditorOptions>());
             var e = Assert.Throws<ArgumentNullException>(() => provider.TryCreateQuickInfoSource(null));
-            Assert.Equal("buffer", e.ParamName);
+            Assert.Equal("textBuffer", e.ParamName);
         }
 
         [Fact]
