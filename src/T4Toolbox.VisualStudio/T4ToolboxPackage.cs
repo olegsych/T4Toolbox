@@ -8,10 +8,15 @@ namespace T4Toolbox.VisualStudio
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using System.Threading;
+
+    using EnvDTE;
+
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
+
     using T4Toolbox.DirectiveProcessors;
+
     using VSLangProj;
 
     /// <summary>
@@ -67,8 +72,14 @@ namespace T4Toolbox.VisualStudio
 
             TransformationContextProvider.Register(this);
             TemplateLocator.Register(this);
-            this.extenderProviders.Add(new BrowseObjectExtenderProvider(this, PrjBrowseObjectCATID.prjCATIDCSharpFileBrowseObject));
-            this.extenderProviders.Add(new BrowseObjectExtenderProvider(this, PrjBrowseObjectCATID.prjCATIDVBFileBrowseObject));
+
+            this.extenderProviders.Add(new BrowseObjectExtenderProvider(this, await GetObjectExtendersAsync(), PrjBrowseObjectCATID.prjCATIDCSharpFileBrowseObject));
+            this.extenderProviders.Add(new BrowseObjectExtenderProvider(this, await GetObjectExtendersAsync(), PrjBrowseObjectCATID.prjCATIDVBFileBrowseObject));
+        }
+
+        private async System.Threading.Tasks.Task<ObjectExtenders> GetObjectExtendersAsync()
+        {
+            return (ObjectExtenders)await this.GetServiceAsync(typeof(ObjectExtenders));
         }
 
         /// <summary>

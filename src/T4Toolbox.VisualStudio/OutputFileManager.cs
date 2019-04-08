@@ -7,21 +7,24 @@ namespace T4Toolbox.VisualStudio
     using System;
     using System.CodeDom.Compiler;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
+
     using EnvDTE;
+
     using EnvDTE80;
+
     using Microsoft.Build.Execution;
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
+
     using VSLangProj;
 
     /// <summary>
@@ -38,30 +41,36 @@ namespace T4Toolbox.VisualStudio
         private readonly IAsyncServiceProvider2 serviceProvider;
         private readonly ITextTemplatingEngineHost templatingHost;
 
-        public OutputFileManager(IAsyncServiceProvider2 serviceProvider, string inputFile, OutputFile[] outputFiles)
+        public OutputFileManager(
+            IAsyncServiceProvider2 serviceProvider,
+            DTE dte,
+            ITextTemplatingEngineHost textTemplatingEngineHost,
+            string inputFile,
+            OutputFile[] outputFiles)
         {
             this.serviceProvider = serviceProvider;
+            this.dte = dte;
+            this.templatingHost = textTemplatingEngineHost;
             this.inputFile = inputFile;
-            this.inputDirectory = Path.GetDirectoryName(inputFile);
             this.outputFiles = outputFiles;
-            this.dte = (DTE)serviceProvider.GetServiceAsync(typeof(DTE)).Result;
+
+            this.inputDirectory = Path.GetDirectoryName(inputFile);
             this.projects = GetAllProjects(this.dte.Solution);
             this.input = this.dte.Solution.FindProjectItem(this.inputFile);
-            this.templatingHost = (ITextTemplatingEngineHost)this.serviceProvider.GetServiceAsync(typeof(STextTemplating)).Result;
         }
 
         /// <summary>
         /// Executes the logic necessary to update output files.
         /// </summary>
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "How else do we report an error from a background task?")]
-        public void DoWork()
+        public async System.Threading.Tasks.Task DoWorkAsync()
         {
             try
             {
                 this.DeleteOldOutputs();
                 List<OutputFile> outputsToSave = this.GetOutputFilesToSave().ToList();
-                this.CheckoutFiles(outputsToSave.Select(output => this.GetFullPath(output.Path)).ToArray());
-                this.SaveOutputFiles(outputsToSave);
+                await this.CheckoutFilesAsync(outputsToSave.Select(output => this.GetFullPath(output.Path)).ToArray());
+                await this.SaveOutputFilesAsync(outputsToSave);
                 this.ConfigureOutputFiles();
                 this.RecordLastOutputs();
             }
@@ -80,7 +89,7 @@ namespace T4Toolbox.VisualStudio
         /// <summary>
         /// Performs validation tasks that require accessing Visual Studio automation model.
         /// </summary>
-        public void Validate()
+        public async System.Threading.Tasks.Task ValidateAsync()
         {
             foreach (OutputFile output in this.outputFiles)
             {
@@ -88,7 +97,7 @@ namespace T4Toolbox.VisualStudio
                 this.ValidateOutputProject(output, out project);
                 this.ValidateOutputDirectory(output, project);
                 ValidateOutputItemType(output, project);
-                this.ValidateOutputEncoding(output);
+                await this.ValidateOutputEncodingAsync(output);
                 this.ValidateOutputContent(output);
             }
         }
@@ -611,9 +620,9 @@ namespace T4Toolbox.VisualStudio
             }
         }
 
-        private void SaveOutputFiles(IEnumerable<OutputFile> outputsToSave)
+        private async System.Threading.Tasks.Task SaveOutputFilesAsync(IEnumerable<OutputFile> outputsToSave)
         {
-            var runningDocumentTable = (IVsRunningDocumentTable)this.serviceProvider.GetServiceAsync(typeof(SVsRunningDocumentTable)).Result;
+            var runningDocumentTable = (IVsRunningDocumentTable)await this.serviceProvider.GetServiceAsync(typeof(SVsRunningDocumentTable));
             foreach (OutputFile output in outputsToSave)
             {
                 string outputFilePath = this.GetFullPath(output.Path);
@@ -626,9 +635,9 @@ namespace T4Toolbox.VisualStudio
         /// <summary>
         /// Uses the <see cref="SVsQueryEditQuerySave"/> service to checkout specified files with a minimum number of visual prompts.
         /// </summary>
-        private void CheckoutFiles(string[] filePaths)
+        private async System.Threading.Tasks.Task CheckoutFilesAsync(string[] filePaths)
         {
-            var queryService = (IVsQueryEditQuerySave2)this.serviceProvider.GetServiceAsync(typeof(SVsQueryEditQuerySave)).Result;
+            var queryService = (IVsQueryEditQuerySave2)await this.serviceProvider.GetServiceAsync(typeof(SVsQueryEditQuerySave));
             if (queryService == null)
             {
                 // SVsQueryEditQueryService is not available, don't try to check out files.
@@ -738,11 +747,11 @@ namespace T4Toolbox.VisualStudio
             }
         }
 
-        private void ValidateOutputEncoding(OutputFile output)
+        private async System.Threading.Tasks.Task ValidateOutputEncodingAsync(OutputFile output)
         {
             if (string.IsNullOrEmpty(output.File))
             {
-                object service = this.serviceProvider.GetServiceAsync(typeof(STextTemplating)).Result;
+                object service = await this.serviceProvider.GetServiceAsync(typeof(STextTemplating));
 
                 // Try to change the encoding
                 var host = (ITextTemplatingEngineHost)service;

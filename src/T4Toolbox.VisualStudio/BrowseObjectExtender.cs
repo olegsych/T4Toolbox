@@ -11,7 +11,9 @@ namespace T4Toolbox.VisualStudio
     using System.Drawing.Design;
     using System.Globalization;
     using System.Runtime.InteropServices;
+
     using EnvDTE;
+
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
@@ -40,6 +42,7 @@ namespace T4Toolbox.VisualStudio
         private readonly IAsyncServiceProvider2 serviceProvider;
         private readonly int cookie;
         private readonly IExtenderSite site;
+        private readonly TemplateLocator templateLocator;
         private ProjectItem projectItem;
 
         internal BrowseObjectExtender(IAsyncServiceProvider2 serviceProvider, IVsBrowseObject browseObject, IExtenderSite site, int cookie)
@@ -55,6 +58,7 @@ namespace T4Toolbox.VisualStudio
             ErrorHandler.ThrowOnFailure(browseObject.GetProjectItem(out this.hierarchy, out this.itemId));
             this.propertyStorage = (IVsBuildPropertyStorage)this.hierarchy;
             this.CustomToolParameters = new CustomToolParameters(this.serviceProvider, this.hierarchy, this.itemId);
+            this.templateLocator = (TemplateLocator)this.serviceProvider.GetServiceAsync(typeof(TemplateLocator)).Result;
         }
 
         /// <summary>
@@ -122,8 +126,8 @@ namespace T4Toolbox.VisualStudio
 
                     // Report an error if the template cannot be found
                     string fullPath = value;
-                    var templateLocator = (TemplateLocator)this.serviceProvider.GetServiceAsync(typeof(TemplateLocator)).Result;
-                    if (!templateLocator.LocateTemplate(this.ProjectItem.FileNames[1], ref fullPath))
+
+                    if (!this.templateLocator.LocateTemplate(this.ProjectItem.FileNames[1], ref fullPath))
                     {
                         throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Template '{0}' could not be found", value));
                     }
