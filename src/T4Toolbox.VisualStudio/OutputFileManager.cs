@@ -18,6 +18,7 @@ namespace T4Toolbox.VisualStudio
     using EnvDTE80;
     using Microsoft.Build.Execution;
     using Microsoft.VisualStudio;
+    using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
@@ -34,19 +35,19 @@ namespace T4Toolbox.VisualStudio
         private readonly string inputDirectory;
         private readonly OutputFile[] outputFiles;
         private readonly IDictionary<string, Project> projects;
-        private readonly IServiceProvider serviceProvider;
+        private readonly IAsyncServiceProvider2 serviceProvider;
         private readonly ITextTemplatingEngineHost templatingHost;
 
-        public OutputFileManager(IServiceProvider serviceProvider, string inputFile, OutputFile[] outputFiles)
+        public OutputFileManager(IAsyncServiceProvider2 serviceProvider, string inputFile, OutputFile[] outputFiles)
         {
             this.serviceProvider = serviceProvider;
             this.inputFile = inputFile;
             this.inputDirectory = Path.GetDirectoryName(inputFile);
             this.outputFiles = outputFiles;
-            this.dte = (DTE)serviceProvider.GetService(typeof(DTE));
+            this.dte = (DTE)serviceProvider.GetServiceAsync(typeof(DTE)).Result;
             this.projects = GetAllProjects(this.dte.Solution);
             this.input = this.dte.Solution.FindProjectItem(this.inputFile);
-            this.templatingHost = (ITextTemplatingEngineHost)this.serviceProvider.GetService(typeof(STextTemplating));
+            this.templatingHost = (ITextTemplatingEngineHost)this.serviceProvider.GetServiceAsync(typeof(STextTemplating)).Result;
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace T4Toolbox.VisualStudio
             catch (TransformationException e)
             {
                 // Expected error condition. Log message only.
-                this.LogError(e.Message); 
+                this.LogError(e.Message);
             }
             catch (Exception e)
             {
@@ -535,7 +536,7 @@ namespace T4Toolbox.VisualStudio
             if (!string.IsNullOrEmpty(relativePath))
             {
                 string projectDirectory = Path.GetDirectoryName(this.input.ContainingProject.FullName);
-                return Path.GetFullPath(Path.Combine(projectDirectory, relativePath));                
+                return Path.GetFullPath(Path.Combine(projectDirectory, relativePath));
             }
 
             return string.Empty;
@@ -612,14 +613,14 @@ namespace T4Toolbox.VisualStudio
 
         private void SaveOutputFiles(IEnumerable<OutputFile> outputsToSave)
         {
-            var runningDocumentTable = (IVsRunningDocumentTable)this.serviceProvider.GetService(typeof(SVsRunningDocumentTable));
+            var runningDocumentTable = (IVsRunningDocumentTable)this.serviceProvider.GetServiceAsync(typeof(SVsRunningDocumentTable)).Result;
             foreach (OutputFile output in outputsToSave)
             {
                 string outputFilePath = this.GetFullPath(output.Path);
                 Directory.CreateDirectory(Path.GetDirectoryName(outputFilePath));
                 File.WriteAllText(outputFilePath, output.Content.ToString(), output.Encoding);
                 ReloadDocument(runningDocumentTable, outputFilePath);
-            }            
+            }
         }
 
         /// <summary>
@@ -627,7 +628,7 @@ namespace T4Toolbox.VisualStudio
         /// </summary>
         private void CheckoutFiles(string[] filePaths)
         {
-            var queryService = (IVsQueryEditQuerySave2)this.serviceProvider.GetService(typeof(SVsQueryEditQuerySave));
+            var queryService = (IVsQueryEditQuerySave2)this.serviceProvider.GetServiceAsync(typeof(SVsQueryEditQuerySave)).Result;
             if (queryService == null)
             {
                 // SVsQueryEditQueryService is not available, don't try to check out files.
@@ -645,7 +646,7 @@ namespace T4Toolbox.VisualStudio
                 return;
             }
 
-            if (editResult == (uint)tagVSQueryEditResult.QER_NoEdit_UserCanceled && 
+            if (editResult == (uint)tagVSQueryEditResult.QER_NoEdit_UserCanceled &&
                 (editInfo & (uint)tagVSQueryEditResultFlags.QER_CheckoutCanceledOrFailed) == (uint)tagVSQueryEditResultFlags.QER_CheckoutCanceledOrFailed)
             {
                 throw CheckoutAbortedException();
@@ -666,7 +667,7 @@ namespace T4Toolbox.VisualStudio
             finally
             {
                 ErrorHandler.ThrowOnFailure(queryService.EndQuerySaveBatch());
-            }            
+            }
         }
 
         /// <summary>
@@ -741,7 +742,7 @@ namespace T4Toolbox.VisualStudio
         {
             if (string.IsNullOrEmpty(output.File))
             {
-                object service = this.serviceProvider.GetService(typeof(STextTemplating));
+                object service = this.serviceProvider.GetServiceAsync(typeof(STextTemplating)).Result;
 
                 // Try to change the encoding
                 var host = (ITextTemplatingEngineHost)service;

@@ -6,6 +6,7 @@ namespace T4Toolbox.VisualStudio
 {
     using System;
     using EnvDTE;
+    using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
@@ -18,12 +19,12 @@ namespace T4Toolbox.VisualStudio
         private readonly string extenderCategory;
         private readonly ObjectExtenders objectExtenders;
         private readonly int providerCookie;
-        private readonly IServiceProvider serviceProvider;
+        private readonly IAsyncServiceProvider2 serviceProvider;
 
-        public BrowseObjectExtenderProvider(IServiceProvider serviceProvider, string extenderCategory)
+        public BrowseObjectExtenderProvider(IAsyncServiceProvider2 serviceProvider, string extenderCategory)
         {
             this.serviceProvider = serviceProvider;
-            this.objectExtenders = (ObjectExtenders)serviceProvider.GetService(typeof(ObjectExtenders));
+            this.objectExtenders = (ObjectExtenders)serviceProvider.GetServiceAsync(typeof(ObjectExtenders)).Result;
             this.extenderCategory = extenderCategory;
             this.providerCookie = this.objectExtenders.RegisterExtenderProvider(extenderCategory, BrowseObjectExtenderProvider.ExtenderName, this);
         }
