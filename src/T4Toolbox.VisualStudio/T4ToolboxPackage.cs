@@ -44,6 +44,7 @@ namespace T4Toolbox.VisualStudio
     [ProvideCodeGenerator(typeof(ScriptFileGenerator), ScriptFileGenerator.Name, ScriptFileGenerator.Description, false, ProjectSystem = ProvideCodeGeneratorAttribute.VisualBasicProjectGuid)]
 
     // Auto-load the package for C# and Visual Basic projects to extend file properties 
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionOpening_string, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.CSharpProject_string, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(VSConstants.UICONTEXT.VBProject_string, PackageAutoLoadFlags.BackgroundLoad)]
 
@@ -54,6 +55,11 @@ namespace T4Toolbox.VisualStudio
     {
         internal const string Id = "c88631b5-770c-453d-b90e-7136f127d57d";
         private readonly List<IDisposable> extenderProviders = new List<IDisposable>();
+
+        /// <summary>
+        /// This is used to resolve the dependency from TemplatedFileGenerator. I was unable to get the service location previously used in that class to work.
+        /// </summary>
+        public static T4ToolboxPackage Instance { get;  set; }
 
         /// <summary>
         /// Releases managed resources held by this package.
@@ -68,18 +74,15 @@ namespace T4Toolbox.VisualStudio
         /// </summary>
         protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
+            Instance = this;
             await base.InitializeAsync(cancellationToken, progress);
 
             TransformationContextProvider.Register(this);
             TemplateLocator.Register(this);
 
-            this.extenderProviders.Add(new BrowseObjectExtenderProvider(this, await GetObjectExtendersAsync(), PrjBrowseObjectCATID.prjCATIDCSharpFileBrowseObject));
-            this.extenderProviders.Add(new BrowseObjectExtenderProvider(this, await GetObjectExtendersAsync(), PrjBrowseObjectCATID.prjCATIDVBFileBrowseObject));
-        }
-
-        private async System.Threading.Tasks.Task<ObjectExtenders> GetObjectExtendersAsync()
-        {
-            return (ObjectExtenders)await this.GetServiceAsync(typeof(ObjectExtenders));
+            var objectExtenders = (ObjectExtenders)await this.GetServiceAsync(typeof(ObjectExtenders));
+            this.extenderProviders.Add(new BrowseObjectExtenderProvider(this, objectExtenders, PrjBrowseObjectCATID.prjCATIDCSharpFileBrowseObject));
+            this.extenderProviders.Add(new BrowseObjectExtenderProvider(this, objectExtenders, PrjBrowseObjectCATID.prjCATIDVBFileBrowseObject));
         }
 
         /// <summary>
