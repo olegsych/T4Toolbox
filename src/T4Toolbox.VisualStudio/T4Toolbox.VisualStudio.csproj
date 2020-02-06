@@ -10,6 +10,8 @@
     <CreateVsixContainer>false</CreateVsixContainer>
     <DeployExtension>false</DeployExtension>
     <UseCodebase>true</UseCodebase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
@@ -27,7 +29,9 @@
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.14.0.DesignTime"/>
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.15.3.DesignTime" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.15.6.DesignTime"/>
     <Reference Include="Microsoft.VisualStudio.TemplateWizardInterface" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.15.0" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" />

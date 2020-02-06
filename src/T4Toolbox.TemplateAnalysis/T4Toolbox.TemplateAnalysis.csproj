@@ -8,6 +8,8 @@
     <YaccLexTools>..\..\packages\YaccLexTools.0.2.2\tools\</YaccLexTools>
     <GplexTool>"$(YaccLexTools)gplex.exe"</GplexTool>
     <GppgTool>"$(YaccLexTools)gppg.exe"</GppgTool>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />

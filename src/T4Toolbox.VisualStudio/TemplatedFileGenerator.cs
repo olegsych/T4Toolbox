@@ -91,7 +91,7 @@ namespace T4Toolbox.VisualStudio
                 return true;
             }
 
-            var templateLocator = (TemplateLocator)this.GlobalServiceProvider.GetService(typeof(TemplateLocator));
+            var templateLocator = T4ToolboxPackage.Instance.GetServiceAsync(typeof(TemplateLocator)).Result as TemplateLocator;
             if (!templateLocator.LocateTemplate(inputFileName, ref templateFileName))
             {
                 this.LogError(inputFileName, "Template '{0}' could not be found.", templateFileName);

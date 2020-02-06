@@ -14,6 +14,7 @@ namespace T4Toolbox.VisualStudio
     using System.Reflection;
     using System.Text.RegularExpressions;
     using Microsoft.VisualStudio;
+    using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
     using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
@@ -40,7 +41,7 @@ namespace T4Toolbox.VisualStudio
             "<\\#\\@\\s*parameter\\s+name\\s*=\\s*\"(?<" + NameGroup + ">[^\"]*)\"\\s+type\\s*=\\s*\"(?<" + TypeGroup + ">[^\"]*)\"\\s*\\#>",
             RegexOptions.IgnoreCase);
 
-        private readonly IServiceProvider serviceProvider;
+        private readonly IAsyncServiceProvider2 serviceProvider;
         private readonly IVsHierarchy project;
         private readonly uint projectItemId;
 
@@ -48,7 +49,7 @@ namespace T4Toolbox.VisualStudio
         private ITextTemplating templatingService;
         private string[] assemblyReferences;
 
-        internal CustomToolParameters(IServiceProvider serviceProvider, IVsHierarchy project, uint projectItemId)
+        internal CustomToolParameters(IAsyncServiceProvider2 serviceProvider, IVsHierarchy project, uint projectItemId)
         {
             Debug.Assert(serviceProvider != null, "serviceProvider");
             Debug.Assert(project != null, "project");
@@ -144,7 +145,7 @@ namespace T4Toolbox.VisualStudio
         /// </summary>
         public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
-            this.templatingService = (ITextTemplating)this.serviceProvider.GetService(typeof(STextTemplating));
+            this.templatingService = (ITextTemplating)this.serviceProvider.GetServiceAsync(typeof(STextTemplating)).Result;
             this.templatingHost = (ITextTemplatingEngineHost)this.templatingService;
 
             string templateFileName;
@@ -160,7 +161,7 @@ namespace T4Toolbox.VisualStudio
 
                 var parameters = new List<CustomToolParameter>();
                 this.ParseParameters(templateContent, parameters);
-                return new PropertyDescriptorCollection(parameters.Cast<PropertyDescriptor>().ToArray());                
+                return new PropertyDescriptorCollection(parameters.Cast<PropertyDescriptor>().ToArray());
             }
 
             return PropertyDescriptorCollection.Empty;
@@ -245,7 +246,7 @@ namespace T4Toolbox.VisualStudio
                     return false;
                 }
 
-                var templateLocator = (TemplateLocator)this.serviceProvider.GetService(typeof(TemplateLocator));
+                var templateLocator = (TemplateLocator)this.serviceProvider.GetServiceAsync(typeof(TemplateLocator)).Result;
                 if (!templateLocator.LocateTemplate(inputFileName, ref templateFileName))
                 {
                     return false;
@@ -272,7 +273,7 @@ namespace T4Toolbox.VisualStudio
             }
 
             string name = match.Groups[NameGroup].Value;
-            return new CustomToolParameter(name, type, description);            
+            return new CustomToolParameter(name, type, description);
         }
 
         [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom", Justification = "That's how the T4 Engine loads assemblies.")]
