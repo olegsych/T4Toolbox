@@ -48,6 +48,6 @@ namespace T4Toolbox
         /// <summary>
         /// Version of the T4 Toolbox assembly.
         /// </summary>
-        public const string Version = "15.0.0.0";
+        public const string Version = "16.0.0.0";
     }
 }
