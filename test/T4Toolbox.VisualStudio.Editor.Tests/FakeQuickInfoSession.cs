@@ -5,109 +5,73 @@
 namespace T4Toolbox.VisualStudio.Editor
 {
     using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.VisualStudio.Language.Intellisense;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Editor;
     using Microsoft.VisualStudio.Utilities;
 
-    internal class FakeQuickInfoSession : IQuickInfoSession
+    internal class FakeQuickInfoSession : IAsyncQuickInfoSession
     {
         public SnapshotPoint? SnapshotTriggerPoint { get; set; }
 
-        #region IQuickInfoSession
+        #region IAsyncQuickInfoSession
 
-        ITrackingSpan IQuickInfoSession.ApplicableToSpan
+        public ITrackingSpan ApplicableToSpan
         {
             get { throw new NotImplementedException(); }
         }
 
-        event EventHandler IQuickInfoSession.ApplicableToSpanChanged
+        public IEnumerable<object> Content
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool HasInteractiveContent
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public QuickInfoSessionOptions Options
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public QuickInfoSessionState State
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ITextView TextView
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public PropertyCollection Properties
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public event EventHandler<QuickInfoSessionStateChangedEventArgs> StateChanged
         {
             add { throw new NotImplementedException(); }
             remove { throw new NotImplementedException(); }
         }
 
-        BulkObservableCollection<object> IQuickInfoSession.QuickInfoContent
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IQuickInfoSession.TrackMouse
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        void IIntellisenseSession.Collapse()
+        public Task DismissAsync()
         {
             throw new NotImplementedException();
         }
 
-        void IIntellisenseSession.Dismiss()
+        public ITrackingPoint GetTriggerPoint(ITextBuffer textBuffer)
         {
             throw new NotImplementedException();
         }
 
-        event EventHandler IIntellisenseSession.Dismissed
-        {
-            add { throw new NotImplementedException(); }
-            remove { throw new NotImplementedException(); }
-        }
-
-        SnapshotPoint? IIntellisenseSession.GetTriggerPoint(ITextSnapshot textSnapshot)
+        public SnapshotPoint? GetTriggerPoint(ITextSnapshot snapshot)
         {
             return this.SnapshotTriggerPoint;
-        }
-
-        ITrackingPoint IIntellisenseSession.GetTriggerPoint(ITextBuffer textBuffer)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IIntellisenseSession.IsDismissed
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        bool IIntellisenseSession.Match()
-        {
-            throw new NotImplementedException();
-        }
-
-        IIntellisensePresenter IIntellisenseSession.Presenter
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        event EventHandler IIntellisenseSession.PresenterChanged
-        {
-            add { throw new NotImplementedException(); }
-            remove { throw new NotImplementedException(); }
-        }
-
-        void IIntellisenseSession.Recalculate()
-        {
-            throw new NotImplementedException();
-        }
-
-        event EventHandler IIntellisenseSession.Recalculated
-        {
-            add { throw new NotImplementedException(); }
-            remove { throw new NotImplementedException(); }
-        }
-
-        void IIntellisenseSession.Start()
-        {
-            throw new NotImplementedException();
-        }
-
-        ITextView IIntellisenseSession.TextView
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        PropertyCollection IPropertyOwner.Properties
-        {
-            get { throw new NotImplementedException(); }
         }
 
         #endregion

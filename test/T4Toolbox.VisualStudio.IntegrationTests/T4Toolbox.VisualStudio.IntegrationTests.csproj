@@ -30,6 +30,7 @@
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.15.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Framework" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.15.0" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" />
