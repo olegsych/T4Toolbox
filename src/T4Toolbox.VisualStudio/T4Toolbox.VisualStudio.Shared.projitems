@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>de2da6ca-63a9-4800-9b27-7380c611b71e</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.VisualStudio.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BrowseObjectExtender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BrowseObjectExtenderProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomToolParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomToolParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomToolTemplateEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EnvDteExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ItemMetadataWizard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputFileManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ProjectItemProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ProjectItemTemplateWizard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ScriptFileGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T4ToolboxOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T4ToolboxOptionsPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)T4ToolboxPackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplatedFileGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransformationContextProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

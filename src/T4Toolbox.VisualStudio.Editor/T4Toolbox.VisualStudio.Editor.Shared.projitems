@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>961ae290-d1f0-4f50-a326-080b07d4d71e</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.VisualStudio.Editor.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ClassificationFormatDefinitions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClassificationTypeDefinitions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClassificationTypeName.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ITemplateEditorOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateAnalysis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateAnalyzer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateClassificationTagger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateClassificationTaggerProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionHandlerProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionSourceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateContentType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorReporter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorReporterProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorTagger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorTaggerProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateOutliningTagger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateOutliningTaggerProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateQuickInfoSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateQuickInfoSourceProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateTagger.cs" />
+  </ItemGroup>
+</Project>
