@@ -10,8 +10,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.TextTemplating.15.0" />
-    <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +36,12 @@
     <Compile Include="TransformationException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.TextTemplating.15.0">
+      <Version>16.10.31320.204</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.15.0">
+      <Version>16.10.31320.204</Version>
+    </PackageReference>
     <PackageReference Include="StyleCop.MSBuild">
       <Version>5.0.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
