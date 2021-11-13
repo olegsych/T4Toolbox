@@ -48,6 +48,10 @@ namespace T4Toolbox
         /// <summary>
         /// Version of the T4 Toolbox assembly.
         /// </summary>
+#if VS2019
         public const string Version = "16.0.0.0";
+#elif VS2022
+        public const string Version = "17.0.0.0";
+#endif
     }
 }

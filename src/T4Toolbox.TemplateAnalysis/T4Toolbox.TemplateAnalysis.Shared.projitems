@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>01f96615-9c52-4307-a4d3-0027f0a961d2</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.TemplateAnalysis.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyDirective.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AttributeDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AttributeName.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AttributeValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BlockEnd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaptureNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClassBlockStart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CodeBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CodeBlockStart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomDirective.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Directive.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectiveBlockStart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectiveDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectiveName.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DoubleQuote.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EndOfFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Equals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExpressionBlockStart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HashCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImportDirective.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IncludeDirective.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KnownValuesAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NonterminalNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputDirective.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParameterDirective.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Position.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ShiftReduceParserCode.cs">
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)StatementBlockStart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxNodeVisitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Template.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateDirective.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateError.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateParser.partial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateScanner.partial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateVisibility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TerminalNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueDescriptor.cs" />
+    <Yacc Include="$(MSBuildThisFileDirectory)TemplateParser.y" />
+    <Lex Include="$(MSBuildThisFileDirectory)TemplateScanner.lex" />
+  </ItemGroup>
+</Project>
