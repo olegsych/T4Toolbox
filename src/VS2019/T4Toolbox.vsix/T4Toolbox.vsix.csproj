@@ -66,16 +66,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DarkTheme.pkgdef">
+    <Content Include="..\..\T4Toolbox.vsix\DarkTheme.pkgdef">
+      <Link>DarkTheme.pkgdef</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="Dark.vstheme" />
+    <Content Include="..\..\T4Toolbox.vsix\Include\T4Toolbox.tt">
+      <Link>Include\T4Toolbox.tt</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="..\..\T4Toolbox.vsix\Dark.vstheme">
+      <Link>Dark.vstheme</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </None>
     <None Include="source.extension.vsixmanifest" />
-    <Content Include="License.txt">
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Include\T4Toolbox.tt">
+    <Content Include="..\..\T4Toolbox.vsix\License.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
