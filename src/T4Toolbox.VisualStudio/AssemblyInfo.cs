@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.Shell;
 [assembly: AssemblyTitle(T4Toolbox.VisualStudio.AssemblyInfo.Name)]
 [assembly: CLSCompliant(false)]
 
-#if VS2019
+#if !VS2019 && !VS2022
 // Help Visual Studio resolve references to the T4Toolbox assembly.
 [assembly: ProvideCodeBase(
     AssemblyName = T4Toolbox.AssemblyInfo.Name,
