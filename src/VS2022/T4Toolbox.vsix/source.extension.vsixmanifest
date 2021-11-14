@@ -5,7 +5,7 @@
         <DisplayName>T4 Toolbox for Visual Studio 2022</DisplayName>
         <Description xml:space="preserve">Extends Text Templates with syntax colorization, error reporting, outlining, QuickInfo tooltips, statement completion, generation of multiple output files with source control integration, support for template parameters in Solution Explorer properties and more.</Description>
         <MoreInfo>https://github.com/olegsych/T4Toolbox</MoreInfo>
-        <License>..\..\T4Toolbox.vsix\License.txt</License>
+        <License>License.txt</License>
         <GettingStartedGuide>http://olegsych.github.io/T4Toolbox/getting-started.html</GettingStartedGuide>
         <ReleaseNotes>https://github.com/olegsych/T4Toolbox/releases</ReleaseNotes>
     </Metadata>
