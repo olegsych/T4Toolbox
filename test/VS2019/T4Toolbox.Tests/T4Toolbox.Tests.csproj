@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{682E771A-76F7-4972-BBDC-1250B67F399B}</ProjectGuid>
+    <ProjectGuid>{7E037B27-988E-45BC-85DE-B18DF26522B4}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
-  <Import Project="..\..\..\T4Toolbox.Common.props" />
+  <Import Project="..\..\T4Toolbox.Tests.props" />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;DEBUG;VS2019</DefineConstants>
   </PropertyGroup>
@@ -14,10 +15,8 @@
     <DefineConstants>TRACE;VS2019</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
     <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\CommonAssemblyInfo.cs">
@@ -32,6 +31,12 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <Import Project="..\..\T4Toolbox\T4Toolbox.Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\VS2019\T4Toolbox\T4Toolbox.csproj">
+      <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
+      <Name>T4Toolbox</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\..\T4Toolbox.Tests\T4Toolbox.Tests.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

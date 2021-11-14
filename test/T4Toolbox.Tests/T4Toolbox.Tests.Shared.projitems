@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>01258134-933e-4b0c-b0a7-77e8b60617fe</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.Tests.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ClrTemplateTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSharpTemplateTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeTemplate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeTextTemplatingService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeTransformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GeneratorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputItemTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransformationContextTest.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>3a1fb4fd-ffc0-4172-ad56-9bb29242c900</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.VisualStudio.Editor.Tests.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FakeClassificationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeClassificationTypeRegistryService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeCompletionSession.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeQuickInfoSession.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeTextBuffer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeTextSnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeTrackingSpan.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SubstituteExporter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateAnalyzerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateClassificationTaggerProviderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateClassificationTaggerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionBuilderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionHandlerProviderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionHandlerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionSourceProviderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateCompletionSourceTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorReporterProviderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorTaggerProviderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorTaggerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateOutliningTaggerProviderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateOutliningTaggerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateQuickInfoSourceProviderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateQuickInfoSourceTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateTaggerTest.cs" />
+  </ItemGroup>
+</Project>

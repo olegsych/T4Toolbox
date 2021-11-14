@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>b315a9aa-477c-405c-a59d-cea286fc84a8</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.TemplateAnalysis.Tests.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyDirectiveTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AttributeDescriptorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AttributeNameTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AttributeTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AttributeValueTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BlockEndTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CaptureNodeTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClassBlockStartTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CodeBlockTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CodeTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomDirectiveTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectiveBlockStartTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectiveDescriptorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectiveNameTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectiveTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DoubleQuoteTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EndOfFileTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EqualsTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExpressionBlockStartTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImportDirectiveTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IncludeDirectiveTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KnownValuesAttributeTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NonterminalNodeTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputDirectiveTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParameterDirectiveTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PositionTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StatementBlockStartTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxNodeTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxNodeVisitorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SyntaxTokenTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateDirectiveTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateParserTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateScannerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TerminalNodeTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueDescriptorTest.cs" />
+  </ItemGroup>
+</Project>
