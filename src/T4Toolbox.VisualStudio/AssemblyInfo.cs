@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.Shell;
 [assembly: AssemblyTitle(T4Toolbox.VisualStudio.AssemblyInfo.Name)]
 [assembly: CLSCompliant(false)]
 
+#if VS2019
 // Help Visual Studio resolve references to the T4Toolbox assembly.
 [assembly: ProvideCodeBase(
     AssemblyName = T4Toolbox.AssemblyInfo.Name,
@@ -31,6 +32,7 @@ using Microsoft.VisualStudio.Shell;
     PublicKeyToken = T4Toolbox.VisualStudio.AssemblyInfo.PublicKeyToken,
     Version = T4Toolbox.VisualStudio.AssemblyInfo.Version,
     CodeBase = @"$PackageFolder$\" + T4Toolbox.VisualStudio.AssemblyInfo.Name + ".dll")]
+#endif
 
 namespace T4Toolbox.VisualStudio
 {
