@@ -46,7 +46,12 @@ namespace T4Toolbox.VisualStudio
 
     public sealed class T4ToolboxPackage : Package, IDisposable
     {
+#if VS2019
         internal const string Id = "c88631b5-770c-453d-b90e-7136f127d57d";
+#elif VS2022
+        internal const string Id = "7abf6d57-8ee6-44fb-8b43-d8a7800175c3";
+#endif
+
         private readonly List<IDisposable> extenderProviders = new List<IDisposable>();
 
         /// <summary>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a638d205-0886-4b04-bc88-d1b5345c8ac6</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.VisualStudio.IntegrationTests.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CustomToolParametersTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomToolTemplateTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IntegrationTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ItemTemplateTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputFileManagerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PackageTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ScriptFileGeneratorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T4ToolboxOptionsPageTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TargetProject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplatedFileGeneratorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateErrorReporterTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemplateLocatorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransformationContextProviderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransformationContextTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)TargetProject.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

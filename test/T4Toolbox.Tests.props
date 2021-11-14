@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\T4Toolbox.Common.props"/>
   <PropertyGroup>
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\T4Toolbox.Tests.ruleset</CodeAnalysisRuleSet>
+    <!-- <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\T4Toolbox.Tests.ruleset</CodeAnalysisRuleSet> -->
     <DocumentationFile/>
   </PropertyGroup>
   <ItemDefinitionGroup>

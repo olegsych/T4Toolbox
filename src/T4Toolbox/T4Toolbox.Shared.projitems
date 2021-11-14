@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>d97084be-b5b2-4d74-8396-aef1ee9577d0</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClrTemplate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CopyToOutputDirectory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CSharpTemplate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Generator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ItemMetadata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ItemType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ITransformationContextProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NativeMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Template.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransformationContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransformationException.cs" />
+  </ItemGroup>
+</Project>

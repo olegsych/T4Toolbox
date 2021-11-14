@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\T4Toolbox.Common.props" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{45D896DD-AC3F-44CF-A570-834BE6830BCE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <!-- On AppVeyor build agent, use dynamically generated package version. Locally, hardcode to 17.0.0.0 -->
+    <PackageVersion Condition=" '$(appveyor_build_version)' != '' ">$(appveyor_build_version)</PackageVersion>
+    <PackageVersion Condition=" '$(appveyor_build_version)' == '' ">17.0.0.0</PackageVersion>
+    <!-- VSSDK properties -->
+    <TargetVsixContainerName>T4Toolbox.$(PackageVersion).vsix</TargetVsixContainerName>
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <UseCodebase>false</UseCodebase>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+    <StartAction>Program</StartAction>
+    <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;VS2022</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;VS2022</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\T4Toolbox.DirectiveProcessors\T4Toolbox.DirectiveProcessors.csproj">
+      <Project>{53f7143f-dbda-41a5-a9c3-7d80debae286}</Project>
+      <Name>T4Toolbox.DirectiveProcessors</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
+      <Project>{398b0741-3977-4b0b-88e2-55a3b50c5f71}</Project>
+      <Name>T4Toolbox.TemplateAnalysis</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
+      <Project>{02f1c0b2-e405-4436-994e-e64affe22003}</Project>
+      <Name>T4Toolbox.VisualStudio.Editor</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox.VisualStudio.ItemTemplates\T4Toolbox.VisualStudio.ItemTemplates.csproj">
+      <Project>{4590e6bd-5423-4a5f-99f0-a658436fb463}</Project>
+      <Name>T4Toolbox.VisualStudio.ItemTemplates</Name>
+      <VSIXSubPath>ItemTemplates</VSIXSubPath>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup</IncludeOutputGroupsInVSIX>
+      <OutputItemType>Content</OutputItemType>
+    </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj">
+      <Project>{7629dcbb-d586-479c-9d49-91c8c39bd74f}</Project>
+      <Name>T4Toolbox.VisualStudio</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bPkgdefProjectOutputGroup%3bBuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">
+      <Project>{0bb76863-b250-4bd5-8d70-3e6b16364b7a}</Project>
+      <Name>T4Toolbox</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.31902.203" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.5232" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\T4Toolbox.vsix\DarkTheme.pkgdef">
+      <Link>DarkTheme.pkgdef</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\..\T4Toolbox.vsix\Include\T4Toolbox.tt">
+      <Link>Include\T4Toolbox.tt</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="License.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="..\..\T4Toolbox.vsix\Dark.vstheme">
+      <Link>Dark.vstheme</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </None>
+    <None Include="source.extension.vsixmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="GetPackageVersion" Outputs="$(PackageVersion)" />
+</Project>

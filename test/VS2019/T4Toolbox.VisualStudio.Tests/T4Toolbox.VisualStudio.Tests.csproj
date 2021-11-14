@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{4EA95651-8694-41F0-9E92-A44AD57AAF4A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <Import Project="..\..\T4Toolbox.Tests.props" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>TRACE;DEBUG;VS2019</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>TRACE;VS2019</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\..\..\CodeAnalysisDictionary.xml">
+      <Link>CodeAnalysisDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.10.31321.278" />
+    <PackageReference Include="NSubstitute">
+      <Version>4.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="StyleCop.MSBuild">
+      <Version>5.0.0</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\VS2019\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
+      <Project>{93bb161a-5947-4ea8-b557-e05414e823f2}</Project>
+      <Name>T4Toolbox.TemplateAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\VS2019\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
+      <Project>{3899e3cb-5898-47f5-9203-36d823769e91}</Project>
+      <Name>T4Toolbox.VisualStudio.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\VS2019\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj">
+      <Project>{40c635b9-1f5d-49bb-bb2e-9d3cbb2a1d94}</Project>
+      <Name>T4Toolbox.VisualStudio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\VS2019\T4Toolbox\T4Toolbox.csproj">
+      <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
+      <Name>T4Toolbox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\T4Toolbox.Tests\T4Toolbox.Tests.csproj">
+      <Project>{7e037b27-988e-45bc-85de-b18df26522b4}</Project>
+      <Name>T4Toolbox.Tests</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\..\T4Toolbox.VisualStudio.Tests\T4Toolbox.VisualStudio.Tests.Shared.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

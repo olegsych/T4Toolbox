@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\T4Toolbox.Common.props" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{4590E6BD-5423-4A5F-99F0-A658436FB463}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <!-- Suppress C# warning about missing source files -->
+    <NoWarn>2008</NoWarn>
+    <!-- Disable FxCop. This project does not generate an assembly. -->
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <!-- VS SDK Item Template Project Settings -->
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CreateVsixContainer>false</CreateVsixContainer>
+    <DeployExtension>false</DeployExtension>
+    <DeployVSTemplates>false</DeployVSTemplates>
+    <CopyVsixManifestToOutput>false</CopyVsixManifestToOutput>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <ItemDefinitionGroup>
+    <VSTemplate>
+      <OutputSubPath>T4Toolbox</OutputSubPath>
+    </VSTemplate>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\C#\Generator\Generator.tt" />
+    <VSTemplate Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\C#\Generator\Generator.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\C#\Script\Script.tt" />
+    <VSTemplate Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\C#\Script\Script.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\C#\Template\Template.tt" />
+    <VSTemplate Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\C#\Template\Template.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\VB\Generator\Generator.tt" />
+    <VSTemplate Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\VB\Generator\Generator.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\VB\Script\Script.tt" />
+    <VSTemplate Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\VB\Script\Script.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\VB\Template\Template.tt" />
+    <VSTemplate Include="..\..\T4Toolbox.VisualStudio.ItemTemplates\VB\Template\Template.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

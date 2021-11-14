@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>c79f75ba-c727-498b-ba23-a1b3735d434f</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>T4Toolbox.VisualStudio.Tests.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BrowseObjectExtenderTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomToolParametersTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomToolParameterTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomToolTemplateEditorTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeDte.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeObjectExtenders.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeProject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeProjectItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeProjectItems.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeProjects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeProperties.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeSolution.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeTemplateLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeTextTemplating.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeTypeDescriptorContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\FakeVsActivityLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\StubIPersistDocData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\StubIVsQueryEditQuerySave.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fakes\StubIVsRunningDocumentTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ItemMetadataWizardTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OutputFileManagerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T4ToolboxOptionsTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)T4ToolboxPackageTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransformationContextProviderTest.cs" />
+  </ItemGroup>
+</Project>

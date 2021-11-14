@@ -1,5 +1,5 @@
-// <copyright file="FakeSolution.cs" company="Oleg Sych">
-//  Copyright � Oleg Sych. All Rights Reserved.
+﻿// <copyright file="FakeSolution.cs" company="Oleg Sych">
+//  Copyright © Oleg Sych. All Rights Reserved.
 // </copyright>
 
 namespace T4Toolbox.VisualStudio.Tests.Fakes
