@@ -26,12 +26,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.TextTemplating.15.0">
-      <Version>17.0.0-previews-3-31605-261</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.15.0">
-      <Version>17.0.0-previews-3-31530-272</Version>
-    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.31902.203" />
     <PackageReference Include="StyleCop.MSBuild">
       <Version>5.0.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

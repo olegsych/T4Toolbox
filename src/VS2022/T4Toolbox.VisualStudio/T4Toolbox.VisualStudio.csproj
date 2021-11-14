@@ -58,28 +58,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Interop">
-      <Version>17.0.31902.203</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0">
-      <Version>17.0.31902.203</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.TemplateWizardInterface">
-      <Version>17.0.31902.203</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.TextTemplating.VSHost.15.0">
-      <Version>17.0.0-previews-3-31605-261</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Utilities">
-      <Version>17.0.31902.203</Version>
-    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.31902.203" />
+    <PackageReference Include="Microsoft.VisualStudio.TemplateWizardInterface" Version="17.0.31902.203" />
     <PackageReference Include="StyleCop.MSBuild">
       <Version>5.0.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="YaccLexTools">
-      <Version>0.2.2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="..\..\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.Shared.projitems" Label="Shared" />
