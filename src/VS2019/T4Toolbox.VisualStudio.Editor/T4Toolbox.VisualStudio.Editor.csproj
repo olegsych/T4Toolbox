@@ -22,7 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
-      <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
+      <Project>{93bb161a-5947-4ea8-b557-e05414e823f2}</Project>
       <Name>T4Toolbox.TemplateAnalysis</Name>
     </ProjectReference>
     <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">

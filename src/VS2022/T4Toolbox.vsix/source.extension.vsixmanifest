@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="T4Toolbox.vsix.d57a66cf-c2be-4296-bdf4-0edc3d0c1d58" Version="|%CurrentProject%;GetPackageVersion|" Language="en-US" Publisher="Hippasus Chu" />
+    <Identity Id="T4Toolbox.17" Version="|%CurrentProject%;GetPackageVersion|" Language="en-US" Publisher="Oleg Sych" />
     <DisplayName>T4 Toolbox for Visual Studio 2022</DisplayName>
     <Description>Extends Text Templates with syntax colorization, error reporting, outlining, QuickInfo tooltips, statement completion, generation of multiple output files with source control integration, support for template parameters in Solution Explorer properties and more.</Description>
     <MoreInfo>https://github.com/olegsych/T4Toolbox</MoreInfo>

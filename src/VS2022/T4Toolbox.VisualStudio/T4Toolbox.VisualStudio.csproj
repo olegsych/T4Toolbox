@@ -33,19 +33,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\T4Toolbox.DirectiveProcessors\T4Toolbox.DirectiveProcessors.csproj">
-      <Project>{E0282961-2D83-48CC-B4D4-8257449CF8F7}</Project>
+      <Project>{53f7143f-dbda-41a5-a9c3-7d80debae286}</Project>
       <Name>T4Toolbox.DirectiveProcessors</Name>
     </ProjectReference>
     <ProjectReference Include="..\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
-      <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
+      <Project>{398b0741-3977-4b0b-88e2-55a3b50c5f71}</Project>
       <Name>T4Toolbox.TemplateAnalysis</Name>
     </ProjectReference>
     <ProjectReference Include="..\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
-      <Project>{fde953d3-ad27-4398-8ef4-293c0cebdc3e}</Project>
+      <Project>{02f1c0b2-e405-4436-994e-e64affe22003}</Project>
       <Name>T4Toolbox.VisualStudio.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">
-      <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
+      <Project>{0bb76863-b250-4bd5-8d70-3e6b16364b7a}</Project>
       <Name>T4Toolbox</Name>
     </ProjectReference>
   </ItemGroup>

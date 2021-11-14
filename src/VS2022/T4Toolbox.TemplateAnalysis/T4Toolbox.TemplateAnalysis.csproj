@@ -27,12 +27,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">
-      <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
-      <Name>T4Toolbox</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Text.Data">
       <Version>17.0.487</Version>
     </PackageReference>
@@ -44,6 +38,12 @@
     <PackageReference Include="YaccLexTools">
       <Version>0.2.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">
+      <Project>{0bb76863-b250-4bd5-8d70-3e6b16364b7a}</Project>
+      <Name>T4Toolbox</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

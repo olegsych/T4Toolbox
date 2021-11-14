@@ -32,29 +32,29 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\T4Toolbox.DirectiveProcessors\T4Toolbox.DirectiveProcessors.csproj">
-      <Project>{e0282961-2d83-48cc-b4d4-8257449cf8f7}</Project>
+      <Project>{5b222966-eb47-4a58-aa08-87577a4cd628}</Project>
       <Name>T4Toolbox.DirectiveProcessors</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup</IncludeOutputGroupsInVSIX>
     </ProjectReference>
     <ProjectReference Include="..\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
-      <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
+      <Project>{93bb161a-5947-4ea8-b557-e05414e823f2}</Project>
       <Name>T4Toolbox.TemplateAnalysis</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup</IncludeOutputGroupsInVSIX>
     </ProjectReference>
     <ProjectReference Include="..\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
-      <Project>{FDE953D3-AD27-4398-8EF4-293C0CEBDC3E}</Project>
+      <Project>{3899e3cb-5898-47f5-9203-36d823769e91}</Project>
       <Name>T4Toolbox.VisualStudio.Editor</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
     <ProjectReference Include="..\T4Toolbox.VisualStudio.ItemTemplates\T4Toolbox.VisualStudio.ItemTemplates.csproj">
-      <Project>{ea04b345-97be-4a49-9c9c-3ebd4f5d2250}</Project>
+      <Project>{47a5785f-7410-4b74-bcaf-f5e74bfae25e}</Project>
       <Name>T4Toolbox.VisualStudio.ItemTemplates</Name>
       <VSIXSubPath>ItemTemplates</VSIXSubPath>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup</IncludeOutputGroupsInVSIX>
     </ProjectReference>
     <ProjectReference Include="..\T4Toolbox.VisualStudio\T4Toolbox.VisualStudio.csproj">
-      <Project>{1e1e9161-cbe4-4538-928c-539aa5e70153}</Project>
+      <Project>{40c635b9-1f5d-49bb-bb2e-9d3cbb2a1d94}</Project>
       <Name>T4Toolbox.VisualStudio</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bPkgdefProjectOutputGroup%3bBuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
