@@ -13,7 +13,9 @@ namespace T4Toolbox
     /// <summary>
     /// Abstract base class for nested template classes.
     /// </summary>
+#pragma warning disable CS3009 // Base type is not CLS-compliant
     public abstract class Template : TextTransformation
+#pragma warning restore CS3009 // Base type is not CLS-compliant
     {
         #region fields
 

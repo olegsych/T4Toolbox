@@ -114,7 +114,9 @@ namespace T4Toolbox
         /// <exception cref="TransformationException">
         /// When <see cref="TransformationContext"/> has not been properly initialized.
         /// </exception>
+#pragma warning disable CS3003 // Type is not CLS-compliant
         public TextTransformation Transformation { get; private set; }
+#pragma warning restore CS3003 // Type is not CLS-compliant
 
         internal string InputFile
         {
@@ -143,7 +145,9 @@ namespace T4Toolbox
         /// Initializes the <see cref="Current"/> context.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS3001 // Argument type is not CLS-compliant
         public static void Initialize(TextTransformation transformation, StringBuilder generationEnvironment)
+#pragma warning restore CS3001 // Argument type is not CLS-compliant
         {
             CallContext.HostContext = new TransformationContext(transformation, generationEnvironment);
         }

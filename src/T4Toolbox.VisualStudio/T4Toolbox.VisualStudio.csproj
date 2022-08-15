@@ -214,9 +214,6 @@
       <HintPath>..\..\packages\Microsoft.VisualStudio.Shell.Interop.8.0.17.3.32804.24\lib\net472\Microsoft.VisualStudio.Shell.Interop.8.0.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.14.0.DesignTime" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.15.3.DesignTime" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop.15.6.DesignTime" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.VisualStudio.Shell.Interop.9.0.17.3.32804.24\lib\net472\Microsoft.VisualStudio.Shell.Interop.9.0.dll</HintPath>
       <Private>True</Private>
@@ -274,7 +271,6 @@
       <HintPath>..\..\packages\Microsoft.VisualStudio.TextTemplating.17.3.32803.143\lib\net472\Microsoft.VisualStudio.TextTemplating.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.TextTemplating.15.0" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.VisualStudio.TextTemplating.Interfaces.17.3.32803.143\lib\net472\Microsoft.VisualStudio.TextTemplating.Interfaces.dll</HintPath>
       <Private>True</Private>
@@ -291,7 +287,6 @@
       <HintPath>..\..\packages\Microsoft.VisualStudio.TextTemplating.VSHost.17.3.32804.24\lib\net472\Microsoft.VisualStudio.TextTemplating.VSHost.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualStudio.TextTemplating.VSHost.15.0" />
     <Reference Include="Microsoft.VisualStudio.Threading, Version=17.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.VisualStudio.Threading.17.3.44\lib\net472\Microsoft.VisualStudio.Threading.dll</HintPath>
       <Private>True</Private>
