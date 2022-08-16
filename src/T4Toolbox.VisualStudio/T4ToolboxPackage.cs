@@ -15,7 +15,7 @@ namespace T4Toolbox.VisualStudio
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
 
-    using T4Toolbox.DirectiveProcessors;
+    //using T4Toolbox.DirectiveProcessors;
 
     using VSLangProj;
 
@@ -27,10 +27,10 @@ namespace T4Toolbox.VisualStudio
     [Guid(T4ToolboxPackage.Id)]
 
     // Register the T4 Toolbox page in the Visual Studio Options dialog
-    [ProvideOptionPage(typeof(T4ToolboxOptionsPage), T4ToolboxOptions.Category, T4ToolboxOptions.Page, 100, 101, false)]
+    //[ProvideOptionPage(typeof(T4ToolboxOptionsPage), T4ToolboxOptions.Category, T4ToolboxOptions.Page, 100, 101, false)]
 
     // Register the TransformationContext directive processor with the Visual Studio T4 host
-    [ProvideDirectiveProcessor(typeof(TransformationContextProcessor), TransformationContextProcessor.Name, "T4 Toolbox Infrastructure")]
+    //[ProvideDirectiveProcessor(typeof(TransformationContextProcessor), TransformationContextProcessor.Name, "T4 Toolbox Infrastructure")]
 
     // Register the ITransformationContextProvider service accessed by the TransformationContext
     [ProvideService(typeof(ITransformationContextProvider), IsAsyncQueryable = true)]

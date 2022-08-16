@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{42F21B27-CBA5-4FB6-A855-8B74F05F56CD}"
 	ProjectSection(SolutionItems) = preProject
@@ -10,9 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CommonAssemblyInfo.cs = CommonAssemblyInfo.cs
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		README.md = README.md
-		Settings.StyleCop = Settings.StyleCop
 		T4Toolbox.Common.props = T4Toolbox.Common.props
-		T4Toolbox.Common.ruleset = T4Toolbox.Common.ruleset
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3594248C-C8A9-4EAB-8E63-0914300D4ECE}"
@@ -128,5 +126,8 @@ Global
 		{7CBACA4C-728A-4818-839C-E22C24677AFA} = {994DFDA5-97F7-4688-A2FA-6D8E7AB2BC18}
 		{FDE953D3-AD27-4398-8EF4-293C0CEBDC3E} = {3594248C-C8A9-4EAB-8E63-0914300D4ECE}
 		{E8BB5F81-8B2B-4DD4-BAAF-A22C26183F41} = {994DFDA5-97F7-4688-A2FA-6D8E7AB2BC18}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F9BD0ED-69A9-4DE9-8A45-BBE9F8744A87}
 	EndGlobalSection
 EndGlobal

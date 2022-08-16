@@ -496,33 +496,29 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\T4Toolbox.DirectiveProcessors\T4Toolbox.DirectiveProcessors.csproj">
-      <Project>{E0282961-2D83-48CC-B4D4-8257449CF8F7}</Project>
-      <Name>T4Toolbox.DirectiveProcessors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\T4Toolbox.TemplateAnalysis\T4Toolbox.TemplateAnalysis.csproj">
-      <Project>{65bf3fa7-6b2b-47dd-8fc1-bb25754f12d3}</Project>
-      <Name>T4Toolbox.TemplateAnalysis</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\T4Toolbox.VisualStudio.Editor\T4Toolbox.VisualStudio.Editor.csproj">
-      <Project>{fde953d3-ad27-4398-8ef4-293c0cebdc3e}</Project>
-      <Name>T4Toolbox.VisualStudio.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\T4Toolbox\T4Toolbox.csproj">
-      <Project>{682e771a-76f7-4972-bbdc-1250b67f399b}</Project>
-      <Name>T4Toolbox</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CustomToolParameter.cs" />
     <Compile Include="CustomToolParameters.cs" />
-    <Compile Include="T4ToolboxOptions.cs" />
-    <Compile Include="T4ToolboxOptionsPage.cs">
+    <None Include="T4ToolboxOptions.cs" />
+    <None Include="T4ToolboxOptionsPage.cs">
       <SubType>Component</SubType>
-    </Compile>
+    </None>
+    <Compile Include="T4Toolbox\ClrTemplate.cs" />
+    <Compile Include="T4Toolbox\CopyToOutputDirectory.cs" />
+    <Compile Include="T4Toolbox\CSharpTemplate.cs" />
+    <Compile Include="T4Toolbox\FileMethods.cs" />
+    <Compile Include="T4Toolbox\Generator.cs" />
+    <Compile Include="T4Toolbox\ItemMetadata.cs" />
+    <Compile Include="T4Toolbox\ItemType.cs" />
+    <Compile Include="T4Toolbox\ITransformationContextProvider.cs" />
+    <Compile Include="T4Toolbox\NativeMethods.cs" />
+    <Compile Include="T4Toolbox\OutputFile.cs" />
+    <Compile Include="T4Toolbox\OutputItem.cs" />
+    <Compile Include="T4Toolbox\Template.cs" />
+    <Compile Include="T4Toolbox\TransformationContext.cs" />
+    <Compile Include="T4Toolbox\TransformationException.cs" />
     <Compile Include="TemplateLocator.cs" />
     <Compile Include="CustomToolTemplateEditor.cs" />
     <Compile Include="BrowseObjectExtender.cs" />
