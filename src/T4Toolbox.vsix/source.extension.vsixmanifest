@@ -1,31 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="T4Toolbox.15" Version="|%CurrentProject%;GetPackageVersion|" Language="en-US" Publisher="Oleg Sych" />
-    <DisplayName>T4 Toolbox for Visual Studio 2017</DisplayName>
-    <Description>Extends Text Templates with syntax colorization, error reporting, outlining, QuickInfo tooltips, statement completion, generation of multiple output files with source control integration, support for template parameters in Solution Explorer properties and more.</Description>
-    <MoreInfo>https://github.com/olegsych/T4Toolbox</MoreInfo>
-    <License>License.txt</License>
-    <GettingStartedGuide>http://olegsych.github.io/T4Toolbox/getting-started.html</GettingStartedGuide>
-    <ReleaseNotes>https://github.com/olegsych/T4Toolbox/releases</ReleaseNotes>
-  </Metadata>
-  <Installation InstalledByMsi="false">
-    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Community" />
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.6,)" />
-    <Dependency Id="Microsoft.VisualStudio.MPF.15.0" DisplayName="Visual Studio MPF 15.0" d:Source="Installed" Version="[15.0,16.0)" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio;PkgdefProjectOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.VsPackage" Path="DarkTheme.pkgdef" />
-    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="%CurrentProject%.ItemTemplates" d:TargetPath="|T4Toolbox.VisualStudio.ItemTemplates;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
-    <Asset Type="Microsoft.T4.Include" Path="Include" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio|" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio.Editor" Path="|T4Toolbox.VisualStudio.Editor|" />
-  </Assets>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.TextTemplating" Version="[15.0, 16.0)" DisplayName="Text Template Transformation" />
-    <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[15.0,16.0)" DisplayName="C# and Visual Basic" />
-  </Prerequisites>
+    <Metadata>
+        <Identity Id="T4Toolbox.17" Version="2022.0.0.1" Language="en-US" Publisher="Oleg Sych" />
+        <DisplayName>T4 Toolbox for Visual Studio 2022</DisplayName>
+        <Description xml:space="preserve">Extends Text Templates with syntax colorization, error reporting, outlining, QuickInfo tooltips, statement completion, generation of multiple output files with source control integration, support for template parameters in Solution Explorer properties and more.</Description>
+        <MoreInfo>https://github.com/olegsych/T4Toolbox</MoreInfo>
+        <License>License.txt</License>
+        <GettingStartedGuide>http://olegsych.github.io/T4Toolbox/getting-started.html</GettingStartedGuide>
+        <ReleaseNotes>https://github.com/olegsych/T4Toolbox/releases</ReleaseNotes>
+    </Metadata>
+    <Installation InstalledByMsi="false">
+        <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
+        <Dependency d:Source="Installed" Version="[17.0,18.0)" Id="Microsoft.VisualStudio.MPF.17.0" DisplayName="Visual Studio MPF 17.0" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.VsPackage" Path="DarkTheme.pkgdef" />
+        <Asset Type="Microsoft.T4.Include" Path="Include" />
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="T4Toolbox.VisualStudio" Path="|T4Toolbox.VisualStudio|" />
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.TextTemplating" Version="[17.0,18.0)" DisplayName="Text Template Transformation" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[17.0,18.0)" DisplayName="C# and Visual Basic" />
+    </Prerequisites>
 </PackageManifest>

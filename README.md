@@ -1,5 +1,14 @@
 # T4 Toolbox
 
+Version 2022.0.0.1
+- Upgraded for Visual Studio 2022
+- Upgrading to new version of Visual Studio requires updating meta package called Microsoft.VisualStudio.Sdk - the package version is the same as VS version, for VS 2022 it is 17
+- The upgrade to version 2022 encountered an obstacle that the assembly `T4Toolbox` shared by other projects can't be discovered by visual studio at runtime and therefore the plugin can't be loaded
+- To overcome the obstacle the classes from `T4Toolbox` were moved to `T4Toolbox.VisualStudio` project, to folder `T4Toolbox`
+- Further version updates can follow the same approach, unless we find a reason why Visual Studio can't load the shared library
+
+
+
 T4 Toolbox extends the code generation functionality of the [T4](https://docs.microsoft.com/en-us/visualstudio/modeling/code-generation-and-t4-text-templates) 
 text templates in Visual Studio and allows you to:
 - Generate multiple output files from a single text template 

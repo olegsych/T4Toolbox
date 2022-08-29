@@ -11,8 +11,11 @@ namespace T4Toolbox.VisualStudio
     using System.Drawing.Design;
     using System.Globalization;
     using System.Runtime.InteropServices;
+
     using EnvDTE;
+
     using Microsoft.VisualStudio;
+    using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
@@ -29,19 +32,20 @@ namespace T4Toolbox.VisualStudio
         /// Visual Studio uses this name to determine name of the <see cref="Property"/> objects it creates. 
         /// Choosing this value allows us to create properties with clean names like T4Toolbox.CustomToolTemplate.
         /// </remarks>
-        internal const string Name = "T4Toolbox"; 
+        internal const string Name = "T4Toolbox";
 
         private const string TemplatePropertyDisplayName = "Custom Tool Template";
 
         private readonly uint itemId;
         private readonly IVsHierarchy hierarchy;
         private readonly IVsBuildPropertyStorage propertyStorage;
-        private readonly IServiceProvider serviceProvider;
+        private readonly IAsyncServiceProvider2 serviceProvider;
         private readonly int cookie;
         private readonly IExtenderSite site;
+        private readonly TemplateLocator templateLocator;
         private ProjectItem projectItem;
 
-        internal BrowseObjectExtender(IServiceProvider serviceProvider, IVsBrowseObject browseObject, IExtenderSite site, int cookie)
+        internal BrowseObjectExtender(IAsyncServiceProvider2 serviceProvider, IVsBrowseObject browseObject, IExtenderSite site, int cookie)
         {
             Debug.Assert(serviceProvider != null, "serviceProvider");
             Debug.Assert(browseObject != null, "browseObject");
@@ -54,6 +58,7 @@ namespace T4Toolbox.VisualStudio
             ErrorHandler.ThrowOnFailure(browseObject.GetProjectItem(out this.hierarchy, out this.itemId));
             this.propertyStorage = (IVsBuildPropertyStorage)this.hierarchy;
             this.CustomToolParameters = new CustomToolParameters(this.serviceProvider, this.hierarchy, this.itemId);
+            this.templateLocator = (TemplateLocator)this.serviceProvider.GetServiceAsync(typeof(TemplateLocator)).Result;
         }
 
         /// <summary>
@@ -115,14 +120,14 @@ namespace T4Toolbox.VisualStudio
                             string.Format(
                                 CultureInfo.CurrentCulture,
                                 "The '{0}' property is supported only by the {1}. Set the 'Custom Tool' property first.",
-                                TemplatePropertyDisplayName, 
+                                TemplatePropertyDisplayName,
                                 TemplatedFileGenerator.Name));
                     }
 
                     // Report an error if the template cannot be found
                     string fullPath = value;
-                    var templateLocator = (TemplateLocator)this.serviceProvider.GetService(typeof(TemplateLocator));
-                    if (!templateLocator.LocateTemplate(this.ProjectItem.FileNames[1], ref fullPath))
+
+                    if (!this.templateLocator.LocateTemplate(this.ProjectItem.FileNames[1], ref fullPath))
                     {
                         throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Template '{0}' could not be found", value));
                     }
@@ -131,7 +136,7 @@ namespace T4Toolbox.VisualStudio
                 ErrorHandler.ThrowOnFailure(this.propertyStorage.SetItemAttribute(this.itemId, ItemMetadata.Template, value));
 
                 // If the file does not have a custom tool yet, assume that by specifying the template user wants to use the T4Toolbox.TemplatedFileGenerator.
-                if (!string.IsNullOrWhiteSpace(value) && 
+                if (!string.IsNullOrWhiteSpace(value) &&
                     string.IsNullOrWhiteSpace((string)this.ProjectItem.Properties.Item(ProjectItemProperty.CustomTool).Value))
                 {
                     this.ProjectItem.Properties.Item(ProjectItemProperty.CustomTool).Value = TemplatedFileGenerator.Name;

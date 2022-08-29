@@ -8,10 +8,17 @@ namespace T4Toolbox.VisualStudio
     using System.ComponentModel.Design;
     using System.IO;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    using EnvDTE;
+
     using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
+    using Microsoft.VisualStudio.TextTemplating;
     using Microsoft.VisualStudio.TextTemplating.VSHost;
+
     using T4Toolbox;
 
     /// <summary>
@@ -19,9 +26,9 @@ namespace T4Toolbox.VisualStudio
     /// </summary>
     internal class TransformationContextProvider : MarshalByRefObject, ITransformationContextProvider
     {
-        private readonly IServiceProvider serviceProvider;
+        private readonly IAsyncServiceProvider2 serviceProvider;
 
-        private TransformationContextProvider(IServiceProvider serviceProvider)
+        private TransformationContextProvider(IAsyncServiceProvider2 serviceProvider)
         {
             this.serviceProvider = serviceProvider;
         }
@@ -74,7 +81,7 @@ namespace T4Toolbox.VisualStudio
         /// <param name="outputFiles">
         /// A collection of <see cref="OutputFile"/> objects produced by the template.
         /// </param>
-        void ITransformationContextProvider.UpdateOutputFiles(string inputFile, OutputFile[] outputFiles)
+        async void ITransformationContextProvider.UpdateOutputFiles(string inputFile, OutputFile[] outputFiles)
         {
             if (inputFile == null)
             {
@@ -99,14 +106,23 @@ namespace T4Toolbox.VisualStudio
                 }
             }
 
+            var dte = (DTE)await serviceProvider.GetServiceAsync(typeof(DTE)).ConfigureAwait(false);
+            ITextTemplatingEngineHost textTemplatingEngineHost = (ITextTemplatingEngineHost)await this.serviceProvider.GetServiceAsync(typeof(STextTemplating)).ConfigureAwait(false);
+
             // Validate the output files immediately. Exceptions will be reported by the templating service.
-            var manager = new OutputFileManager(this.serviceProvider, inputFile, outputFiles);
-            manager.Validate();
+            var manager = new OutputFileManager(
+                this.serviceProvider,
+                dte,
+                textTemplatingEngineHost,
+                inputFile,
+                outputFiles
+                );
+            await manager.ValidateAsync();
 
             // Wait for the default output file to be generated
             var watcher = new FileSystemWatcher();
             watcher.Path = Path.GetDirectoryName(inputFile);
-            watcher.Filter = Path.GetFileNameWithoutExtension(inputFile) + "*." + this.GetTransformationOutputExtensionFromHost();
+            watcher.Filter = Path.GetFileNameWithoutExtension(inputFile) + "*." + await this.GetTransformationOutputExtensionFromHostAsync();
 
             FileSystemEventHandler runManager = (sender, args) =>
             {
@@ -120,7 +136,7 @@ namespace T4Toolbox.VisualStudio
                 }
 
                 // Finish updating the output files on the UI thread
-                ThreadHelper.Generic.BeginInvoke(manager.DoWork);
+                ThreadHelper.Generic.BeginInvoke(async () => await manager.DoWorkAsync());
             };
 
             watcher.Created += runManager;
@@ -134,24 +150,24 @@ namespace T4Toolbox.VisualStudio
         /// <param name="container">
         /// An <see cref="IServiceContainer"/> object that will be providing the <see cref="ITransformationContextProvider"/> service.
         /// </param>
-        internal static void Register(IServiceContainer container)
+        internal static void Register(IAsyncServiceContainer container)
         {
             container.AddService(typeof(ITransformationContextProvider), CreateService, promote: true);
         }
 
-        private static object CreateService(IServiceContainer container, Type serviceType)
+        private static Task<object> CreateService(IAsyncServiceContainer container, CancellationToken cancellationToken, Type serviceType)
         {
             if (serviceType == typeof(ITransformationContextProvider))
             {
-                return new TransformationContextProvider(container);
+                return System.Threading.Tasks.Task.FromResult<object>(new TransformationContextProvider(container as IAsyncServiceProvider2));
             }
 
-            return null;
+            return System.Threading.Tasks.Task.FromResult<object>(null);
         }
 
-        private string GetTransformationOutputExtensionFromHost()
+        private async Task<string> GetTransformationOutputExtensionFromHostAsync()
         {
-            var components = (ITextTemplatingComponents)this.serviceProvider.GetService(typeof(STextTemplating));
+            var components = (ITextTemplatingComponents)await this.serviceProvider.GetServiceAsync(typeof(STextTemplating));
             var callback = components.Callback as TextTemplatingCallback; // Callback can be passed to ITextTemplating.ProcessTemplate by user code.
             if (callback == null)
             {

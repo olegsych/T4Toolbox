@@ -21,6 +21,8 @@
     <CopyVsixManifestToOutput>false</CopyVsixManifestToOutput>
     <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
     <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
