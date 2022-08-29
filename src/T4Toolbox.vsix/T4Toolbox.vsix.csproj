@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <!-- On AppVeyor build agent, use dynamically generated package version. Locally, hardcode to 0.0.0.0 -->
     <PackageVersion Condition=" '$(appveyor_build_version)' != '' ">$(appveyor_build_version)</PackageVersion>
-    <PackageVersion Condition=" '$(appveyor_build_version)' == '' ">0.0.0.0</PackageVersion>
+    <PackageVersion Condition=" '$(appveyor_build_version)' == '' ">2022.0.0.1</PackageVersion>
     <!-- VSSDK properties -->
     <TargetVsixContainerName>T4Toolbox.$(PackageVersion).vsix</TargetVsixContainerName>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
